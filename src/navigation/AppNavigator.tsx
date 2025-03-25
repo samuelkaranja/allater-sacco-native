@@ -3,13 +3,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
-import CreateAccountScreen from '../screens/CreateAccountScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 export type RootStackParamList = {
   Welcome: undefined;
   OnBoarding: undefined;
-  CreateAccount: undefined;
+  Register: undefined;
   Login: undefined;
 };
 
@@ -21,7 +21,7 @@ const AppNavigator = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="OnBoarding" component={OnboardingScreen} />
-        <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>

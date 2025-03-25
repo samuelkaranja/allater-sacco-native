@@ -16,7 +16,7 @@ const WelcomeScreen: React.FC<Props> = ({navigation}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace('OnBoarding');
-    }, 4000); // 3 seconds delay
+    }, 3000); // 3 seconds delay
 
     return () => clearTimeout(timer);
   }, [navigation]);

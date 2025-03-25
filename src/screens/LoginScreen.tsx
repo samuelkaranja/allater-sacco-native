@@ -92,7 +92,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       <View>
         <Text
           style={styles.signupText}
-          onPress={() => navigation.navigate('CreateAccount')}>
+          onPress={() => navigation.navigate('Register')}>
           Don't have an account?{' '}
           <Text style={styles.signupLink}>Create an Account Here</Text>
         </Text>

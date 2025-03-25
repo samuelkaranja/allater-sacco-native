@@ -21,7 +21,7 @@ const OnboardingScreen: React.FC<Props> = ({navigation}) => {
       />
       <TouchableOpacity
         style={styles.createBtn}
-        onPress={() => navigation.navigate('CreateAccount')}>
+        onPress={() => navigation.navigate('Register')}>
         <Text style={styles.createText}>Create Account</Text>
       </TouchableOpacity>
       <TouchableOpacity
