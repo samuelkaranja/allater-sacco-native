@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
 
   createBtn: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#12994a',
     width: '90%',
     padding: 15,
     borderRadius: 50,

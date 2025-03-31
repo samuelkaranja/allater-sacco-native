@@ -84,7 +84,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         <TouchableOpacity>
           <Text style={styles.linkText}>Reset Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Text style={styles.linkText}>Need Help?</Text>
         </TouchableOpacity>
       </View>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
 
   loginBtn: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#12994a',
     paddingVertical: 12,
     borderRadius: 25,
     width: '100%',

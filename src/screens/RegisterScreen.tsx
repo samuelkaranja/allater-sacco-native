@@ -198,7 +198,7 @@ const RegisterScreen = () => {
 
             {/* Navigation Buttons */}
             <TouchableOpacity style={styles.button} onPress={handleNext}>
-              <Text style={styles.buttonText}>DONE</Text>
+              <Text style={styles.buttonText}>Done</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handlePrev}>
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: 'green',
+    backgroundColor: '#12994a',
     paddingVertical: 12,
     borderRadius: 25,
     width: '100%',
