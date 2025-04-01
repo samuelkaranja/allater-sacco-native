@@ -1,18 +1,30 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {TouchableOpacity} from 'react-native';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
 import TransactScreen from '../screens/TransactScreen';
 import AccountScreen from '../screens/AccountScreen';
 
 const Tab = createBottomTabNavigator();
+const CustomHeaderLeft = ({
+  navigation,
+}: {
+  navigation: DrawerNavigationProp<any>;
+}) => (
+  <TouchableOpacity
+    onPress={() => navigation.openDrawer()}
+    style={{marginLeft: 15}}>
+    <Icon name="bars" size={24} color="#000" />
+  </TouchableOpacity>
+);
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({route, navigation}) => ({
         tabBarIcon: ({color, size}) => {
           let iconName;
           if (route.name === 'Home') iconName = 'home';
@@ -26,6 +38,14 @@ const BottomTabNavigator = () => {
         tabBarActiveTintColor: 'green',
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: {height: 60, paddingBottom: 5},
+        headerLeft: () => {
+          const drawerNavigation =
+            navigation.getParent<DrawerNavigationProp<any>>();
+          return drawerNavigation ? (
+            <CustomHeaderLeft navigation={drawerNavigation} />
+          ) : null;
+        }, // Add hamburger menu
+        headerTitleAlign: 'center',
         headerShown: false,
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />

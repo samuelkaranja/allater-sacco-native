@@ -1,4 +1,4 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 import React from 'react';
 import {
   FlatList,
@@ -14,8 +14,9 @@ import MainAccountCard from '../components/Home/MainAccountCard';
 import SharesCard from '../components/Home/SharesCard';
 import LoansCard from '../components/Home/LoansCard';
 import TransactionItem from '../components/Home/TransactionItem';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-type HomeScreenNavigationProps = StackNavigationProp<
+type HomeScreenNavigationProps = DrawerNavigationProp<
   RootStackParamList,
   'Home'
 >;
@@ -67,11 +68,43 @@ const transactions: {
     amount: 123456,
     date: '18-11-2023',
   },
+  {
+    type: 'Deposit',
+    transfer: 'Mpesa to Savings',
+    amount: 123456,
+    date: 'Today',
+  },
+  {
+    type: 'Withdraw',
+    transfer: 'Savings - Mpesa 0700123456',
+    amount: 123456,
+    date: '18-11-2023',
+  },
 ];
 
-const HomeScreen: React.FC<Props> = () => {
+const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
+      {/* Top Bar with Hamburger Menu */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => navigation.openDrawer()}
+          style={styles.iconButton}>
+          <Icon name="bars" size={24} color="#000" />
+        </TouchableOpacity>
+        <Image
+          source={require('../../assets/images/logo.png')}
+          style={styles.headerImage}
+        />
+        <TouchableOpacity
+          onPress={() => console.log('Notifications Clicked')}
+          style={styles.iconButton}>
+          <Icon name="bell" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
+
+      {/* Main Content */}
+
       <View style={styles.banner}>
         <Image
           source={require('../../assets/images/Banner.png')}
@@ -110,8 +143,31 @@ const HomeScreen: React.FC<Props> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: '#fff',
+  },
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingVertical: 20,
+  },
+
+  iconButton: {
+    padding: 10,
+  },
+
+  headerImage: {
+    width: 50,
+    height: 50,
+    objectFit: 'cover',
+  },
+
+  text: {
+    fontSize: 16,
+    marginTop: 20,
   },
 
   banner: {

@@ -13,9 +13,7 @@ const LoansCard: React.FC<LoansCardProps> = ({amountDue, loanLimit}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
-    <Pressable
-      style={styles.card}
-      onPress={() => navigation.navigate('Account')}>
+    <Pressable style={styles.card} onPress={() => navigation.navigate('Loan')}>
       <View>
         <Text style={styles.title}>💳 Loans</Text>
       </View>
