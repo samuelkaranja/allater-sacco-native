@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import {RootStackParamList} from '../../navigation/AppNavigator';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 interface SharesCardProps {
   shares: number;
@@ -10,10 +10,10 @@ interface SharesCardProps {
 }
 
 const SharesCard: React.FC<SharesCardProps> = ({shares, worth}) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
   return (
-    <Pressable onPress={() => navigation.navigate('Account')}>
+    <Pressable onPress={() => navigation.navigate('Shares')}>
       <View style={styles.card}>
         <View>
           <Text style={styles.title}>📈 Shares</Text>

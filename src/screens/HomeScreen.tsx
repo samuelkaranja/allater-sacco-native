@@ -9,16 +9,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RootStackParamList} from '../navigation/AppNavigator';
 import MainAccountCard from '../components/Home/MainAccountCard';
 import SharesCard from '../components/Home/SharesCard';
 import LoansCard from '../components/Home/LoansCard';
 import TransactionItem from '../components/Home/TransactionItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {HomeStackParamList} from '../navigation/type/navigationTypes';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
-  RootStackParamList,
-  'Home'
+  HomeStackParamList,
+  'HomeMain'
 >;
 
 interface Props {

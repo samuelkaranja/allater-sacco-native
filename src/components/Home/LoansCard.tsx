@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../navigation/AppNavigator';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 interface LoansCardProps {
   amountDue: number;
@@ -10,7 +10,7 @@ interface LoansCardProps {
 }
 
 const LoansCard: React.FC<LoansCardProps> = ({amountDue, loanLimit}) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
   return (
     <Pressable style={styles.card} onPress={() => navigation.navigate('Loan')}>

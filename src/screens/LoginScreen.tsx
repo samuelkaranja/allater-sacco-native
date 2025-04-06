@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {RootStackParamList} from '../navigation/AppNavigator';
+import {RootStackParamList} from '../navigation/type/navigationTypes';
 
 type LoginScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -84,7 +84,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         <TouchableOpacity>
           <Text style={styles.linkText}>Reset Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.navigate('MainApp')}>
           <Text style={styles.linkText}>Need Help?</Text>
         </TouchableOpacity>
       </View>
