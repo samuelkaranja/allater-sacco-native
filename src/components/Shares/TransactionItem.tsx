@@ -7,6 +7,7 @@ type Props = {
 };
 
 const TransactionItem: React.FC<Props> = ({transaction}) => {
+  //const isNegative = transaction.amount.includes('-');
   const color = transaction.type === 'Sell' ? 'red' : 'green';
 
   return (
@@ -18,7 +19,7 @@ const TransactionItem: React.FC<Props> = ({transaction}) => {
         </View>
         <View>
           <Text style={{color}}>{transaction.amount}</Text>
-          <Text>{transaction.date}</Text>
+          <Text style={styles.date}>{transaction.date}</Text>
         </View>
       </View>
     </View>
@@ -36,7 +37,13 @@ const styles = StyleSheet.create({
   itemCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingBottom: 5,
+  },
+
+  date: {
+    textAlign: 'right',
+    fontSize: 11,
   },
 });
 

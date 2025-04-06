@@ -1,20 +1,14 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import React from 'react';
-import {
-  Image,
-  Share,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, {useState} from 'react';
+import {View, StyleSheet, Text} from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import SharesSummaryCard from '../components/Shares/SharesSummaryCard';
 import SharesActions from '../components/Shares/SharesActions';
 import TransactionFilterTabs from '../components/Shares/TransactionFilterTabs';
 import {Transaction} from '../components/Shares/types';
 import TransactionList from '../components/Shares/TransactionList';
+import Header from '../components/Header/Header';
+import useTransactionFilter from '../hooks/useTransactionFilter';
 
 type LoansScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -25,7 +19,7 @@ interface Props {
   navigation: LoansScreenNavigationProps;
 }
 
-const filteredTransactions: Transaction[] = [
+const allTransactions: Transaction[] = [
   {
     type: 'Buy',
     account: 'Savings - Shares',
@@ -101,35 +95,24 @@ const filteredTransactions: Transaction[] = [
 ];
 
 const SharesScreen: React.FC<Props> = ({navigation}) => {
+  const [selectedTab, setSelectedTab] = useState('All');
+  const filteredTransactions = useTransactionFilter(
+    allTransactions,
+    selectedTab,
+  );
   return (
     <View style={styles.container}>
       {/* Top Bar with Hamburger Menu */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.openDrawer()}
-          style={styles.iconButton}>
-          <Icon name="bars" size={24} color="#000" />
-        </TouchableOpacity>
-        <Image
-          source={require('../../assets/images/logo.png')}
-          style={styles.headerImage}
-        />
-        <TouchableOpacity
-          onPress={() => console.log('Notifications Clicked')}
-          style={styles.iconButton}>
-          <Icon name="bell" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation} />
 
       {/* Main Content */}
+      <Text style={styles.title}>Your Shares</Text>
       <SharesSummaryCard />
 
       <SharesActions />
 
-      <TransactionFilterTabs
-        selected="All"
-        onSelect={filter => console.log('Selected filter:', filter)}
-      />
+      <Text style={styles.history}>Shares Transction History</Text>
+      <TransactionFilterTabs selected={selectedTab} onSelect={setSelectedTab} />
 
       <TransactionList transactions={filteredTransactions} />
     </View>
@@ -143,22 +126,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    paddingVertical: 20,
+  title: {
+    fontSize: 20,
+    fontWeight: 500,
   },
 
-  iconButton: {
-    padding: 10,
-  },
-
-  headerImage: {
-    width: 50,
-    height: 50,
-    objectFit: 'cover',
+  history: {
+    fontSize: 15,
+    fontWeight: 500,
+    paddingVertical: 8,
   },
 });
 

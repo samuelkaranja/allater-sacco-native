@@ -11,7 +11,7 @@ const TransactionList: React.FC<Props> = ({transactions}) => (
   <FlatList
     data={transactions}
     renderItem={({item}) => <TransactionItem transaction={item} />}
-    keyExtractor={(item, index) => index.toString()}
+    keyExtractor={(_, index) => index.toString()}
   />
 );
 
