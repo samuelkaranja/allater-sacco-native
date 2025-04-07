@@ -3,6 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {HomeStackParamList} from '../../navigation/type/navigationTypes';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface SharesCardProps {
   shares: number;
@@ -29,6 +30,9 @@ const SharesCard: React.FC<SharesCardProps> = ({shares, worth}) => {
             })}
           </Text>
         </View>
+        <View>
+          <Icon name="angle-right" size={20} color={'white'} />
+        </View>
       </View>
     </Pressable>
   );
@@ -40,7 +44,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#F4A825',
-    padding: 20,
+    paddingVertical: 25,
+    paddingHorizontal: 15,
     borderRadius: 10,
     marginBottom: 15,
   },
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     fontSize: 15,
+    paddingVertical: 1,
   },
 });
 
