@@ -15,6 +15,7 @@ import LoansCard from '../components/Home/LoansCard';
 import TransactionItem from '../components/Home/TransactionItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import Header from '../components/Header/Header';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -86,22 +87,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       {/* Top Bar with Hamburger Menu */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.openDrawer()}
-          style={styles.iconButton}>
-          <Icon name="bars" size={24} color="#000" />
-        </TouchableOpacity>
-        <Image
-          source={require('../../assets/images/logo.png')}
-          style={styles.headerImage}
-        />
-        <TouchableOpacity
-          onPress={() => console.log('Notifications Clicked')}
-          style={styles.iconButton}>
-          <Icon name="bell" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation} />
 
       {/* Main Content */}
 
@@ -145,24 +131,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     backgroundColor: '#fff',
-  },
-
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    paddingVertical: 20,
-  },
-
-  iconButton: {
-    padding: 10,
-  },
-
-  headerImage: {
-    width: 50,
-    height: 50,
-    objectFit: 'cover',
   },
 
   text: {

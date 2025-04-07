@@ -20,7 +20,6 @@ const SharesSummaryCard: React.FC = () => (
 
 const styles = StyleSheet.create({
   card: {
-    width: '100%',
     backgroundColor: '#DAA520',
     borderRadius: 12,
     padding: 16,

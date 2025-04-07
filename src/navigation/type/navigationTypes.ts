@@ -19,17 +19,18 @@ export type BottomTabParamList = {
 };
 
 export type DrawerParamList = {
-  Tabs: undefined;
-  // Main: undefined;
-  // FAQs: undefined;
-  // AboutUs: undefined;
-  // ContactInfo: undefined;
-  // Help: undefined;
-  // Settings: undefined;
+  Home: undefined;
+  About: undefined;
+  FAQs: undefined;
 };
 
 export type HomeStackParamList = {
   HomeMain: undefined;
   Shares: undefined;
   Loan: undefined;
+  Contact: undefined;
+  Investing: undefined;
+  Locate: undefined;
+  About: undefined;
+  Faq: undefined;
 };

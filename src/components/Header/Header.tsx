@@ -8,7 +8,7 @@ const Header = ({navigation}: {navigation: any}) => {
       <TouchableOpacity
         onPress={() => navigation?.openDrawer()}
         style={styles.iconButton}>
-        <Icon name="bars" size={24} color="#000" />
+        <Icon name="bars" size={18} color="#12994a" />
       </TouchableOpacity>
       <Image
         source={require('../../../assets/images/logo.png')}
@@ -17,7 +17,7 @@ const Header = ({navigation}: {navigation: any}) => {
       <TouchableOpacity
         onPress={() => console.log('Notifications Clicked')}
         style={styles.iconButton}>
-        <Icon name="bell" size={24} color="#000" />
+        <Icon name="bell" size={18} color="#000" />
       </TouchableOpacity>
     </View>
   );

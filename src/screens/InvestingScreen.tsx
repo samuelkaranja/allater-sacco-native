@@ -1,25 +1,24 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {BottomTabParamList} from '../navigation/type/navigationTypes';
+import {View, Text, StyleSheet} from 'react-native';
+import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
 
-type AccountScreenNavigationProps = DrawerNavigationProp<
-  BottomTabParamList,
-  'Account'
+type InvestingScreenNavigationProps = DrawerNavigationProp<
+  HomeStackParamList,
+  'Investing'
 >;
 
 interface Props {
-  navigation: AccountScreenNavigationProps;
+  navigation: InvestingScreenNavigationProps;
 }
 
-const AccountScreen: React.FC<Props> = ({navigation}) => {
+const InvestingScreen: React.FC<Props> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-
       <Text style={{textAlign: 'center', fontSize: 20, marginTop: 20}}>
-        Account Screen
+        Investing Screen
       </Text>
     </View>
   );
@@ -33,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountScreen;
+export default InvestingScreen;
