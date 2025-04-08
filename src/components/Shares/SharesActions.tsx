@@ -5,6 +5,17 @@ const actions = ['Sell Shares', 'Transfer Shares', 'Buy Shares'];
 
 const SharesActions = () => (
   <View style={styles.container}>
+    <TouchableOpacity style={styles.button}>
+      <Text>Sell Shares</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.button}>
+      <Text>Transfer Shares</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.button}>
+      <Text>Buy Shares</Text>
+    </TouchableOpacity>
     {actions.map((action, idx) => (
       <TouchableOpacity key={idx} style={styles.button}>
         <Text>{action}</Text>

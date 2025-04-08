@@ -8,7 +8,7 @@ const Header = ({navigation}: {navigation: any}) => {
       <TouchableOpacity
         onPress={() => navigation?.openDrawer()}
         style={styles.iconButton}>
-        <Icon name="bars" size={18} color="#12994a" />
+        <Icon name="bars" size={18} color="#000" />
       </TouchableOpacity>
       <Image
         source={require('../../../assets/images/logo.png')}

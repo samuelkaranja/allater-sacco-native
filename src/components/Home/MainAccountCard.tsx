@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   },
 
   main: {
-    fontSize: 15,
-    fontWeight: 500,
+    fontSize: 14,
+    fontWeight: 400,
     paddingBottom: 4,
   },
 

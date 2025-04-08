@@ -81,6 +81,18 @@ const transactions: {
     amount: 123456,
     date: '18-11-2023',
   },
+  {
+    type: 'Deposit',
+    transfer: 'Mpesa to Savings',
+    amount: 123456,
+    date: 'Today',
+  },
+  {
+    type: 'Withdraw',
+    transfer: 'Savings - Mpesa 0700123456',
+    amount: 123456,
+    date: '18-11-2023',
+  },
 ];
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
@@ -91,13 +103,13 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
 
       {/* Main Content */}
 
-      <View style={styles.banner}>
+      {/* <View style={styles.banner}>
         <Image
           source={require('../../assets/images/Banner.png')}
           style={styles.image}
           resizeMode="cover"
         />
-      </View>
+      </View> */}
 
       <Text style={styles.welcomeText}>Welcome Back, Samuel.</Text>
 
@@ -109,7 +121,15 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
 
       <LoansCard amountDue={1000} loanLimit={20000} />
 
-      <Text style={styles.sectionTitle}>Transaction History</Text>
+      <Text
+        style={{
+          fontSize: 15,
+          fontWeight: 'bold',
+          paddingTop: 20,
+          paddingBottom: 12,
+        }}>
+        Transaction History
+      </Text>
 
       <View style={{marginBottom: 60}}>
         {transactions.map((tx, index) => (
@@ -148,15 +168,15 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: 500,
     paddingTop: 5,
-    paddingBottom: 10,
+    paddingBottom: 25,
   },
 
   sectionTitle: {
-    fontSize: 15,
-    fontWeight: 500,
+    fontSize: 14,
+    fontWeight: 400,
     marginVertical: 10,
   },
 });

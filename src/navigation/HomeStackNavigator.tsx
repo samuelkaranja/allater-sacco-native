@@ -10,6 +10,7 @@ import InvestingScreen from '../screens/InvestingScreen';
 import LocateScreen from '../screens/LocateScreen';
 import AboutScreen from '../screens/AboutScreen';
 import FaqScreen from '../screens/FaqScreen';
+import WithdrawScreen from '../screens/WithdrawScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -24,6 +25,7 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="Locate" component={LocateScreen} />
       <Stack.Screen name="About" component={AboutScreen} />
       <Stack.Screen name="Faq" component={FaqScreen} />
+      <Stack.Screen name="Withdraw" component={WithdrawScreen} />
       {/* Add other screens here */}
     </Stack.Navigator>
   );

@@ -33,4 +33,5 @@ export type HomeStackParamList = {
   Locate: undefined;
   About: undefined;
   Faq: undefined;
+  Withdraw: undefined;
 };
