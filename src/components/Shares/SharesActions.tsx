@@ -1,26 +1,23 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-
-const actions = ['Sell Shares', 'Transfer Shares', 'Buy Shares'];
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SharesActions = () => (
   <View style={styles.container}>
     <TouchableOpacity style={styles.button}>
-      <Text>Sell Shares</Text>
+      <Icon name="money" size={25} color={'black'} style={styles.icon} />
+      <Text style={styles.iconText}>Sell Shares</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.button}>
-      <Text>Transfer Shares</Text>
+      <Icon name="exchange" size={25} color={'black'} style={styles.icon} />
+      <Text style={styles.iconText}>Transfer Shares</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.button}>
-      <Text>Buy Shares</Text>
+      <Icon name="credit-card" size={25} color={'black'} style={styles.icon} />
+      <Text style={styles.iconText}>Buy Shares</Text>
     </TouchableOpacity>
-    {actions.map((action, idx) => (
-      <TouchableOpacity key={idx} style={styles.button}>
-        <Text>{action}</Text>
-      </TouchableOpacity>
-    ))}
   </View>
 );
 
@@ -28,12 +25,26 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 12,
+    marginBottom: 10,
   },
 
   button: {
+    padding: 8,
     alignItems: 'center',
-    padding: 10,
+  },
+
+  icon: {
+    marginBottom: 5,
+    borderWidth: 1,
+    borderColor: 'lightgrey',
+    borderRadius: 10,
+    paddingVertical: 13,
+    paddingHorizontal: 13,
+  },
+
+  iconText: {
+    fontSize: 13,
+    color: '#333',
   },
 });
 

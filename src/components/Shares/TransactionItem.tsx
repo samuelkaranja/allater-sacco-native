@@ -8,7 +8,7 @@ type Props = {
 
 const TransactionItem: React.FC<Props> = ({transaction}) => {
   //const isNegative = transaction.amount.includes('-');
-  const color = transaction.type === 'Sell' ? 'red' : 'green';
+  const color = transaction && transaction.type === 'Sell' ? 'red' : 'green';
 
   return (
     <View style={styles.item}>

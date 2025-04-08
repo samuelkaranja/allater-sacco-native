@@ -121,15 +121,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
 
       <LoansCard amountDue={1000} loanLimit={20000} />
 
-      <Text
-        style={{
-          fontSize: 15,
-          fontWeight: 'bold',
-          paddingTop: 20,
-          paddingBottom: 12,
-        }}>
-        Transaction History
-      </Text>
+      <Text style={styles.transaction}>Transaction History</Text>
 
       <View style={{marginBottom: 60}}>
         {transactions.map((tx, index) => (
@@ -168,8 +160,9 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 500,
+    textAlign: 'center',
     paddingTop: 5,
     paddingBottom: 25,
   },
@@ -178,6 +171,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 400,
     marginVertical: 10,
+  },
+
+  transaction: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingTop: 20,
+    paddingBottom: 12,
   },
 });
 

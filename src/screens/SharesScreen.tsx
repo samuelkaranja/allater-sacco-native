@@ -9,6 +9,7 @@ import {Transaction} from '../components/Shares/types';
 import TransactionList from '../components/Shares/TransactionList';
 import Header from '../components/Header/Header';
 import useTransactionFilter from '../hooks/useTransactionFilter';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type LoansScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -20,6 +21,30 @@ interface Props {
 }
 
 const allTransactions: Transaction[] = [
+  {
+    type: 'Buy',
+    account: 'Savings - Shares',
+    amount: '+Ksh 123,456.00',
+    date: '2025-04-06',
+  },
+  {
+    type: 'Sell',
+    account: 'Shares - Savings',
+    amount: '-Ksh 123,456.00',
+    date: '2025-04-01',
+  },
+  {
+    type: 'Transfer',
+    account: 'Savings to Shares',
+    amount: '+Ksh 123,456.00',
+    date: '2025-03-28',
+  },
+  {
+    type: 'Transfer',
+    account: 'Savings to Shares',
+    amount: '+Ksh 123,456.00',
+    date: '2025-03-02',
+  },
   {
     type: 'Buy',
     account: 'Savings - Shares',
@@ -106,7 +131,11 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
       <Header navigation={navigation} />
 
       {/* Main Content */}
-      <Text style={styles.title}>Your Shares</Text>
+      <View style={styles.head}>
+        <Icon name="bar-chart" size={22} color={'black'} style={styles.icon} />
+        <Text style={styles.title}>Your Shares</Text>
+      </View>
+
       <SharesSummaryCard />
 
       <SharesActions />
@@ -126,8 +155,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
+  head: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+
+  icon: {
+    marginLeft: 18,
+    marginRight: 10,
+  },
+
   title: {
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: 500,
   },
 

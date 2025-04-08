@@ -37,14 +37,16 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     paddingHorizontal: 20,
     borderRadius: 50,
+    backgroundColor: 'rgb(227 241 254)',
   },
 
   activeTab: {
-    backgroundColor: '#000',
+    backgroundColor: 'rgb(0 84 209)',
   },
 
   tabText: {
     color: '#555',
+    fontSize: 13,
   },
 
   activeText: {
