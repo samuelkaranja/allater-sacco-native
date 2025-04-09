@@ -1,24 +1,40 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 interface MainAccountCardProps {
   balance: number;
 }
 
 const MainAccountCard: React.FC<MainAccountCardProps> = ({balance}) => {
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+
   return (
     <View style={styles.container}>
       <Text style={styles.main}>Main Account</Text>
-      <View style={styles.card}>
-        <Text style={styles.title}>💰 Savings Account Balance</Text>
-        <Text style={styles.balance}>
-          <Text style={styles.floatingText}>Ksh</Text>
-          {balance.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
-        </Text>
-      </View>
+      <Pressable
+        style={styles.card}
+        onPress={() => navigation.navigate('Savings')}>
+        <View></View>
+        <View style={{alignItems: 'center'}}>
+          <Text style={styles.title}>💰 Savings Account Balance</Text>
+          <Text style={styles.balance}>
+            <Text style={styles.floatingText}>Ksh</Text>
+
+            {balance.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </Text>
+        </View>
+
+        <View>
+          <Icon name="angle-right" size={20} color={'white'} />
+        </View>
+      </Pressable>
     </View>
   );
 };
@@ -35,8 +51,8 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#12994a',
     padding: 15,
@@ -46,20 +62,24 @@ const styles = StyleSheet.create({
 
   title: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
   },
 
+  // floatingText: {
+  //   position: 'absolute',
+  //   left: 0,
+  //   top: 0,
+  //   fontSize: 15,
+  // },
+
   floatingText: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
     fontSize: 15,
   },
 
   balance: {
     color: '#fff',
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 400,
     marginTop: 5,
   },

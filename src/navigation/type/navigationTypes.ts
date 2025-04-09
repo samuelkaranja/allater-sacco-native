@@ -26,6 +26,7 @@ export type DrawerParamList = {
 
 export type HomeStackParamList = {
   HomeMain: undefined;
+  Savings: undefined;
   Shares: undefined;
   Loan: undefined;
   Contact: undefined;

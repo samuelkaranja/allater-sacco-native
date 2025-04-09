@@ -11,6 +11,7 @@ import LocateScreen from '../screens/LocateScreen';
 import AboutScreen from '../screens/AboutScreen';
 import FaqScreen from '../screens/FaqScreen';
 import WithdrawScreen from '../screens/WithdrawScreen';
+import SavingsScreen from '../screens/SavingsScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -18,6 +19,7 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeMain" component={HomeScreen} />
+      <Stack.Screen name="Savings" component={SavingsScreen} />
       <Stack.Screen name="Shares" component={SharesScreen} />
       <Stack.Screen name="Loan" component={LoansScreen} />
       <Stack.Screen name="Contact" component={ContactScreen} />
