@@ -1,31 +1,37 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
-const actions = [
-  {label: 'Withdraw', icon: 'wallet'},
-  {label: 'Transfer', icon: 'swap-horizontal'},
-  {label: 'Pay', icon: 'card'},
-];
+const ActionButtons: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
-export const ActionButtons = () => (
-  <View style={styles.container}>
-    <TouchableOpacity style={styles.button}>
-      <Icon name="money" size={25} color={'black'} style={styles.icon} />
-      <Text style={styles.iconText}>Withdraw</Text>
-    </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button}>
+        <Icon name="money" size={25} color={'black'} style={styles.icon} />
+        <Text style={styles.iconText}>Withdraw</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.button}>
-      <Icon name="exchange" size={25} color={'black'} style={styles.icon} />
-      <Text style={styles.iconText}>Transfer</Text>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Icon name="exchange" size={25} color={'black'} style={styles.icon} />
+        <Text style={styles.iconText}>Transfer</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.button}>
-      <Icon name="credit-card" size={25} color={'black'} style={styles.icon} />
-      <Text style={styles.iconText}>Pay</Text>
-    </TouchableOpacity>
-  </View>
-);
+      <TouchableOpacity style={styles.button}>
+        <Icon
+          name="credit-card"
+          size={25}
+          color={'black'}
+          style={styles.icon}
+        />
+        <Text style={styles.iconText}>Pay</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -57,3 +63,5 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 });
+
+export default ActionButtons;

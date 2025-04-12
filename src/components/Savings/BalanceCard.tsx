@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-export const BalanceCard = () => (
+const BalanceCard = () => (
   <View style={styles.card}>
     <Text style={styles.label}>Current Balance</Text>
     <Text style={styles.amount}>
@@ -63,3 +63,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+export default BalanceCard;

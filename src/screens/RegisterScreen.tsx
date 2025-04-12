@@ -215,8 +215,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 10,
-    justifyContent: 'center',
+    paddingVertical: 10,
   },
 
   container: {
@@ -229,12 +228,12 @@ const styles = StyleSheet.create({
 
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
   },
 
   logoImage: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     resizeMode: 'contain',
   },
 
