@@ -5,11 +5,6 @@ export type RootStackParamList = {
   Login: undefined;
   MainApp: undefined;
   Loan: undefined;
-  // Home: undefined;
-  // Search: undefined;
-  // Transact: undefined;
-  // Account: undefined;
-  // Loan: undefined;
 };
 
 export type BottomTabParamList = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -26,7 +26,7 @@ type FormData = {
 
 const RegisterScreen = () => {
   const dispatch = useDispatch();
-  const [step, setStep] = React.useState(1);
+  const [step, setStep] = useState(1);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const {
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     borderRadius: 25,
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginBottom: 10,
     width: '100%',
   },
   icon: {
@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginLeft: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   },
 });
 

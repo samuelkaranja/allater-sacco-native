@@ -11,6 +11,8 @@ import {
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
+import {useNavigation} from '@react-navigation/native';
+import {Controller, useForm} from 'react-hook-form';
 
 type LoginScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -21,19 +23,44 @@ interface Props {
   navigation: LoginScreenNavigationProps;
 }
 
-const LoginScreen: React.FC<Props> = ({navigation}) => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [secureText, setSecureText] = useState(true);
-  const [loading, setLoading] = useState(false);
+interface LoginFormInputs {
+  phoneNumber: string;
+  password: string;
+}
 
-  const handleLogin = () => {
+const LoginScreen: React.FC<Props> = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const [secureText, setSecureText] = useState(true);
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<LoginFormInputs>();
+
+  const onSubmit = (data: LoginFormInputs) => {
+    const {phoneNumber, password} = data;
+
     if (!phoneNumber || !password) {
       return Alert.alert('Error', 'Please fill in all fields.');
     }
 
     setLoading(true);
+    console.log('Login Info', data);
+    navigation.navigate('MainApp');
   };
+
+  // const [phoneNumber, setPhoneNumber] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [secureText, setSecureText] = useState(true);
+
+  // const handleLogin = () => {
+  //   if (!phoneNumber || !password) {
+  //     return Alert.alert('Error', 'Please fill in all fields.');
+  //   }
+
+  //   setLoading(true);
+  // };
 
   return (
     <View style={styles.container}>
@@ -47,33 +74,58 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       <Text style={styles.title}>Login Here</Text>
       <Text style={styles.subtitle}>Please Enter your Details Below</Text>
 
+      {/* Phone Number Input */}
       <View style={styles.inputContainer}>
         <Icon name="phone" size={20} color="#777" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Phone Number"
-          placeholderTextColor="#888"
-          keyboardType="phone-pad"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
+        <Controller
+          control={control}
+          name="phoneNumber"
+          rules={{required: 'Phone number is required'}}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              placeholderTextColor="#888"
+              keyboardType="phone-pad"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
         />
       </View>
+      {errors.phoneNumber && (
+        <Text style={styles.errorText}>{errors.phoneNumber.message}</Text>
+      )}
 
+      {/* Password Input */}
       <View style={styles.inputContainer}>
         <Icon name="lock" size={20} color="#777" style={styles.icon} />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#888"
-          secureTextEntry={secureText}
-          value={password}
-          onChangeText={setPassword}
+        <Controller
+          control={control}
+          name="password"
+          rules={{required: 'Password is required'}}
+          render={({field: {onChange, onBlur, value}}) => (
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#888"
+              secureTextEntry={secureText}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
         />
       </View>
+      {errors.password && (
+        <Text style={styles.errorText}>{errors.password.message}</Text>
+      )}
 
+      {/* Submit Button */}
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={handleLogin}
+        onPress={handleSubmit(onSubmit)}
         disabled={loading}>
         <Text style={styles.buttonText}>
           {loading ? 'Logging in.....' : 'Login'}
@@ -139,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     borderRadius: 25,
     paddingHorizontal: 15,
-    marginBottom: 15,
+    marginBottom: 10,
     width: '100%',
   },
 
@@ -191,6 +243,14 @@ const styles = StyleSheet.create({
     color: '#008000',
     fontWeight: 'bold',
     textDecorationLine: 'underline',
+  },
+
+  errorText: {
+    color: 'red',
+    textAlign: 'left',
+    alignSelf: 'stretch',
+    paddingLeft: 10,
+    paddingBottom: 10,
   },
 });
 
