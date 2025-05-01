@@ -11,17 +11,23 @@ import {
 import {useDispatch} from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {nextStep, prevStep} from '../store/features/auth/registerSlice';
+import {
+  nextStep,
+  prevStep,
+  resetForm,
+} from '../store/features/auth/registerSlice';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
+import axios from 'axios';
+import {Alert} from 'react-native';
 
 type FormData = {
-  fullName: string;
-  phoneNumber: string;
-  idNumber: string;
+  fullname: string;
+  phonenumber: string;
+  idnumber: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmpassword: string;
 };
 
 const RegisterScreen = () => {
@@ -36,29 +42,62 @@ const RegisterScreen = () => {
     formState: {errors},
   } = useForm<FormData>({
     defaultValues: {
-      fullName: '',
-      phoneNumber: '',
-      idNumber: '',
+      fullname: '',
+      phonenumber: '',
+      idnumber: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      confirmpassword: '',
     },
   });
 
   const handleNext = (data: FormData) => {
     console.log('Step 1 Data:', data);
     setStep(2);
-  };
-
-  const handleFinalSubmit = (data: FormData) => {
-    console.log('Final Form Data:', data);
-
-    navigation.navigate('Login');
-    // You can dispatch data to Redux here if you want
     dispatch(nextStep());
   };
 
-  const handlePrev = () => setStep(1);
+  const handlePrev = () => {
+    setStep(1);
+    dispatch(prevStep());
+  };
+
+  const handleFinalSubmit = async (data: FormData) => {
+    const payload = {
+      fullname: data.fullname,
+      phonenumber: data.phonenumber,
+      idnumber: data.idnumber,
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      const response = await axios.post(
+        'https://allater-sacco-backend.onrender.com/auth/signup',
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      const result = await response.data;
+      console.log('Response:', result);
+      dispatch(resetForm());
+      navigation.navigate('Login');
+      Alert.alert('Success', 'Account created successfully');
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message || 'Something went wrong';
+        console.error('Signup failed:', message);
+        Alert.alert('Signup Failed', message.toString());
+      } else {
+        console.error('Unexpected error:', error);
+        Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+      }
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -78,7 +117,7 @@ const RegisterScreen = () => {
             {/* Full Name */}
             <Controller
               control={control}
-              name="fullName"
+              name="fullname"
               rules={{required: 'Full name is required'}}
               render={({field: {onChange, onBlur, value}}) => (
                 <View>
@@ -101,9 +140,9 @@ const RegisterScreen = () => {
                       value={value}
                     />
                   </View>
-                  {errors.fullName && (
+                  {errors.fullname && (
                     <Text style={styles.errorText}>
-                      {errors.fullName.message}
+                      {errors.fullname.message}
                     </Text>
                   )}
                 </View>
@@ -113,7 +152,7 @@ const RegisterScreen = () => {
             {/* Phone Number */}
             <Controller
               control={control}
-              name="phoneNumber"
+              name="phonenumber"
               rules={{required: 'Phone number is required'}}
               render={({field: {onChange, onBlur, value}}) => (
                 <View>
@@ -135,9 +174,9 @@ const RegisterScreen = () => {
                       value={value}
                     />
                   </View>
-                  {errors.phoneNumber && (
+                  {errors.phonenumber && (
                     <Text style={styles.errorText}>
-                      {errors.phoneNumber.message}
+                      {errors.phonenumber.message}
                     </Text>
                   )}
                 </View>
@@ -147,7 +186,7 @@ const RegisterScreen = () => {
             {/* ID Number */}
             <Controller
               control={control}
-              name="idNumber"
+              name="idnumber"
               rules={{required: 'ID number is required'}}
               render={({field: {onChange, onBlur, value}}) => (
                 <View>
@@ -169,9 +208,9 @@ const RegisterScreen = () => {
                       value={value}
                     />
                   </View>
-                  {errors.idNumber && (
+                  {errors.idnumber && (
                     <Text style={styles.errorText}>
-                      {errors.idNumber.message}
+                      {errors.idnumber.message}
                     </Text>
                   )}
                 </View>
@@ -247,7 +286,13 @@ const RegisterScreen = () => {
             <Controller
               control={control}
               name="password"
-              rules={{required: 'Password is required'}}
+              rules={{
+                required: 'Password is required',
+                minLength: {
+                  value: 6,
+                  message: 'Password must be at least 6 characters',
+                },
+              }}
               render={({field: {onChange, onBlur, value}}) => (
                 <View>
                   <Text style={styles.inputLabel}>Password*</Text>
@@ -280,7 +325,7 @@ const RegisterScreen = () => {
             {/* Confirm Password */}
             <Controller
               control={control}
-              name="confirmPassword"
+              name="confirmpassword"
               rules={{
                 required: 'Confirm password is required',
                 validate: value =>
@@ -306,9 +351,9 @@ const RegisterScreen = () => {
                       value={value}
                     />
                   </View>
-                  {errors.confirmPassword && (
+                  {errors.confirmpassword && (
                     <Text style={styles.errorText}>
-                      {errors.confirmPassword.message}
+                      {errors.confirmpassword.message}
                     </Text>
                   )}
                 </View>

@@ -11,8 +11,9 @@ import {
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
-import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from 'react-hook-form';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type LoginScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -24,7 +25,7 @@ interface Props {
 }
 
 interface LoginFormInputs {
-  phoneNumber: string;
+  phonenumber: string;
   password: string;
 }
 
@@ -38,29 +39,51 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     formState: {errors},
   } = useForm<LoginFormInputs>();
 
-  const onSubmit = (data: LoginFormInputs) => {
-    const {phoneNumber, password} = data;
+  const onSubmit = async (data: LoginFormInputs) => {
+    const {phonenumber, password} = data;
 
-    if (!phoneNumber || !password) {
+    if (!phonenumber || !password) {
       return Alert.alert('Error', 'Please fill in all fields.');
     }
 
     setLoading(true);
-    console.log('Login Info', data);
-    navigation.navigate('MainApp');
+
+    try {
+      const response = await axios.post(
+        'https://allater-sacco-backend.onrender.com/auth/login',
+        {
+          phonenumber,
+          password,
+        },
+      );
+
+      const {accessToken, user} = response.data;
+
+      // Handle unexpected structure
+      if (!response.data || !response.data.accessToken) {
+        throw new Error('Invalid login response. Please try again.');
+      }
+
+      // Store token in AsyncStorage
+      await AsyncStorage.setItem('token', accessToken);
+
+      console.log('Login successful:', user);
+      Alert.alert('Success', 'You are now logged in.');
+
+      // Navigate to your main app screen
+      navigation.navigate('MainApp');
+    } catch (error: any) {
+      console.error('Login error:', error);
+
+      const errorMessage =
+        error.response?.data?.message ||
+        'Login failed. Please check your phone number and password.';
+
+      Alert.alert('Login Failed', errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  // const [phoneNumber, setPhoneNumber] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [secureText, setSecureText] = useState(true);
-
-  // const handleLogin = () => {
-  //   if (!phoneNumber || !password) {
-  //     return Alert.alert('Error', 'Please fill in all fields.');
-  //   }
-
-  //   setLoading(true);
-  // };
 
   return (
     <View style={styles.container}>
@@ -79,7 +102,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         <Icon name="phone" size={20} color="#777" style={styles.icon} />
         <Controller
           control={control}
-          name="phoneNumber"
+          name="phonenumber"
           rules={{required: 'Phone number is required'}}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
@@ -94,8 +117,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
           )}
         />
       </View>
-      {errors.phoneNumber && (
-        <Text style={styles.errorText}>{errors.phoneNumber.message}</Text>
+      {errors.phonenumber && (
+        <Text style={styles.errorText}>{errors.phonenumber.message}</Text>
       )}
 
       {/* Password Input */}
