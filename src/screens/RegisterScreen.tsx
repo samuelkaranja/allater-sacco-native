@@ -20,6 +20,7 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
 import axios from 'axios';
 import {Alert} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 type FormData = {
   fullname: string;
@@ -86,15 +87,38 @@ const RegisterScreen = () => {
       console.log('Response:', result);
       dispatch(resetForm());
       navigation.navigate('Login');
-      Alert.alert('Success', 'Account created successfully');
+
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Account created successfully 🎉',
+        position: 'top', // or 'bottom'
+        visibilityTime: 4000, // duration in ms
+        autoHide: true,
+      });
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         const message = error.response?.data?.message || 'Something went wrong';
         console.error('Signup failed:', message);
-        Alert.alert('Signup Failed', message.toString());
+
+        Toast.show({
+          type: 'error',
+          text1: 'Signup Failed',
+          text2: message.toString(),
+          position: 'top', // or 'bottom'
+          visibilityTime: 4000, // duration in ms
+          autoHide: true,
+        });
       } else {
         console.error('Unexpected error:', error);
-        Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'An unexpected error occurred. Please try again.',
+          position: 'top', // or 'bottom'
+          visibilityTime: 4000, // duration in ms
+          autoHide: true,
+        });
       }
     }
   };

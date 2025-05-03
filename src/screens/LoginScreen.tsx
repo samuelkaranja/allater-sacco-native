@@ -14,6 +14,7 @@ import {RootStackParamList} from '../navigation/type/navigationTypes';
 import {Controller, useForm} from 'react-hook-form';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 type LoginScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -43,7 +44,15 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     const {phonenumber, password} = data;
 
     if (!phonenumber || !password) {
-      return Alert.alert('Error', 'Please fill in all fields.');
+      Toast.show({
+        type: 'error',
+        text1: 'Validation Error',
+        text2: 'Please fill in all fields.',
+        position: 'top', // or 'bottom'
+        visibilityTime: 4000, // duration in ms
+        autoHide: true,
+      });
+      return;
     }
 
     setLoading(true);
@@ -68,7 +77,15 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       await AsyncStorage.setItem('token', accessToken);
 
       console.log('Login successful:', user);
-      Alert.alert('Success', 'You are now logged in.');
+
+      Toast.show({
+        type: 'success',
+        text1: 'Login Successful',
+        text2: 'Welcome back!',
+        position: 'top', // or 'bottom'
+        visibilityTime: 4000, // duration in ms
+        autoHide: true,
+      });
 
       // Navigate to your main app screen
       navigation.navigate('MainApp');
@@ -79,7 +96,14 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         error.response?.data?.message ||
         'Login failed. Please check your phone number and password.';
 
-      Alert.alert('Login Failed', errorMessage);
+      Toast.show({
+        type: 'error',
+        text1: 'Login Failed',
+        text2: errorMessage,
+        position: 'top', // or 'bottom'
+        visibilityTime: 4000, // duration in ms
+        autoHide: true,
+      });
     } finally {
       setLoading(false);
     }
