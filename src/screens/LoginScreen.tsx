@@ -14,6 +14,8 @@ import {RootStackParamList} from '../navigation/type/navigationTypes';
 import {Controller, useForm} from 'react-hook-form';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {setCredentials} from '../store/features/auth/authSlice';
 import Toast from 'react-native-toast-message';
 
 type LoginScreenNavigationProps = StackNavigationProp<
@@ -31,6 +33,8 @@ interface LoginFormInputs {
 }
 
 const LoginScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
   const [secureText, setSecureText] = useState(true);
 
@@ -49,7 +53,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         text1: 'Validation Error',
         text2: 'Please fill in all fields.',
         position: 'top', // or 'bottom'
-        visibilityTime: 4000, // duration in ms
+        visibilityTime: 7000, // duration in ms
         autoHide: true,
       });
       return;
@@ -66,7 +70,9 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         },
       );
 
-      const {accessToken, user} = response.data;
+      const {accessToken: token, user} = response.data;
+
+      console.log('Login response:', response.data);
 
       // Handle unexpected structure
       if (!response.data || !response.data.accessToken) {
@@ -74,7 +80,10 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       }
 
       // Store token in AsyncStorage
-      await AsyncStorage.setItem('token', accessToken);
+      await AsyncStorage.setItem('token', token);
+
+      // Dispatch auth state to Redux
+      dispatch(setCredentials({token, user}));
 
       console.log('Login successful:', user);
 
@@ -83,7 +92,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         text1: 'Login Successful',
         text2: 'Welcome back!',
         position: 'top', // or 'bottom'
-        visibilityTime: 4000, // duration in ms
+        visibilityTime: 7000, // duration in ms
         autoHide: true,
       });
 
@@ -101,7 +110,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         text1: 'Login Failed',
         text2: errorMessage,
         position: 'top', // or 'bottom'
-        visibilityTime: 4000, // duration in ms
+        visibilityTime: 7000, // duration in ms
         autoHide: true,
       });
     } finally {

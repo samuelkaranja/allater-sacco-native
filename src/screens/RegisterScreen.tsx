@@ -19,7 +19,6 @@ import {
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
 import axios from 'axios';
-import {Alert} from 'react-native';
 import Toast from 'react-native-toast-message';
 
 type FormData = {
@@ -93,7 +92,7 @@ const RegisterScreen = () => {
         text1: 'Success',
         text2: 'Account created successfully 🎉',
         position: 'top', // or 'bottom'
-        visibilityTime: 4000, // duration in ms
+        visibilityTime: 7000, // duration in ms
         autoHide: true,
       });
     } catch (error: any) {
@@ -106,7 +105,7 @@ const RegisterScreen = () => {
           text1: 'Signup Failed',
           text2: message.toString(),
           position: 'top', // or 'bottom'
-          visibilityTime: 4000, // duration in ms
+          visibilityTime: 7000, // duration in ms
           autoHide: true,
         });
       } else {
@@ -116,7 +115,7 @@ const RegisterScreen = () => {
           text1: 'Error',
           text2: 'An unexpected error occurred. Please try again.',
           position: 'top', // or 'bottom'
-          visibilityTime: 4000, // duration in ms
+          visibilityTime: 7000, // duration in ms
           autoHide: true,
         });
       }
