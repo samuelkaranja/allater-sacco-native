@@ -17,7 +17,7 @@ const BottomTabs = () => {
           let iconName;
           if (route.name === 'Home') iconName = 'home';
           else if (route.name === 'Transact') iconName = 'card';
-          else if (route.name === 'Account') iconName = 'person';
+          else if (route.name === 'Profile') iconName = 'person';
           else iconName = 'ellipse-outline';
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -27,7 +27,7 @@ const BottomTabs = () => {
       })}>
       <Tab.Screen name="Home" component={HomeStackNavigator} />
       <Tab.Screen name="Transact" component={TransactScreen} />
-      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Profile" component={AccountScreen} />
     </Tab.Navigator>
   );
 };

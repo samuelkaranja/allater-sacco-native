@@ -10,7 +10,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Home: undefined;
   Transact: undefined;
-  Account: undefined;
+  Profile: undefined;
 };
 
 export type DrawerParamList = {
