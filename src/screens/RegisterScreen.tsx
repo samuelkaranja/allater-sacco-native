@@ -31,6 +31,7 @@ type FormData = {
 };
 
 const RegisterScreen = () => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [step, setStep] = useState(1);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -386,8 +387,11 @@ const RegisterScreen = () => {
             {/* Submit & Back Buttons */}
             <TouchableOpacity
               style={styles.button}
-              onPress={handleSubmit(handleFinalSubmit)}>
-              <Text style={styles.buttonText}>Create Account</Text>
+              onPress={handleSubmit(handleFinalSubmit)}
+              disabled={loading}>
+              <Text style={styles.buttonText}>
+                {loading ? 'Creating account...' : 'Create Account'}
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handlePrev}>

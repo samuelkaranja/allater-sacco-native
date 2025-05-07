@@ -16,6 +16,8 @@ import TransactionItem from '../components/Home/TransactionItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
+import {useSelector} from 'react-redux';
+import {RootState} from '../store/store';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -96,6 +98,7 @@ const transactions: {
 ];
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
+  const user = useSelector((state: RootState) => state.auth.user);
   return (
     <ScrollView style={styles.container}>
       {/* Top Bar with Hamburger Menu */}
@@ -111,7 +114,9 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         />
       </View> */}
 
-      <Text style={styles.welcomeText}>Welcome Back, Samuel.</Text>
+      <Text style={styles.welcomeText}>
+        Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
+      </Text>
 
       <MainAccountCard balance={123456.45} />
 

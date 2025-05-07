@@ -62,7 +62,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
+      // Step 1: Login request
+      const loginResponse = await axios.post(
         'https://allater-sacco-backend.onrender.com/auth/login',
         {
           phonenumber,
@@ -70,19 +71,28 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         },
       );
 
-      const {accessToken: token, user} = response.data;
+      const {accessToken: token} = loginResponse.data;
 
-      console.log('Login response:', response.data);
+      if (!token) throw new Error('Missing token from login response.');
 
-      // Handle unexpected structure
-      if (!response.data || !response.data.accessToken) {
-        throw new Error('Invalid login response. Please try again.');
-      }
+      console.log('Login response:', loginResponse.data);
+
+      // Step 2: Get user info
+      const userResponse = await axios.get(
+        'https://allater-sacco-backend.onrender.com/user/me',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const user = userResponse.data;
 
       // Store token in AsyncStorage
       await AsyncStorage.setItem('token', token);
 
-      // Dispatch auth state to Redux
+      // Update Redux state
       dispatch(setCredentials({token, user}));
 
       console.log('Login successful:', user);
@@ -90,7 +100,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       Toast.show({
         type: 'success',
         text1: 'Login Successful',
-        text2: 'Welcome back!',
+        text2: 'Welcome back',
         position: 'top', // or 'bottom'
         visibilityTime: 7000, // duration in ms
         autoHide: true,
@@ -100,6 +110,8 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       navigation.navigate('MainApp');
     } catch (error: any) {
       console.error('Login error:', error);
+
+      // Handle error response
 
       const errorMessage =
         error.response?.data?.message ||
