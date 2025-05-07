@@ -22,8 +22,7 @@ const MainAccountCard: React.FC<MainAccountCardProps> = ({balance}) => {
         <View style={{alignItems: 'center'}}>
           <Text style={styles.title}>💰 Savings Account Balance</Text>
           <Text style={styles.balance}>
-            <Text style={styles.floatingText}>Ksh</Text>
-
+            <Text style={styles.floatingText}>Ksh</Text>{' '}
             {balance.toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
@@ -66,15 +65,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  // floatingText: {
-  //   position: 'absolute',
-  //   left: 0,
-  //   top: 0,
-  //   fontSize: 15,
-  // },
-
   floatingText: {
-    fontSize: 15,
+    fontSize: 18,
   },
 
   balance: {

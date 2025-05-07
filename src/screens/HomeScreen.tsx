@@ -118,13 +118,13 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
       </Text>
 
-      <MainAccountCard balance={123456.45} />
+      <MainAccountCard balance={0.0} />
 
       <Text style={styles.sectionTitle}>Other Accounts</Text>
 
-      <SharesCard shares={10} worth={123456.0} />
+      <SharesCard shares={0} worth={0.0} />
 
-      <LoansCard amountDue={1000} loanLimit={20000} />
+      <LoansCard amountDue={0} loanLimit={0} />
 
       <Text style={styles.transaction}>Transaction History</Text>
 
