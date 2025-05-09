@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,20 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../../store/store';
+import {fetchUserOverview} from '../../store/slices/overviewSlice';
 
 const BalanceCard = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const overview = useSelector((state: RootState) => state.overview);
+
+  useEffect(() => {
+    dispatch(fetchUserOverview());
+  }, [dispatch]);
+
+  console.log('BalanceCard', overview);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [amount, setAmount] = useState('');
 
@@ -59,7 +71,11 @@ const BalanceCard = () => {
     <View style={styles.card}>
       <Text style={styles.label}>Current Balance</Text>
       <Text style={styles.amount}>
-        <Text style={{fontSize: 15}}>Ksh</Text> 0.00
+        <Text style={{fontSize: 15}}>Ksh</Text>{' '}
+        {overview.savings.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
       </Text>
       <View style={styles.section}>
         <Text style={styles.account}>Acc: 1234 5678 9012</Text>

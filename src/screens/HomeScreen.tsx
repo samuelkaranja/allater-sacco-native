@@ -1,5 +1,5 @@
+import React, {useEffect} from 'react';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import React from 'react';
 import {
   FlatList,
   Image,
@@ -16,8 +16,10 @@ import TransactionItem from '../components/Home/TransactionItem';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
-import {useSelector} from 'react-redux';
-import {RootState} from '../store/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState, AppDispatch} from '../store/store';
+import {fetchUserOverview} from '../store/slices/overviewSlice';
+import TransactionList from '../components/Home/TransactionList';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -28,118 +30,107 @@ interface Props {
   navigation: HomeScreenNavigationProps;
 }
 
-// Dummy transaction data
-const transactions: {
-  type: 'Deposit' | 'Withdraw';
-  transfer: string;
-  amount: number;
-  date: string;
-}[] = [
-  {
-    type: 'Deposit',
-    transfer: 'Mpesa to Savings',
-    amount: 123456,
-    date: 'Today',
-  },
-  {
-    type: 'Withdraw',
-    transfer: 'Savings - Mpesa 0700123456',
-    amount: 123456,
-    date: '18-11-2023',
-  },
-  {
-    type: 'Deposit',
-    transfer: 'Mpesa to Savings',
-    amount: 123456,
-    date: 'Today',
-  },
-  {
-    type: 'Withdraw',
-    transfer: 'Savings - Mpesa 0700123456',
-    amount: 123456,
-    date: '18-11-2023',
-  },
-  {
-    type: 'Deposit',
-    transfer: 'Mpesa to Savings',
-    amount: 123456,
-    date: 'Today',
-  },
-  {
-    type: 'Withdraw',
-    transfer: 'Savings - Mpesa 0700123456',
-    amount: 123456,
-    date: '18-11-2023',
-  },
-  {
-    type: 'Deposit',
-    transfer: 'Mpesa to Savings',
-    amount: 123456,
-    date: 'Today',
-  },
-  {
-    type: 'Withdraw',
-    transfer: 'Savings - Mpesa 0700123456',
-    amount: 123456,
-    date: '18-11-2023',
-  },
-  {
-    type: 'Deposit',
-    transfer: 'Mpesa to Savings',
-    amount: 123456,
-    date: 'Today',
-  },
-  {
-    type: 'Withdraw',
-    transfer: 'Savings - Mpesa 0700123456',
-    amount: 123456,
-    date: '18-11-2023',
-  },
-];
-
 const HomeScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const overview = useSelector((state: RootState) => state.overview);
   const user = useSelector((state: RootState) => state.auth.user);
-  return (
-    <ScrollView style={styles.container}>
-      {/* Top Bar with Hamburger Menu */}
-      <Header navigation={navigation} />
 
-      {/* Main Content */}
+  useEffect(() => {
+    dispatch(fetchUserOverview());
+  }, [dispatch]);
 
-      {/* <View style={styles.banner}>
-        <Image
-          source={require('../../assets/images/Banner.png')}
-          style={styles.image}
-          resizeMode="cover"
-        />
-      </View> */}
-
-      <Text style={styles.welcomeText}>
-        Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
-      </Text>
-
-      <MainAccountCard balance={0.0} />
-
-      <Text style={styles.sectionTitle}>Other Accounts</Text>
-
-      <SharesCard shares={0} worth={0.0} />
-
-      <LoansCard amountDue={0} loanLimit={0} />
-
-      <Text style={styles.transaction}>Transaction History</Text>
-
-      <View style={{marginBottom: 60}}>
-        {transactions.map((tx, index) => (
-          <TransactionItem
-            key={index}
-            type={tx.type}
-            transfer={tx.transfer}
-            amount={tx.amount}
-            date={tx.date}
-          />
-        ))}
+  const renderHeader = () => {
+    return (
+      <View>
+        <Header navigation={navigation} />
+        <Text style={styles.welcomeText}>
+          Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
+        </Text>
+        <MainAccountCard balance={overview.savings} />
+        <Text style={styles.sectionTitle}>Other Accounts</Text>
+        <SharesCard shares={overview.shares} worth={overview.shares} />
+        <LoansCard amountDue={overview.loan} loanLimit={overview.loan} />
+        <Text style={styles.transaction}>Transaction History</Text>
       </View>
-    </ScrollView>
+    );
+  };
+
+  return (
+    <FlatList
+      data={[]}
+      ListHeaderComponent={renderHeader}
+      //ListFooterComponent={renderFooter}
+      renderItem={null}
+      style={styles.container}
+      ListEmptyComponent={
+        overview.transactions.length === 0 ? (
+          <Text style={{textAlign: 'center'}}>No transactions found</Text>
+        ) : (
+          <TransactionList
+            transactions={overview.transactions}
+            pagination={{
+              page: 1,
+              pageSize: 10,
+              total: overview.transactions.length,
+              totalPages: Math.ceil(overview.transactions.length / 10),
+            }}
+          />
+        )
+      }
+    />
+
+    // <ScrollView style={styles.container}>
+    //   {/* Top Bar with Hamburger Menu */}
+    //   <Header navigation={navigation} />
+
+    //   {/* Main Content */}
+
+    //   <Text style={styles.welcomeText}>
+    //     Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
+    //   </Text>
+
+    //   <MainAccountCard balance={overview.savings} />
+
+    //   <Text style={styles.sectionTitle}>Other Accounts</Text>
+
+    //   <SharesCard shares={overview.shares} worth={overview.shares} />
+
+    //   <LoansCard amountDue={overview.loan} loanLimit={overview.loan} />
+
+    //   <Text style={styles.transaction}>Transaction History</Text>
+
+    //   <View style={{marginBottom: 60}}>
+    //     {overview.transactions.length === 0 ? (
+    //       <Text>No transactions found</Text>
+    //     ) : (
+    //       <TransactionList
+    //         transactions={overview.transactions}
+    //         pagination={{
+    //           page: overview.pagination,
+    //           totalPages: 1,
+    //           pageSize: 10,
+    //           total: overview.transactions.length,
+    //         }}
+    //       />
+    //     )}
+    //   </View>
+
+    //   <View style={{marginBottom: 60}}>
+    //     {overview.transactions.length === 0 ? (
+    //       <Text>No transactions found</Text>
+    //     ) : (
+    //       overview.transactions.map((tx, index) => (
+    //         <TransactionItem
+    //           key={index}
+    //           type={tx.type}
+    //           status={tx.status}
+    //           amount={tx.amount}
+    //           createdAt={new Date(tx.createdAt).toLocaleDateString()}
+    //         />
+    //       ))
+    //     )}
+    //   </View>
+    // </ScrollView>
   );
 };
 

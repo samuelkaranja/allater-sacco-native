@@ -2,42 +2,38 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 interface TransactionItemProps {
-  type: 'Deposit' | 'Withdraw';
-  transfer: string;
+  type: string;
+  status: string;
   amount: number;
-  date: string;
+  createdAt: string;
 }
 
 const TransactionItem: React.FC<TransactionItemProps> = ({
   type,
-  transfer,
+  status,
   amount,
-  date,
+  createdAt,
 }) => {
+  const formattedDate = new Date(createdAt).toLocaleString();
+
   return (
     <View style={styles.item}>
       <View>
         <Text style={styles.type}>{type}</Text>
-        <Text style={styles.transfer}>{transfer}</Text>
+        <Text style={styles.transfer}>{status}</Text>
       </View>
 
       <View>
         <Text
           style={[
             styles.amount,
-            type === 'Withdraw' ? styles.withdraw : styles.deposit,
+            type === 'WITHDRAW' ? styles.withdraw : styles.deposit,
           ]}>
-          {type === 'Withdraw'
-            ? `-Ksh ${amount.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}`
-            : `+Ksh ${amount.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}`}
+          {type === 'WITHDRAW'
+            ? `-Ksh ${amount.toFixed(2)}`
+            : `+Ksh ${amount.toFixed(2)}`}
         </Text>
-        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.date}>{formattedDate}</Text>
       </View>
     </View>
   );
@@ -54,12 +50,13 @@ const styles = StyleSheet.create({
 
   type: {
     fontSize: 14,
-    fontWeight: 400,
+    fontWeight: 500,
   },
 
   transfer: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 400,
+    color: '#666',
   },
 
   amount: {
