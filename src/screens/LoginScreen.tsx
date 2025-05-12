@@ -1,22 +1,14 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
 import {Controller, useForm} from 'react-hook-form';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
-import {setCredentials} from '../store/features/auth/authSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginUser} from '../store/features/auth/authSlice';
 import Toast from 'react-native-toast-message';
+import {AppDispatch, RootState} from '../store/store';
 
 type LoginScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -33,9 +25,9 @@ interface LoginFormInputs {
 }
 
 const LoginScreen: React.FC<Props> = ({navigation}) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const {loading} = useSelector((state: RootState) => state.auth);
 
-  const [loading, setLoading] = useState(false);
   const [secureText, setSecureText] = useState(true);
 
   const {
@@ -45,9 +37,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
   } = useForm<LoginFormInputs>();
 
   const onSubmit = async (data: LoginFormInputs) => {
-    const {phonenumber, password} = data;
-
-    if (!phonenumber || !password) {
+    if (!data.phonenumber || !data.password) {
       Toast.show({
         type: 'error',
         text1: 'Validation Error',
@@ -59,75 +49,24 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       return;
     }
 
-    setLoading(true);
-
-    try {
-      // Step 1: Login request
-      const loginResponse = await axios.post(
-        'https://allater-sacco-backend.onrender.com/auth/login',
-        {
-          phonenumber,
-          password,
-        },
-      );
-
-      const {accessToken: token} = loginResponse.data;
-
-      if (!token) throw new Error('Missing token from login response.');
-
-      console.log('Login response:', loginResponse.data);
-
-      // Step 2: Get user info
-      const userResponse = await axios.get(
-        'https://allater-sacco-backend.onrender.com/user/me',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      const user = userResponse.data;
-
-      // Store token in AsyncStorage
-      await AsyncStorage.setItem('token', token);
-
-      // Update Redux state
-      dispatch(setCredentials({token, user}));
-
-      console.log('Login successful:', user);
-
-      Toast.show({
-        type: 'success',
-        text1: 'Login Successful',
-        text2: 'Welcome back',
-        position: 'top', // or 'bottom'
-        visibilityTime: 7000, // duration in ms
-        autoHide: true,
-      });
-
-      // Navigate to your main app screen
-      navigation.navigate('MainApp');
-    } catch (error: any) {
-      console.error('Login error:', error);
-
-      // Handle error response
-
-      const errorMessage =
-        error.response?.data?.message ||
-        'Login failed. Please check your phone number and password.';
-
-      Toast.show({
-        type: 'error',
-        text1: 'Login Failed',
-        text2: errorMessage,
-        position: 'top', // or 'bottom'
-        visibilityTime: 7000, // duration in ms
-        autoHide: true,
-      });
-    } finally {
-      setLoading(false);
-    }
+    dispatch(loginUser(data)).then((res: any) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        Toast.show({
+          type: 'success',
+          text1: 'Login Successful',
+          text2: 'Welcome back!',
+          position: 'top',
+        });
+        navigation.navigate('MainApp');
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Login Failed',
+          text2: res.payload,
+          position: 'top',
+        });
+      }
+    });
   };
 
   return (
