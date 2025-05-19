@@ -45,14 +45,14 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
       <View>
         <Header navigation={navigation} />
         <Text style={styles.welcomeText}>
-          Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
+          Welcome Back, {user?.fullname.trim().split(' ')[0] || 'User'}!
         </Text>
         <CardCarousel />
-        <MainAccountCard balance={overview.savings} />
+        {/* <MainAccountCard balance={overview.savings} />
         <Text style={styles.sectionTitle}>Other Accounts</Text>
         <SharesCard shares={overview.shares} worth={overview.shares} />
-        <LoansCard amountDue={overview.loan} loanLimit={overview.loan} />
-        <Text style={styles.transaction}>Transaction History</Text>
+        <LoansCard amountDue={overview.loan} loanLimit={overview.loan} /> */}
+        <Text style={styles.transaction}>Transactions</Text>
       </View>
     );
   };
@@ -158,9 +158,9 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 500,
-    textAlign: 'center',
+    textAlign: 'left',
     paddingTop: 5,
     paddingBottom: 25,
   },

@@ -70,7 +70,7 @@ const TransactionList: React.FC<Props> = ({transactions, pagination}) => {
         )}
       />
 
-      {totalPages > 1 && (
+      {/* {totalPages > 1 && (
         <View
           style={{
             flexDirection: 'row',
@@ -91,7 +91,7 @@ const TransactionList: React.FC<Props> = ({transactions, pagination}) => {
             disabled={currentPage === totalPages}
           />
         </View>
-      )}
+      )} */}
     </View>
   );
 };
