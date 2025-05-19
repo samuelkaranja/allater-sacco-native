@@ -20,6 +20,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState, AppDispatch} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
 import TransactionList from '../components/Home/TransactionList';
+import CardCarousel from '../components/CardCarousel/CardCarousel';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -46,6 +47,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         <Text style={styles.welcomeText}>
           Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
         </Text>
+        <CardCarousel />
         <MainAccountCard balance={overview.savings} />
         <Text style={styles.sectionTitle}>Other Accounts</Text>
         <SharesCard shares={overview.shares} worth={overview.shares} />

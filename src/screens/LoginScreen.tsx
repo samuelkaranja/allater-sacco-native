@@ -143,7 +143,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         <TouchableOpacity>
           <Text style={styles.linkText}>Reset Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('MainApp')}>
           <Text style={styles.linkText}>Need Help?</Text>
         </TouchableOpacity>
       </View>
