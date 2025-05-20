@@ -41,20 +41,6 @@ const TransactionList: React.FC<Props> = ({transactions, pagination}) => {
     if (currentPage > 1) setCurrentPage(prev => prev - 1);
   };
 
-  //   const startIdx = (currentPage - 1) * pagination.pageSize;
-  //   const currentItems = transactions.slice(
-  //     startIdx,
-  //     startIdx + pagination.pageSize,
-  //   );
-
-  //   const goNext = () => {
-  //     if (currentPage < pagination.totalPages) setCurrentPage(prev => prev + 1);
-  //   };
-
-  //   const goPrev = () => {
-  //     if (currentPage > 1) setCurrentPage(prev => prev - 1);
-  //   };
-
   return (
     <View>
       <FlatList
