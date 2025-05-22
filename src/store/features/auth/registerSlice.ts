@@ -2,22 +2,22 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface RegisterState {
   step: number;
-  fullName: string;
-  phoneNumber: string;
-  idNumber: string;
+  fullname: string;
+  phonenumber: string;
+  idnumber: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmpassword: string;
 }
 
 const initialState: RegisterState = {
   step: 1,
-  fullName: '',
-  phoneNumber: '',
-  idNumber: '',
+  fullname: '',
+  phonenumber: '',
+  idnumber: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  confirmpassword: '',
 };
 
 const registerSlice = createSlice({

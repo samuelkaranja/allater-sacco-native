@@ -46,7 +46,7 @@ export const loginUser = createAsyncThunk(
   ) => {
     try {
       const loginRes = await axios.post(
-        'https://allater-sacco-backend.onrender.com/auth/login',
+        'https://allater-sacco-backend.fly.dev/auth/login',
         {phonenumber, password},
       );
 
@@ -54,7 +54,7 @@ export const loginUser = createAsyncThunk(
       if (!token) throw new Error('Token not received');
 
       const userRes = await axios.get(
-        'https://allater-sacco-backend.onrender.com/user/me',
+        'https://allater-sacco-backend.fly.dev/user/me',
         {
           headers: {Authorization: `Bearer ${token}`},
         },

@@ -43,7 +43,7 @@ const BalanceCard = () => {
       }
       // Replace with your API endpoint
       const response = await fetch(
-        'https://allater-sacco-backend.onrender.com/savings/deposit',
+        'https://allater-sacco-backend.fly.dev/savings/deposit',
         {
           method: 'POST',
           headers: {

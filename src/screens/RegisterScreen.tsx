@@ -74,7 +74,7 @@ const RegisterScreen = () => {
 
     try {
       const response = await axios.post(
-        'https://allater-sacco-backend.onrender.com/auth/signup',
+        'https://allater-sacco-backend.fly.dev/auth/signup',
         payload,
         {
           headers: {
