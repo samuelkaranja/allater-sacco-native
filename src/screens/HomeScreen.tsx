@@ -80,59 +80,6 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         )
       }
     />
-
-    // <ScrollView style={styles.container}>
-    //   {/* Top Bar with Hamburger Menu */}
-    //   <Header navigation={navigation} />
-
-    //   {/* Main Content */}
-
-    //   <Text style={styles.welcomeText}>
-    //     Welcome Back, {user?.fullname.trim().split(' ')[0] || ''}!
-    //   </Text>
-
-    //   <MainAccountCard balance={overview.savings} />
-
-    //   <Text style={styles.sectionTitle}>Other Accounts</Text>
-
-    //   <SharesCard shares={overview.shares} worth={overview.shares} />
-
-    //   <LoansCard amountDue={overview.loan} loanLimit={overview.loan} />
-
-    //   <Text style={styles.transaction}>Transaction History</Text>
-
-    //   <View style={{marginBottom: 60}}>
-    //     {overview.transactions.length === 0 ? (
-    //       <Text>No transactions found</Text>
-    //     ) : (
-    //       <TransactionList
-    //         transactions={overview.transactions}
-    //         pagination={{
-    //           page: overview.pagination,
-    //           totalPages: 1,
-    //           pageSize: 10,
-    //           total: overview.transactions.length,
-    //         }}
-    //       />
-    //     )}
-    //   </View>
-
-    //   <View style={{marginBottom: 60}}>
-    //     {overview.transactions.length === 0 ? (
-    //       <Text>No transactions found</Text>
-    //     ) : (
-    //       overview.transactions.map((tx, index) => (
-    //         <TransactionItem
-    //           key={index}
-    //           type={tx.type}
-    //           status={tx.status}
-    //           amount={tx.amount}
-    //           createdAt={new Date(tx.createdAt).toLocaleDateString()}
-    //         />
-    //       ))
-    //     )}
-    //   </View>
-    // </ScrollView>
   );
 };
 
