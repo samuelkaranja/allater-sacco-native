@@ -48,10 +48,6 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
           Welcome Back, {user?.fullname.trim().split(' ')[0] || 'User'}!
         </Text>
         <CardCarousel />
-        {/* <MainAccountCard balance={overview.savings} />
-        <Text style={styles.sectionTitle}>Other Accounts</Text>
-        <SharesCard shares={overview.shares} worth={overview.shares} />
-        <LoansCard amountDue={overview.loan} loanLimit={overview.loan} /> */}
         <Text style={styles.transaction}>Transactions</Text>
       </View>
     );

@@ -23,8 +23,13 @@ const SharesCard: React.FC<SharesCardProps> = ({title, balance, account}) => {
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.number}>{account}</Text>
 
+        <View style={{marginTop: 5}}>
+          <Text style={styles.label}>No of shares</Text>
+          <Text style={styles.balance}>{balance.toFixed(2)} Shares</Text>
+        </View>
+
         <View style={{marginTop: 20}}>
-          <Text style={styles.label}>Current Balance</Text>
+          <Text style={styles.label}>Shares Worth</Text>
           <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
         </View>
 
