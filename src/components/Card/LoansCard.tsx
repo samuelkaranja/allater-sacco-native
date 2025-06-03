@@ -9,14 +9,21 @@ type LoansCardProps = {
   title: string;
   balance: number;
   account: string;
+  route: string;
 };
 
-const LoansCard: React.FC<LoansCardProps> = ({title, account, balance}) => {
+const LoansCard: React.FC<LoansCardProps> = ({
+  title,
+  account,
+  balance,
+  route,
+}) => {
   const navigation = useNavigation();
   return (
-    <Pressable
-      onPress={() => navigation.navigate('Savings' as never)}
-      style={styles.cardContainer}>
+    // <Pressable
+    //   onPress={() => navigation.navigate(route as never)}
+    //   style={styles.cardContainer}>
+    <View style={styles.cardContainer}>
       <LinearGradient
         colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
         style={styles.glassCard}>
@@ -35,7 +42,8 @@ const LoansCard: React.FC<LoansCardProps> = ({title, account, balance}) => {
 
         <Text style={styles.visa}>VISA</Text>
       </LinearGradient>
-    </Pressable>
+    </View>
+    // </Pressable>
   );
 };
 
@@ -71,7 +79,7 @@ const styles = StyleSheet.create({
     color: '#ccc',
   },
   balance: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
   },

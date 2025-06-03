@@ -1,25 +1,12 @@
 import React, {useEffect} from 'react';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import MainAccountCard from '../components/Home/MainAccountCard';
-import SharesCard from '../components/Home/SharesCard';
-import LoansCard from '../components/Home/LoansCard';
-import TransactionItem from '../components/Home/TransactionItem';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, AppDispatch} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
-import TransactionList from '../components/Home/TransactionList';
+import TransactionList from '../components/Transaction/TransactionList';
 import CardCarousel from '../components/CardCarousel/CardCarousel';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
@@ -31,9 +18,30 @@ interface Props {
   navigation: HomeScreenNavigationProps;
 }
 
+const transactions = [
+  {
+    amount: 100.0,
+    status: 'Top up',
+    type: 'Deposit',
+    createdAt: 'Today 1:53 PM',
+  },
+  {
+    amount: -500.0,
+    status: 'Transfer',
+    type: 'Send',
+    createdAt: 'Today 2:33 PM',
+  },
+  {
+    amount: 50.0,
+    status: 'Received',
+    type: 'Deposit',
+    createdAt: 'Today 3:32 PM',
+  },
+];
+
 const HomeScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const overview = useSelector((state: RootState) => state.overview);
+  //const overview = useSelector((state: RootState) => state.overview);
   const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
@@ -61,18 +69,10 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
       renderItem={null}
       style={styles.container}
       ListEmptyComponent={
-        overview.transactions.length === 0 ? (
+        transactions.length === 0 ? (
           <Text style={{textAlign: 'center'}}>No transactions found</Text>
         ) : (
-          <TransactionList
-            transactions={overview.transactions}
-            pagination={{
-              page: 1,
-              pageSize: 10,
-              total: overview.transactions.length,
-              totalPages: Math.ceil(overview.transactions.length / 10),
-            }}
-          />
+          <TransactionList transactions={transactions} />
         )
       }
     />

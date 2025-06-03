@@ -9,33 +9,43 @@ type SharesCardProps = {
   title: string;
   balance: number;
   account: string;
+  route: string;
 };
 
-const SharesCard: React.FC<SharesCardProps> = ({title, balance, account}) => {
+const SharesCard: React.FC<SharesCardProps> = ({
+  title,
+  balance,
+  account,
+  route,
+}) => {
   const navigation = useNavigation();
   return (
-    <Pressable
-      onPress={() => navigation.navigate('Savings' as never)}
-      style={styles.cardContainer}>
+    // <Pressable
+    //   onPress={() => navigation.navigate(route as never)}
+    //   style={styles.cardContainer}>
+    <View style={styles.cardContainer}>
       <LinearGradient
         colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
         style={styles.glassCard}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.number}>{account}</Text>
 
-        <View style={{marginTop: 5}}>
-          <Text style={styles.label}>No of shares</Text>
-          <Text style={styles.balance}>{balance.toFixed(2)} Shares</Text>
-        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{marginTop: 5}}>
+            <Text style={styles.label}>No of shares</Text>
+            <Text style={styles.balance}>{balance.toFixed(2)} Shares</Text>
+          </View>
 
-        <View style={{marginTop: 20}}>
-          <Text style={styles.label}>Shares Worth</Text>
-          <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
+          <View style={{marginTop: 5}}>
+            <Text style={styles.label}>Shares Worth</Text>
+            <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
+          </View>
         </View>
 
         <Text style={styles.visa}>VISA</Text>
       </LinearGradient>
-    </Pressable>
+    </View>
+    // </Pressable>
   );
 };
 
@@ -71,7 +81,7 @@ const styles = StyleSheet.create({
     color: '#ccc',
   },
   balance: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
   },

@@ -2,30 +2,47 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import TransactionItem from './TransactionItem';
 
-const TransactionList: React.FC = () => {
+interface Transaction {
+  amount: number;
+  status: string;
+  type: string;
+  createdAt: string;
+}
+
+interface TransactionListProps {
+  transactions: Transaction[];
+}
+
+const TransactionList: React.FC<TransactionListProps> = ({transactions}) => {
   return (
     <ScrollView>
-      <TransactionItem
-        title="Top up"
-        time="Today 1:53 PM"
+      {transactions.map((transaction, index) => (
+        <TransactionItem
+          key={index}
+          status={transaction.status}
+          createdAt={transaction.createdAt}
+          amount={transaction.amount}
+          type={transaction.type}
+        />
+      ))}
+      {/* <TransactionItem
+        status="Top up"
+        createdAt="Today 1:53 PM"
         amount={100.0}
         type="Deposit"
-        isPositive={true}
       />
       <TransactionItem
-        title="Transfer"
-        time="Today 2:33 PM"
+        status="Transfer"
+        createdAt="Today 2:33 PM"
         amount={-500.0}
         type="Send"
-        isPositive={false}
       />
       <TransactionItem
-        title="Received"
-        time="Today 3:32 PM"
+        status="Received"
+        createdAt="Today 3:32 PM"
         amount={50.0}
         type="Deposit"
-        isPositive={true}
-      />
+      /> */}
     </ScrollView>
   );
 };
