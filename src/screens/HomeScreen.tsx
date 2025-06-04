@@ -37,11 +37,34 @@ const transactions = [
     type: 'Deposit',
     createdAt: 'Today 3:32 PM',
   },
+  {
+    amount: 50.0,
+    status: 'Received',
+    type: 'Deposit',
+    createdAt: 'Today 3:32 PM',
+  },
+  {
+    amount: -500.0,
+    status: 'Transfer',
+    type: 'Send',
+    createdAt: 'Today 2:33 PM',
+  },
+  {
+    amount: 50.0,
+    status: 'Received',
+    type: 'Deposit',
+    createdAt: 'Today 3:32 PM',
+  },
+  {
+    amount: 50.0,
+    status: 'Received',
+    type: 'Deposit',
+    createdAt: 'Today 3:32 PM',
+  },
 ];
 
 const HomeScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch<AppDispatch>();
-  //const overview = useSelector((state: RootState) => state.overview);
   const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
@@ -101,11 +124,12 @@ const styles = StyleSheet.create({
   },
 
   welcomeText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 500,
     textAlign: 'left',
     paddingTop: 5,
     paddingBottom: 25,
+    paddingLeft: 15,
   },
 
   sectionTitle: {
@@ -115,7 +139,7 @@ const styles = StyleSheet.create({
   },
 
   transaction: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: 'bold',
     paddingTop: 20,
     paddingBottom: 12,

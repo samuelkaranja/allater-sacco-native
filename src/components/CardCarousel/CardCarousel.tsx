@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {ScrollView, View, StyleSheet, Dimensions} from 'react-native';
-//import Card from '../Card/Card';
+import {ScrollView, StyleSheet, Dimensions} from 'react-native';
 import SavingsCard from '../Card/SavingsCard';
 import LoansCard from '../Card/LoansCard';
 import SharesCard from '../Card/SharesCard';
@@ -31,20 +30,9 @@ const CardCarousel: React.FC = () => {
         title="Savings"
         balance={overview.savings}
         account="42464246"
-        route="Savings"
       />
-      <SharesCard
-        title="Shares"
-        balance={overview.shares}
-        account="33813381"
-        route="Shares"
-      />
-      <LoansCard
-        title="Loans"
-        balance={overview.loan}
-        account="71237123"
-        route="Loan"
-      />
+      <SharesCard title="Shares" balance={overview.shares} account="33813381" />
+      <LoansCard title="Loans" balance={overview.loan} account="71237123" />
     </ScrollView>
   );
 };

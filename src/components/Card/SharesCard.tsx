@@ -1,7 +1,8 @@
 import React from 'react';
-import {Pressable, Text, View, Dimensions, StyleSheet} from 'react-native';
+import {Text, View, Dimensions, StyleSheet, Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 const {width} = Dimensions.get('window');
 
@@ -9,20 +10,11 @@ type SharesCardProps = {
   title: string;
   balance: number;
   account: string;
-  route: string;
 };
 
-const SharesCard: React.FC<SharesCardProps> = ({
-  title,
-  balance,
-  account,
-  route,
-}) => {
-  const navigation = useNavigation();
+const SharesCard: React.FC<SharesCardProps> = ({title, balance, account}) => {
+  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   return (
-    // <Pressable
-    //   onPress={() => navigation.navigate(route as never)}
-    //   style={styles.cardContainer}>
     <View style={styles.cardContainer}>
       <LinearGradient
         colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
@@ -30,8 +22,8 @@ const SharesCard: React.FC<SharesCardProps> = ({
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.number}>{account}</Text>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={{marginTop: 5}}>
+        <View style={styles.sharesInfo}>
+          <View>
             <Text style={styles.label}>No of shares</Text>
             <Text style={styles.balance}>{balance.toFixed(2)} Shares</Text>
           </View>
@@ -42,10 +34,13 @@ const SharesCard: React.FC<SharesCardProps> = ({
           </View>
         </View>
 
-        <Text style={styles.visa}>VISA</Text>
+        <Pressable
+          style={styles.infoBtn}
+          onPress={() => navigation.navigate('Shares')}>
+          <Text style={styles.visa}>Details</Text>
+        </Pressable>
       </LinearGradient>
     </View>
-    // </Pressable>
   );
 };
 
@@ -76,6 +71,12 @@ const styles = StyleSheet.create({
     color: '#eee',
     marginTop: 4,
   },
+  sharesInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+  },
   label: {
     fontSize: 12,
     color: '#ccc',
@@ -85,12 +86,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
-  visa: {
+  infoBtn: {
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  visa: {
+    fontSize: 13,
     fontWeight: 'bold',
     color: '#fff',
+    textDecorationLine: 'underline',
   },
 });
 

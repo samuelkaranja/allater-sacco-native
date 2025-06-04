@@ -1,7 +1,8 @@
 import React from 'react';
-import {Pressable, Text, View, Dimensions, StyleSheet} from 'react-native';
+import {Text, View, Dimensions, StyleSheet, Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 const {width} = Dimensions.get('window');
 
@@ -9,20 +10,11 @@ type SavingsCardProps = {
   title: string;
   balance: number;
   account: string;
-  route: string;
 };
 
-const SavingsCard: React.FC<SavingsCardProps> = ({
-  title,
-  account,
-  balance,
-  route,
-}) => {
-  const navigation = useNavigation();
+const SavingsCard: React.FC<SavingsCardProps> = ({title, account, balance}) => {
+  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   return (
-    // <Pressable
-    //   onPress={() => navigation.navigate(route as never)}
-    //   style={styles.cardContainer}>
     <View style={styles.cardContainer}>
       <LinearGradient
         colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
@@ -35,10 +27,13 @@ const SavingsCard: React.FC<SavingsCardProps> = ({
           <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
         </View>
 
-        <Text style={styles.visa}>More</Text>
+        <Pressable
+          style={styles.infoBtn}
+          onPress={() => navigation.navigate('Shares')}>
+          <Text style={styles.visa}>Details</Text>
+        </Pressable>
       </LinearGradient>
     </View>
-    // </Pressable>
   );
 };
 
@@ -78,12 +73,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
-  visa: {
+  infoBtn: {
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  visa: {
+    fontSize: 13,
     fontWeight: 'bold',
     color: '#fff',
+    textDecorationLine: 'underline',
   },
 });
 

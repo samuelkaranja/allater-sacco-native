@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 interface TransactionItemProps {
   type: string;
@@ -27,7 +27,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             styles.amount,
             type === 'WITHDRAW' ? styles.withdraw : styles.deposit,
           ]}>
-          {amount.toFixed(2)}
+          <Text style={styles.currency}>Kshs</Text> {amount.toFixed(2)}
         </Text>
         <Text style={styles.type}>{status}</Text>
       </View>
@@ -75,6 +75,10 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  currency: {
+    fontSize: 12,
+    color: '#000',
   },
   type: {
     fontSize: 12,
