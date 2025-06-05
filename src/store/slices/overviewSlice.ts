@@ -45,7 +45,6 @@ export const fetchUserOverview = createAsyncThunk(
       );
 
       return response.data;
-      console.log('Overview data fetched successfully:', response.data);
     } catch (error: any) {
       return rejectWithValue(error.response?.data || 'Failed to fetch data');
     }

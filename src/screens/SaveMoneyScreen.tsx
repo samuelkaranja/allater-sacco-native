@@ -5,10 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import Header from '../components/Header/Header';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../store/store';
+import {fetchUserOverview} from '../store/slices/overviewSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type SaveMoneyScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -21,6 +26,7 @@ interface Props {
 
 const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
   const [amount, setAmount] = useState<string>('0');
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleKeyPress = (key: string) => {
     if (key === 'back') {
@@ -30,61 +36,86 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
     }
   };
 
-  const handleSend = () => {
-    console.log('Sending:', amount);
+  const handleSave = async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      Alert.alert('Validation', 'Please enter a valid amount.');
+      return;
+    }
+
+    try {
+      const token = await AsyncStorage.getItem('token');
+      if (!token) {
+        Alert.alert(
+          'Unauthorized',
+          'You must be logged in to perform this action.',
+        );
+        return;
+      }
+
+      const response = await fetch(
+        'https://allater-sacco-backend.fly.dev/savings/deposit',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({amount}),
+        },
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setAmount('0');
+
+        // Wait 4 seconds to let backend update transaction status
+        setTimeout(() => {
+          dispatch(fetchUserOverview());
+          navigation.navigate('HomeMain');
+        }, 8000);
+      } else {
+        Alert.alert('Error', data.message || 'Failed to save amount');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Something went wrong');
+    }
   };
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <Header navigation={navigation} />
-        <View style={styles.card}>
-          <Text style={styles.header}>Save Money To Your Account</Text>
+    <SafeAreaView style={styles.container}>
+      <Header navigation={navigation} />
+      <View style={styles.card}>
+        <Text style={styles.header}>Save Money To Your Account</Text>
 
-          <View style={styles.amountBox}>
-            <Text style={styles.amountText}>
-              <Text style={{fontSize: 15}}>KES </Text>
-              {Number(amount).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              }) || '0'}
-            </Text>
-          </View>
+        <View style={styles.amountBox}>
+          <Text style={styles.amountText}>
+            <Text style={{fontSize: 15}}>KES </Text>
+            {Number(amount).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }) || '0'}
+          </Text>
+        </View>
 
-          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-            <Text style={styles.sendButtonText}>Save</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.sendButton} onPress={handleSave}>
+          <Text style={styles.sendButtonText}>Save</Text>
+        </TouchableOpacity>
 
-          <View style={styles.keypad}>
-            {[
-              '1',
-              '2',
-              '3',
-              '4',
-              '5',
-              '6',
-              '7',
-              '8',
-              '9',
-              '00',
-              '0',
-              'back',
-            ].map((key, idx) => (
+        <View style={styles.keypad}>
+          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', 'back'].map(
+            (key, idx) => (
               <TouchableOpacity
                 key={idx}
                 style={[styles.key, key === 'back' && styles.backKey]}
                 onPress={() => handleKeyPress(key)}>
                 <Text style={styles.keyText}>{key === 'back' ? '⌫' : key}</Text>
               </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-            <Text style={styles.sendButtonText}>Save</Text>
-          </TouchableOpacity> */}
+            ),
+          )}
         </View>
-      </SafeAreaView>
-    </>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -93,7 +124,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
   },
-
   card: {
     width: '100%',
     paddingTop: 50,
@@ -101,13 +131,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     alignItems: 'center',
   },
-
   header: {
     fontSize: 16,
     color: '#888',
     marginBottom: 10,
   },
-
   amountBox: {
     backgroundColor: '#F1F2F6',
     borderRadius: 12,
@@ -116,19 +144,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 40,
   },
-
   amountText: {
     fontSize: 28,
     fontWeight: '600',
   },
-
   keypad: {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-
   key: {
     width: '30%',
     aspectRatio: 1,
@@ -137,16 +162,13 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     borderRadius: 10,
   },
-
   keyText: {
     fontSize: 24,
     color: '#333',
   },
-
   backKey: {
     backgroundColor: '#F1F2F6',
   },
-
   sendButton: {
     backgroundColor: '#000',
     paddingVertical: 10,
@@ -154,7 +176,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 30,
   },
-
   sendButtonText: {
     color: '#fff',
     textAlign: 'center',

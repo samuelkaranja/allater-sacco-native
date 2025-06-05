@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
 
   statusFailed: {
-    color: 'red',
+    color: 'orange',
   },
 
   statusInsufficient: {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   statusCancelled: {
-    color: 'orange',
+    color: 'red',
   },
 });
 

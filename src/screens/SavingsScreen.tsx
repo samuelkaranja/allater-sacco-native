@@ -12,6 +12,7 @@ import TransactionList from '../components/Savings/TransactionList';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
+import {useFocusEffect} from '@react-navigation/native';
 
 type SavingsScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -115,9 +116,15 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
     (state: RootState) => state.overview.savings,
   );
 
-  useEffect(() => {
-    dispatch(fetchUserOverview());
-  }, [dispatch]);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(fetchUserOverview());
+    }, [dispatch]),
+  );
+
+  // useEffect(() => {
+  //   dispatch(fetchUserOverview());
+  // }, [dispatch]);
 
   const [selectedTab, setSelectedTab] = useState('All');
   const filteredTransactions = useTransactionFilter(

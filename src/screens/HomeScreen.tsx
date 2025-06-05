@@ -8,6 +8,7 @@ import {RootState, AppDispatch} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
 import TransactionList from '../components/Transaction/TransactionList';
 import CardCarousel from '../components/CardCarousel/CardCarousel';
+import {useFocusEffect} from '@react-navigation/native';
 
 type HomeScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -26,9 +27,15 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     (state: RootState) => state.overview.transactions,
   );
 
-  useEffect(() => {
-    dispatch(fetchUserOverview());
-  }, [dispatch]);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(fetchUserOverview());
+    }, [dispatch]),
+  );
+
+  // useEffect(() => {
+  //   dispatch(fetchUserOverview());
+  // }, [dispatch]);
 
   return (
     <ScrollView style={styles.container}>
