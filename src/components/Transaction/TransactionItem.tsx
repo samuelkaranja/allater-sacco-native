@@ -26,6 +26,8 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
         return styles.statusFailed;
       case 'insufficient_funds':
         return styles.statusInsufficient;
+      case 'cancelled':
+        return styles.statusCancelled;
       default:
         return {};
     }
@@ -43,7 +45,8 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             styles.amount,
             type === 'WITHDRAW' ? styles.withdraw : styles.deposit,
           ]}>
-          <Text style={styles.currency}>Kshs</Text> {amount.toFixed(2)}
+          <Text style={styles.currency}>Kshs</Text>
+          {amount.toFixed(2)}
         </Text>
         <Text style={[styles.type, getStatusStyle()]}>
           <Text style={{fontSize: 10}}>Status</Text>: {status}
@@ -136,6 +139,10 @@ const styles = StyleSheet.create({
 
   statusInsufficient: {
     color: 'purple',
+  },
+
+  statusCancelled: {
+    color: 'orange',
   },
 });
 

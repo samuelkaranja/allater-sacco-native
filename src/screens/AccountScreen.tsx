@@ -1,8 +1,9 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {BottomTabParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store/store';
 
@@ -19,40 +20,52 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
   const user = useSelector((state: RootState) => state.auth.user);
   return (
     <View style={styles.container}>
+      {/* Profile Header */}
       <Header navigation={navigation} />
-
       <Text
         style={{
-          fontSize: 20,
-          fontWeight: '500',
           textAlign: 'center',
+          fontSize: 23,
+          fontWeight: '500',
         }}>
-        My Profile
+        Profile
       </Text>
-
-      <View style={styles.profileContainer}>
-        <View>
-          <Image
-            source={
-              user?.profilePic
-                ? {uri: user?.profilePic}
-                : require('../../assets/images/profile.jpg')
-            }
-            style={styles.avatar}
-          />
-        </View>
-        <View>
-          <Text style={{textAlign: 'left', fontSize: 20, marginTop: 20}}>
-            {user ? user.fullname : null}
-          </Text>
-          <Text style={{textAlign: 'left', fontSize: 13, marginTop: 2}}>
-            {user ? user.email : null}
-          </Text>
-          <Text style={{textAlign: 'left', fontSize: 13, marginTop: 2}}>
-            {user ? user.phonenumber : null}
-          </Text>
-        </View>
+      {/* User Information */}
+      <View style={styles.header}>
+        <Text style={styles.name}>{user ? user.fullname : null}</Text>
+        <Text style={{marginTop: 10}}>{user?.role}</Text>
       </View>
+
+      {/* Menu Options */}
+      <View style={styles.menuList}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate('Home')}>
+          <View style={styles.menuIconLabel}>
+            <Ionicons name="person-outline" size={20} color="#555" />
+            <Text style={styles.menuText}>Personal Details</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color="#ccc" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate('Home')}>
+          <View style={styles.menuIconLabel}>
+            <Ionicons name="people-outline" size={20} color="#555" />
+            <Text style={styles.menuText}>Next of kin</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color="#ccc" />
+        </TouchableOpacity>
+      </View>
+
+      {/* Logout Button */}
+      <TouchableOpacity
+        style={styles.logoutButton}
+        onPress={() => console.log('Logout pressed')}>
+        <Ionicons name="log-out-outline" size={20} color="#fff" />
+        <Text style={styles.logoutText}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -60,21 +73,61 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15,
     backgroundColor: '#fff',
+    paddingHorizontal: 15,
   },
-  profileContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+  header: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 50,
+    marginBottom: 100,
   },
-  avatar: {
-    width: 90,
-    height: 90,
-    borderRadius: 30,
-    marginRight: 15,
-    marginTop: 20,
+
+  name: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  menuList: {
+    marginBottom: 20,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+    backgroundColor: '#ffffff',
+    borderRadius: 0,
+    marginVertical: 8,
+    // iOS soft shadow
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    // Android soft shadow
+    elevation: 1.5,
+  },
+  menuIconLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  menuText: {
+    fontSize: 14,
+    marginLeft: 12,
+  },
+  logoutButton: {
+    backgroundColor: '#2ecc71', // Green color
+    paddingVertical: 14,
+    borderRadius: 16,
+
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoutText: {
+    color: '#fff',
+    fontSize: 16,
+    marginLeft: 8,
+    fontWeight: '600',
   },
 });
 
