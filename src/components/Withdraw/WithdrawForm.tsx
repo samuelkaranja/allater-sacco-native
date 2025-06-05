@@ -66,7 +66,7 @@ const WithdrawForm = () => {
       </View>
 
       {/* Schedule Date & Time */}
-      <View style={styles.inputWrapper}>
+      {/* <View style={styles.inputWrapper}>
         <Text style={styles.label}>Schedule Date & Time</Text>
         <TouchableOpacity
           onPress={() => setShowDatePicker(true)}
@@ -85,7 +85,7 @@ const WithdrawForm = () => {
           />
         )}
         <Text style={styles.helperText}>Select date and time above</Text>
-      </View>
+      </View> */}
 
       {/* Continue Button */}
       <TouchableOpacity style={styles.button} onPress={handleContinue}>
