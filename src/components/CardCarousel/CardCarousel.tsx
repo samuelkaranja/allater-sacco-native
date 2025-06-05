@@ -21,6 +21,7 @@ const CardCarousel: React.FC = () => {
   return (
     <ScrollView
       horizontal
+      nestedScrollEnabled={true}
       snapToInterval={cardWidth}
       showsHorizontalScrollIndicator={false}
       decelerationRate="fast"

@@ -15,6 +15,22 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
   createdAt,
 }) => {
   const formattedDate = new Date(createdAt).toLocaleString();
+
+  const getStatusStyle = () => {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return styles.statusPending;
+      case 'success':
+        return styles.statusSuccess;
+      case 'failed':
+        return styles.statusFailed;
+      case 'insufficient_funds':
+        return styles.statusInsufficient;
+      default:
+        return {};
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.details}>
@@ -29,7 +45,9 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
           ]}>
           <Text style={styles.currency}>Kshs</Text> {amount.toFixed(2)}
         </Text>
-        <Text style={styles.type}>{status}</Text>
+        <Text style={[styles.type, getStatusStyle()]}>
+          <Text style={{fontSize: 10}}>Status</Text>: {status}
+        </Text>
       </View>
     </View>
   );
@@ -44,6 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
+
   iconContainer: {
     width: 40,
     height: 40,
@@ -52,44 +71,71 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 12,
   },
+
   icon: {
     width: 20,
     height: 20,
     resizeMode: 'contain',
   },
+
   details: {
     flex: 1,
   },
+
   title: {
     fontSize: 14,
     fontWeight: '600',
     color: '#1E1E1E',
   },
+
   time: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#7E8A9A',
+    paddingTop: 5,
   },
+
   amountContainer: {
     alignItems: 'flex-end',
   },
+
   amount: {
     fontSize: 14,
     fontWeight: '600',
   },
+
   currency: {
     fontSize: 12,
     color: '#000',
   },
+
   type: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#7E8A9A',
+    paddingTop: 5,
   },
+
   deposit: {
     color: 'green',
   },
 
   withdraw: {
     color: 'red',
+  },
+
+  statusPending: {
+    color: 'orange',
+  },
+
+  statusSuccess: {
+    color: 'green',
+  },
+
+  statusFailed: {
+    color: 'red',
+  },
+
+  statusInsufficient: {
+    color: 'purple',
   },
 });
 

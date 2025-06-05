@@ -10,7 +10,6 @@ interface Transaction {
 }
 
 interface OverviewState {
-  pagination: number;
   savings: number;
   shares: number;
   loan: number;
@@ -20,7 +19,6 @@ interface OverviewState {
 }
 
 const initialState: OverviewState = {
-  pagination: 1,
   savings: 0,
   shares: 0,
   loan: 0,
@@ -38,7 +36,7 @@ export const fetchUserOverview = createAsyncThunk(
       const token = state.auth.token;
 
       const response = await axios.get(
-        'https://allater-sacco-backend.onrender.com/user/overview?page=1',
+        'https://allater-sacco-backend.fly.dev/user/overview',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,6 +45,7 @@ export const fetchUserOverview = createAsyncThunk(
       );
 
       return response.data;
+      console.log('Overview data fetched successfully:', response.data);
     } catch (error: any) {
       return rejectWithValue(error.response?.data || 'Failed to fetch data');
     }
@@ -68,7 +67,7 @@ const overviewSlice = createSlice({
         state.savings = action.payload.savings;
         state.shares = action.payload.shares;
         state.loan = action.payload.loan;
-        state.transactions = action.payload.transactions;
+        state.transactions = action.payload.recentTransactions;
       })
       .addCase(fetchUserOverview.rejected, (state, action) => {
         state.loading = false;
