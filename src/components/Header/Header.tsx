@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
 
   headerImage: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     objectFit: 'cover',
   },
 });

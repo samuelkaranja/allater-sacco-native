@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   label: {
     fontSize: 12,
@@ -88,14 +88,17 @@ const styles = StyleSheet.create({
   },
   infoBtn: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 18,
     right: 20,
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
   },
   visa: {
     fontSize: 13,
     fontWeight: 'bold',
-    color: '#fff',
-    textDecorationLine: 'underline',
+    color: '#000',
   },
 });
 

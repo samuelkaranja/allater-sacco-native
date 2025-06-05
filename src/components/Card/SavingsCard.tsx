@@ -29,7 +29,7 @@ const SavingsCard: React.FC<SavingsCardProps> = ({title, account, balance}) => {
 
         <Pressable
           style={styles.infoBtn}
-          onPress={() => navigation.navigate('Shares')}>
+          onPress={() => navigation.navigate('Savings')}>
           <Text style={styles.visa}>Details</Text>
         </Pressable>
       </LinearGradient>
@@ -77,12 +77,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
   },
   visa: {
     fontSize: 13,
     fontWeight: 'bold',
-    color: '#fff',
-    textDecorationLine: 'underline',
+    color: '#000',
   },
 });
 

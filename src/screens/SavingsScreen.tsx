@@ -1,15 +1,17 @@
+import React, {useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
-import BalanceCard from '../components/Savings/BalanceCard';
+import Balance from '../components/Savings/Balance';
 import ActionButtons from '../components/Savings/ActionButtons';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import TransactionFilterTabs from '../components/Savings/TransactionFilterTabs';
 import useTransactionFilter from '../hooks/useTransactionFilter';
 import {SavingsTransaction} from '../components/Savings/types';
 import TransactionList from '../components/Savings/TransactionList';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../store/store';
+import {fetchUserOverview} from '../store/slices/overviewSlice';
 
 type SavingsScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -108,6 +110,15 @@ const allTransactions: SavingsTransaction[] = [
 ];
 
 const SavingsScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const savingsOverview = useSelector(
+    (state: RootState) => state.overview.savings,
+  );
+
+  useEffect(() => {
+    dispatch(fetchUserOverview());
+  }, [dispatch]);
+
   const [selectedTab, setSelectedTab] = useState('All');
   const filteredTransactions = useTransactionFilter(
     allTransactions,
@@ -117,11 +128,10 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
     <View style={styles.container}>
       <Header navigation={navigation} />
       <View style={styles.head}>
-        <Icon name="bank" size={22} color={'black'} style={styles.icon} />
         <Text style={styles.title}>Savings Account</Text>
       </View>
 
-      <BalanceCard />
+      <Balance balance={savingsOverview} accountNumber="123456789" />
 
       <ActionButtons />
 
@@ -141,7 +151,8 @@ const styles = StyleSheet.create({
   head: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginLeft: 15,
+    marginBottom: 10,
   },
 
   icon: {
