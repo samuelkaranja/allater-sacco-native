@@ -1,3 +1,5 @@
+import {NavigatorScreenParams} from '@react-navigation/native';
+
 export type RootStackParamList = {
   Welcome: undefined;
   OnBoarding: undefined;
@@ -8,7 +10,7 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  Home: undefined;
+  Home: NavigatorScreenParams<HomeStackParamList>;
   Transact: undefined;
   Profile: undefined;
 };
@@ -31,4 +33,6 @@ export type HomeStackParamList = {
   Faq: undefined;
   Withdraw: undefined;
   Save: undefined;
+  Member: undefined;
+  Kin: undefined;
 };

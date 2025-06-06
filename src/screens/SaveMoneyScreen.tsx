@@ -69,7 +69,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
       if (response.ok) {
         setAmount('0');
 
-        // Wait 4 seconds to let backend update transaction status
+        // Wait 8 seconds to let backend update transaction status
         setTimeout(() => {
           dispatch(fetchUserOverview());
           navigation.navigate('HomeMain');

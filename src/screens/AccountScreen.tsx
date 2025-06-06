@@ -40,7 +40,7 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
       <View style={styles.menuList}>
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.navigate('Home', {screen: 'Member'})}>
           <View style={styles.menuIconLabel}>
             <Ionicons name="person-outline" size={20} color="#555" />
             <Text style={styles.menuText}>Personal Details</Text>
@@ -50,7 +50,7 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
 
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate('Home')}>
+          onPress={() => navigation.navigate('Home', {screen: 'Kin'})}>
           <View style={styles.menuIconLabel}>
             <Ionicons name="people-outline" size={20} color="#555" />
             <Text style={styles.menuText}>Next of kin</Text>
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2ecc71', // Green color
     paddingVertical: 14,
     borderRadius: 16,
-
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

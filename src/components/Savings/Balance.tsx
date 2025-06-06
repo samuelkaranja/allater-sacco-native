@@ -11,7 +11,7 @@ const BalanceCard: React.FC<Props> = ({balance, accountNumber}) => {
     <View style={styles.card}>
       <Text style={styles.label}>Account balance</Text>
       <Text style={styles.balance}>
-        {/* <Text style={styles.currency}>Kshs </Text> */}
+        <Text style={styles.currency}>Kshs</Text>
         {balance.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
