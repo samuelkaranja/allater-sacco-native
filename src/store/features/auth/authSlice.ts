@@ -54,7 +54,7 @@ export const loginUser = createAsyncThunk(
       if (!token) throw new Error('Token not received');
 
       const userRes = await axios.get(
-        'https://allater-sacco-backend.fly.dev/user/me',
+        'https://allater-sacco-backend.fly.dev/user/profile',
         {
           headers: {Authorization: `Bearer ${token}`},
         },

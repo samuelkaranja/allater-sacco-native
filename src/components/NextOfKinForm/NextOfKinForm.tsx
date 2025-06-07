@@ -3,14 +3,16 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   Modal,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-//import {Ionicons} from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../../store/store';
+import {addNextOfKin} from '../../store/features/nextOfKin/nextOfKinSlice';
+import Toast from 'react-native-toast-message';
 
 type Props = {
   visible: boolean;
@@ -21,36 +23,64 @@ type Props = {
 export type NextOfKinData = {
   firstName: string;
   lastName: string;
-  phone: string;
+  phoneNumber: string;
   email: string;
   relationship: string;
 };
 
 const relationshipOptions = [
-  'Sibling',
-  'Spouse',
-  'Parent',
-  'Child',
-  'Relative',
-  'Lawyer',
-  'Friend',
+  'SIBLING',
+  'SPOUSE',
+  'PARENT',
+  'CHILD',
+  'RELATIVE',
+  'LAWYER',
+  'FRIEND',
 ];
 
 const NextOfKinForm: React.FC<Props> = ({visible, onClose, onSubmit}) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [form, setForm] = useState<NextOfKinData>({
     firstName: '',
     lastName: '',
-    phone: '',
+    phoneNumber: '',
     email: '',
-    relationship: 'Sibling',
+    relationship: 'SIBLING',
   });
 
   const handleChange = (field: keyof NextOfKinData, value: string) => {
-    setForm({...form, [field]: value});
+    setForm(prev => ({...prev, [field]: value}));
   };
 
-  const handleSubmit = () => {
-    onSubmit(form);
+  const handleSubmit = async () => {
+    const resultAction = await dispatch(addNextOfKin(form));
+
+    if (addNextOfKin.fulfilled.match(resultAction)) {
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: "You've successfully added next of kin 👋",
+        position: 'top',
+        visibilityTime: 7000,
+        autoHide: true,
+      });
+      onClose();
+      setForm({
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
+        relationship: 'SIBLING',
+      });
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: resultAction.payload || 'Failed to add next of kin',
+        position: 'bottom',
+      });
+    }
   };
 
   return (
@@ -84,8 +114,8 @@ const NextOfKinForm: React.FC<Props> = ({visible, onClose, onSubmit}) => {
             <View style={styles.field}>
               <Text style={styles.label}>Phone number</Text>
               <TextInput
-                value={form.phone}
-                onChangeText={text => handleChange('phone', text)}
+                value={form.phoneNumber}
+                onChangeText={text => handleChange('phoneNumber', text)}
                 style={styles.input}
                 keyboardType="phone-pad"
               />
@@ -122,7 +152,7 @@ const NextOfKinForm: React.FC<Props> = ({visible, onClose, onSubmit}) => {
               <TouchableOpacity
                 style={styles.saveButton}
                 onPress={handleSubmit}>
-                <Text style={styles.saveText}>Save changes</Text>
+                <Text style={styles.saveText}>Add</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>

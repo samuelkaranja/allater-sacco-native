@@ -44,16 +44,17 @@ const ActionButtons: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '95%',
+    //width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#27ae60',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: 20,
-    borderRadius: 16,
-    padding: 18,
+    marginTop: 15,
+    //backgroundColor: '#27ae60',
+    // marginLeft: 'auto',
+    // marginRight: 'auto',
+    // marginBottom: 20,
+    // borderRadius: 16,
+    //padding: 18,
   },
 
   button: {
@@ -66,17 +67,16 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    marginBottom: 10,
+    marginBottom: 7,
     borderWidth: 1,
     borderColor: 'lightgrey',
-    borderRadius: 50,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    borderRadius: 100,
+    padding: 10,
   },
 
   iconText: {
-    fontSize: 13,
-    fontWeight: 500,
+    fontSize: 12,
+    fontWeight: 400,
     color: '#fff',
   },
 });

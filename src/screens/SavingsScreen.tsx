@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
 import {useFocusEffect} from '@react-navigation/native';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 
 type SavingsScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -133,14 +134,16 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
   );
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
-      <View style={styles.head}>
+      <ScreenHeader route="HomeMain" title="Savings Account" />
+      {/* <Header navigation={navigation} /> */}
+      <View></View>
+      {/* <View style={styles.head}>
         <Text style={styles.title}>Savings Account</Text>
-      </View>
+      </View> */}
 
-      <Balance balance={savingsOverview} accountNumber="123456789" />
+      <Balance balance={24562} accountNumber="12345678910" />
 
-      <ActionButtons />
+      {/* <ActionButtons /> */}
 
       <TransactionFilterTabs selected={selectedTab} onSelect={setSelectedTab} />
 
@@ -156,10 +159,10 @@ const styles = StyleSheet.create({
   },
 
   head: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 15,
-    marginBottom: 10,
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // marginLeft: 15,
+    // marginBottom: 10,
   },
 
   icon: {
