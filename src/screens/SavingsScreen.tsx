@@ -122,11 +122,6 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
       dispatch(fetchUserOverview());
     }, [dispatch]),
   );
-
-  // useEffect(() => {
-  //   dispatch(fetchUserOverview());
-  // }, [dispatch]);
-
   const [selectedTab, setSelectedTab] = useState('All');
   const filteredTransactions = useTransactionFilter(
     allTransactions,
@@ -135,13 +130,10 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ScreenHeader route="HomeMain" title="Savings Account" />
-      {/* <Header navigation={navigation} /> */}
-      <View></View>
-      {/* <View style={styles.head}>
-        <Text style={styles.title}>Savings Account</Text>
-      </View> */}
 
-      <Balance balance={24562} accountNumber="12345678910" />
+      <View></View>
+
+      <Balance balance={savingsOverview} accountNumber="12345678910" />
 
       {/* <ActionButtons /> */}
 

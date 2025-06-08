@@ -13,29 +13,19 @@ const ActionButtons: React.FC = () => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Save')}>
-        <Icon
-          name="plus-circle"
-          size={20}
-          color={'white'}
-          style={styles.icon}
-        />
+        <Icon name="plus" size={22} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Save</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Withdraw')}>
-        <Icon
-          name="minus-circle"
-          size={20}
-          color={'white'}
-          style={styles.icon}
-        />
+        <Icon name="minus" size={22} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Withdraw</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
-        <Icon name="send" size={20} color={'white'} style={styles.icon} />
+        <Icon name="send" size={22} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Transfer</Text>
       </TouchableOpacity>
     </View>
@@ -44,17 +34,10 @@ const ActionButtons: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    //width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: 15,
-    //backgroundColor: '#27ae60',
-    // marginLeft: 'auto',
-    // marginRight: 'auto',
-    // marginBottom: 20,
-    // borderRadius: 16,
-    //padding: 18,
   },
 
   button: {
@@ -68,10 +51,9 @@ const styles = StyleSheet.create({
 
   icon: {
     marginBottom: 7,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 100,
-    padding: 10,
+    borderRadius: 50,
+    padding: 14,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
 
   iconText: {

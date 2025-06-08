@@ -10,6 +10,7 @@ import TransactionList from '../components/Shares/TransactionList';
 import Header from '../components/Header/Header';
 import useTransactionFilter from '../hooks/useTransactionFilter';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 
 type LoansScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -127,8 +128,7 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
   );
   return (
     <View style={styles.container}>
-      {/* Top Bar with Hamburger Menu */}
-      <Header navigation={navigation} />
+      <ScreenHeader route="HomeMain" title="Shares Account" />
 
       {/* Main Content */}
       <View style={styles.head}>

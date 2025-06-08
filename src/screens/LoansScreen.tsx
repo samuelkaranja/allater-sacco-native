@@ -6,6 +6,7 @@ import LoanActionButton from '../components/Loan/LoanActionButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 
 type LoanScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -19,23 +20,7 @@ interface Props {
 const LoanScreen: React.FC<Props> = ({navigation}) => {
   return (
     <View style={styles.container}>
-      {/* Top Bar with Hamburger Menu */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.openDrawer()}
-          style={styles.iconButton}>
-          <Icon name="bars" size={24} color="#000" />
-        </TouchableOpacity>
-        <Image
-          source={require('../../assets/images/logo.png')}
-          style={styles.headerImage}
-        />
-        <TouchableOpacity
-          onPress={() => console.log('Notifications Clicked')}
-          style={styles.iconButton}>
-          <Icon name="bell" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <ScreenHeader route="HomeMain" title="Loans Account" />
 
       <Text style={styles.intro}>Loans</Text>
       {/* Loan Summary Card */}
@@ -47,9 +32,6 @@ const LoanScreen: React.FC<Props> = ({navigation}) => {
         <LoanActionButton title="Pay Loan" onPress={() => {}} />
         <LoanActionButton title="Check Limit" onPress={() => {}} />
       </View>
-
-      {/* Bottom Navigation (if used) */}
-      {/* <BottomNavigation /> */}
     </View>
   );
 };
