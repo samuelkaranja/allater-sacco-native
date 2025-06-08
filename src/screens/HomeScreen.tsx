@@ -33,10 +33,6 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     }, [dispatch]),
   );
 
-  // useEffect(() => {
-  //   dispatch(fetchUserOverview());
-  // }, [dispatch]);
-
   return (
     <ScrollView style={styles.container}>
       <Header navigation={navigation} />
@@ -44,7 +40,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
         Welcome Back, {user?.fullname.trim().split(' ')[0] || 'User'}!
       </Text>
       <CardCarousel />
-      <Text style={styles.transaction}>Transactions</Text>
+      <Text style={styles.transaction}>Latest Transactions</Text>
 
       {transactions.length === 0 ? (
         <Text style={{textAlign: 'center'}}>No transactions found</Text>
@@ -92,10 +88,11 @@ const styles = StyleSheet.create({
   },
 
   transaction: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: 'bold',
     paddingTop: 20,
-    paddingBottom: 12,
+    paddingLeft: 4,
+    paddingBottom: 18,
   },
 });
 
