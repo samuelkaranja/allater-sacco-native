@@ -13,19 +13,19 @@ const ActionButtons: React.FC = () => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Save')}>
-        <Icon name="plus" size={22} color={'white'} style={styles.icon} />
+        <Icon name="plus" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Save</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Withdraw')}>
-        <Icon name="minus" size={22} color={'white'} style={styles.icon} />
+        <Icon name="minus" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Withdraw</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
-        <Icon name="send" size={22} color={'white'} style={styles.icon} />
+        <Icon name="send" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Transfer</Text>
       </TouchableOpacity>
     </View>

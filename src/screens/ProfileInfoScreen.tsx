@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import {useSelector} from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {RootState} from '../store/store';
@@ -10,6 +10,7 @@ import {
 } from '../navigation/type/navigationTypes';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 
 type ProfileInfoScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<HomeStackParamList, 'Member'>,
@@ -36,89 +37,75 @@ const ProfileInfo: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Profile')}>
+      <ScreenHeader route="Profile" title="My Profile" />
+
+      {/* Profile block */}
+      <View style={styles.profileBlock}>
+        <Image
+          source={{
+            uri: profile?.profilePic?.replace('/svg?', '/png?'),
+          }}
+          resizeMode="cover"
+          style={styles.image}
+        />
+        <Text style={styles.name}>{profile?.fullname || '—'}</Text>
+        <Text style={styles.role}>{profile?.role}</Text>
+      </View>
+
+      {/* Details block */}
+      <View style={styles.detailsBlock}>
+        <Text style={styles.details}>More Details</Text>
+
+        <View style={styles.row}>
           <FontAwesome
-            name="angle-left"
-            size={28}
-            color="#000"
+            name="envelope"
+            size={22}
+            color="#ccc"
             style={styles.rowIcon}
           />
-        </TouchableOpacity>
-        <Text style={styles.title}>My Profile</Text>
-        <Text>Edit</Text>
-      </View>
-      <Text style={styles.details}>Account Details</Text>
-
-      {/* Name */}
-      <View style={styles.row}>
-        <FontAwesome
-          name="user"
-          size={22}
-          color="#ccc"
-          style={styles.rowIcon}
-        />
-        <View style={styles.rowText}>
-          <Text style={styles.rowLabel}>Name</Text>
-          <Text style={styles.rowValue}>{profile?.fullname || '—'}</Text>
+          <View style={styles.rowText}>
+            <Text style={styles.rowLabel}>Email</Text>
+            <Text style={styles.rowValue}>{profile?.email || '—'}</Text>
+          </View>
         </View>
-      </View>
 
-      {/* Email */}
-      <View style={styles.row}>
-        <FontAwesome
-          name="envelope"
-          size={22}
-          color="#ccc"
-          style={styles.rowIcon}
-        />
-        <View style={styles.rowText}>
-          <Text style={styles.rowLabel}>Email</Text>
-          <Text style={styles.rowValue}>{profile?.email || '—'}</Text>
+        <View style={styles.row}>
+          <FontAwesome
+            name="phone"
+            size={20}
+            color="#ccc"
+            style={styles.rowIcon}
+          />
+          <View style={styles.rowText}>
+            <Text style={styles.rowLabel}>Mobile</Text>
+            <Text style={styles.rowValue}>{profile?.phonenumber || '—'}</Text>
+          </View>
         </View>
-      </View>
 
-      {/* Mobile */}
-      <View style={styles.row}>
-        <FontAwesome
-          name="phone"
-          size={20}
-          color="#ccc"
-          style={styles.rowIcon}
-        />
-        <View style={styles.rowText}>
-          <Text style={styles.rowLabel}>Mobile</Text>
-          <Text style={styles.rowValue}>{profile?.phonenumber || '—'}</Text>
+        <View style={styles.row}>
+          <FontAwesome
+            name="credit-card"
+            size={20}
+            color="#ccc"
+            style={styles.rowIcon}
+          />
+          <View style={styles.rowText}>
+            <Text style={styles.rowLabel}>ID Number</Text>
+            <Text style={styles.rowValue}>{profile?.idnumber || '—'}</Text>
+          </View>
         </View>
-      </View>
 
-      {/* ID Number */}
-      <View style={styles.row}>
-        <FontAwesome
-          name="credit-card"
-          size={20}
-          color="#ccc"
-          style={styles.rowIcon}
-        />
-        <View style={styles.rowText}>
-          <Text style={styles.rowLabel}>ID Number</Text>
-          <Text style={styles.rowValue}>{profile?.idnumber || '—'}</Text>
-        </View>
-      </View>
-
-      {/* Joined */}
-      <View style={styles.row}>
-        <FontAwesome
-          name="calendar"
-          size={20}
-          color="#ccc"
-          style={styles.rowIcon}
-        />
-        <View style={styles.rowText}>
-          <Text style={styles.rowLabel}>Joined</Text>
-          <Text style={styles.rowValue}>{formattedJoinedDate}</Text>
+        <View style={styles.row}>
+          <FontAwesome
+            name="calendar"
+            size={20}
+            color="#ccc"
+            style={styles.rowIcon}
+          />
+          <View style={styles.rowText}>
+            <Text style={styles.rowLabel}>Joined</Text>
+            <Text style={styles.rowValue}>{formattedJoinedDate}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -132,25 +119,41 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  header: {
-    paddingTop: 25,
-    paddingBottom: 60,
-    flexDirection: 'row',
+  profileBlock: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    paddingVertical: 10,
   },
 
-  backButton: {},
-
-  title: {
-    fontSize: 20,
+  name: {
+    fontSize: 18,
     fontWeight: '600',
+    marginTop: 8,
+    marginBottom: 5,
+  },
+
+  role: {
+    fontSize: 16,
+    color: '#888',
+  },
+
+  detailsBlock: {
+    flex: 1,
+    paddingTop: 10,
+  },
+
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 75,
+    marginBottom: 10,
   },
 
   details: {
+    paddingTop: 15,
     paddingLeft: 15,
     paddingBottom: 20,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
   },
 

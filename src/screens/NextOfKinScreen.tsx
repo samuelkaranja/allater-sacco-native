@@ -25,6 +25,7 @@ import {
   fetchNextOfKin,
   resetNextOfKinState,
 } from '../store/features/nextOfKin/nextOfKinSlice';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 
 type NextOfKinScreenNavigationProps = CompositeNavigationProp<
   StackNavigationProp<HomeStackParamList, 'Kin'>,
@@ -64,24 +65,10 @@ const NextOfKinScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate('Profile')}>
-          <FontAwesome
-            name="angle-left"
-            size={28}
-            color="#000"
-            style={styles.rowIcon}
-          />
-        </TouchableOpacity>
-        <Text style={styles.title}>Next Of Kin</Text>
-        <Text>Edit</Text>
-      </View>
+      <ScreenHeader route="Profile" title="Next Of Kin" />
 
       {/* Next of Kin Info */}
-      <View>
+      <View style={{marginTop: 50}}>
         {/* Name */}
         <View style={styles.row}>
           <FontAwesome
@@ -176,21 +163,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-  },
-
-  header: {
-    paddingTop: 25,
-    paddingBottom: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  backButton: {},
-
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
   },
 
   rowIcon: {
