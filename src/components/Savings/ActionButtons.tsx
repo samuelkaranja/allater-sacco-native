@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  label: {
-    marginTop: 6,
-    fontSize: 12,
-  },
+  // label: {
+  //   marginTop: 6,
+  //   fontSize: 12,
+  // },
 
   icon: {
     marginBottom: 7,

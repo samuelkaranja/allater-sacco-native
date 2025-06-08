@@ -1,6 +1,6 @@
 export type Transaction = {
-  type: 'Buy' | 'Sell' | 'Transfer';
-  account: string;
-  amount: string;
-  date: string;
+  type: string;
+  status: string;
+  amount: number;
+  createdAt: string;
 };

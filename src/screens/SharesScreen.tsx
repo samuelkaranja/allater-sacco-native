@@ -1,16 +1,11 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import React, {useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import SharesSummaryCard from '../components/Shares/SharesSummaryCard';
-import SharesActions from '../components/Shares/SharesActions';
-import TransactionFilterTabs from '../components/Shares/TransactionFilterTabs';
 import {Transaction} from '../components/Shares/types';
-import TransactionList from '../components/Shares/TransactionList';
-import Header from '../components/Header/Header';
-import useTransactionFilter from '../hooks/useTransactionFilter';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
+import SharesTransactionList from '../components/Shares/SharesTransactionList';
 
 type LoansScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -24,126 +19,117 @@ interface Props {
 const allTransactions: Transaction[] = [
   {
     type: 'Buy',
-    account: 'Savings - Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-04-06',
+    status: 'Savings - Shares',
+    amount: 123456,
+    createdAt: '2025-04-06',
   },
   {
     type: 'Sell',
-    account: 'Shares - Savings',
-    amount: '-Ksh 123,456.00',
-    date: '2025-04-01',
+    status: 'Shares - Savings',
+    amount: 123456,
+    createdAt: '2025-04-01',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-28',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-28',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-02',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-02',
   },
   {
     type: 'Buy',
-    account: 'Savings - Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-04-06',
+    status: 'Savings - Shares',
+    amount: 123456,
+    createdAt: '2025-04-06',
   },
   {
     type: 'Sell',
-    account: 'Shares - Savings',
-    amount: '-Ksh 123,456.00',
-    date: '2025-04-01',
+    status: 'Shares - Savings',
+    amount: 123456,
+    createdAt: '2025-04-01',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-28',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-28',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-02',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-02',
   },
   {
     type: 'Buy',
-    account: 'Savings - Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-04-06',
+    status: 'Savings - Shares',
+    amount: 123456,
+    createdAt: '2025-04-06',
   },
   {
     type: 'Sell',
-    account: 'Shares - Savings',
-    amount: '-Ksh 123,456.00',
-    date: '2025-04-01',
+    status: 'Shares - Savings',
+    amount: 123456,
+    createdAt: '2025-04-01',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-28',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-28',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-02',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-02',
   },
   {
     type: 'Buy',
-    account: 'Savings - Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-04-06',
+    status: 'Savings - Shares',
+    amount: 123456,
+    createdAt: '2025-04-06',
   },
   {
     type: 'Sell',
-    account: 'Shares - Savings',
-    amount: '-Ksh 123,456.00',
-    date: '2025-04-01',
+    status: 'Shares - Savings',
+    amount: 123456,
+    createdAt: '2025-04-01',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-28',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-28',
   },
   {
     type: 'Transfer',
-    account: 'Savings to Shares',
-    amount: '+Ksh 123,456.00',
-    date: '2025-03-02',
+    status: 'Savings to Shares',
+    amount: 123456,
+    createdAt: '2025-03-02',
   },
 ];
 
 const SharesScreen: React.FC<Props> = ({navigation}) => {
-  const [selectedTab, setSelectedTab] = useState('All');
-  const filteredTransactions = useTransactionFilter(
-    allTransactions,
-    selectedTab,
-  );
   return (
     <View style={styles.container}>
       <ScreenHeader route="HomeMain" title="Shares Account" />
 
-      {/* Main Content */}
-      <View style={styles.head}>
-        <Icon name="bar-chart" size={22} color={'black'} style={styles.icon} />
-        <Text style={styles.title}>Your Shares</Text>
-      </View>
-
       <SharesSummaryCard />
 
-      <SharesActions />
+      <View style={styles.more}>
+        <Text style={styles.history}>Shares Transctions</Text>
+        <TouchableOpacity>
+          <Text style={styles.moreBtn}>See all</Text>
+        </TouchableOpacity>
+      </View>
 
-      <Text style={styles.history}>Shares Transction History</Text>
-      <TransactionFilterTabs selected={selectedTab} onSelect={setSelectedTab} />
-
-      <TransactionList transactions={filteredTransactions} />
+      <SharesTransactionList transactions={allTransactions} />
     </View>
   );
 };
@@ -155,26 +141,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  head: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-
-  icon: {
-    marginLeft: 18,
-    marginRight: 10,
-  },
-
-  title: {
-    fontSize: 19,
-    fontWeight: 500,
-  },
-
   history: {
-    fontSize: 15,
-    fontWeight: 500,
-    paddingVertical: 8,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  more: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingHorizontal: 5,
+  },
+
+  moreBtn: {
+    textDecorationLine: 'underline',
+    color: '#000',
+    fontSize: 13,
   },
 });
 

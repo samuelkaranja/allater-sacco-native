@@ -1,55 +1,83 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import SharesActions from './SharesActions';
 
 const SharesSummaryCard: React.FC = () => (
-  <View style={styles.card}>
-    <Text style={styles.label}>Number of Shares:</Text>
-    <Text style={styles.value}>10000</Text>
-    <View style={styles.worth}>
-      <View>
-        <Text style={styles.label}>Worth:</Text>
-        <Text style={styles.value}>Ksh 1,000,000</Text>
-      </View>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Buy Shares</Text>
-      </TouchableOpacity>
+  <LinearGradient
+    colors={['#005A5B', '#1CB5E0']} // gradient background based on image
+    start={{x: 0, y: 0}}
+    end={{x: 1, y: 0}}
+    style={styles.card}>
+    <View style={styles.intro}>
+      <Text style={styles.account}>
+        <Text style={{fontWeight: '500'}}>Acc:</Text> 12345678
+      </Text>
     </View>
-  </View>
+    <View style={styles.more}>
+      <View>
+        <Text style={styles.label}>Shares</Text>
+        <Text style={styles.shares}>10 Shares</Text>
+      </View>
+      <View>
+        <Text style={styles.label}>Share Worth</Text>
+        <Text style={styles.amount}>
+          <Text style={{fontSize: 12}}>Kshs </Text>1000.00
+        </Text>
+      </View>
+    </View>
+    <SharesActions />
+  </LinearGradient>
 );
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#DAA520',
-    borderRadius: 12,
-    padding: 16,
-    margin: 16,
+    width: '98%',
+    borderRadius: 16,
+    paddingVertical: 25,
+    paddingHorizontal: 25,
+    marginTop: 10,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: 15,
   },
 
-  worth: {
+  more: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 15,
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+
+  intro: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+
+  account: {
+    fontSize: 12,
+    color: '#fff',
+    marginBottom: 10,
   },
 
   label: {
+    fontSize: 23,
+    fontWeight: '400',
     color: '#fff',
   },
 
-  value: {
+  shares: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontWeight: '500',
   },
 
-  button: {
-    marginTop: 10,
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 8,
+  amount: {
+    color: '#fff',
+    fontWeight: '500',
   },
-
-  buttonText: {color: '#000'},
 });
 
 export default SharesSummaryCard;
