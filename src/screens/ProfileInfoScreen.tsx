@@ -52,7 +52,7 @@ const ProfileInfo: React.FC<Props> = ({navigation}) => {
       </View>
       <Text style={styles.details}>Account Details</Text>
 
-      {/* Email */}
+      {/* Name */}
       <View style={styles.row}>
         <FontAwesome
           name="user"
@@ -94,7 +94,7 @@ const ProfileInfo: React.FC<Props> = ({navigation}) => {
         </View>
       </View>
 
-      {/* Mobile */}
+      {/* ID Number */}
       <View style={styles.row}>
         <FontAwesome
           name="credit-card"

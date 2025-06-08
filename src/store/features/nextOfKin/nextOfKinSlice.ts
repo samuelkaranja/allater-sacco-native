@@ -14,12 +14,14 @@ type NextOfKinState = {
   loading: boolean;
   error: string | null;
   success: boolean;
+  data: NextOfKinData | null;
 };
 
 const initialState: NextOfKinState = {
   loading: false,
   error: null,
   success: false,
+  data: null,
 };
 
 export const addNextOfKin = createAsyncThunk<
@@ -55,6 +57,32 @@ export const addNextOfKin = createAsyncThunk<
   }
 });
 
+export const fetchNextOfKin = createAsyncThunk<
+  NextOfKinData | null,
+  void,
+  {state: RootState; rejectValue: string}
+>('nextOfKin/fetchNextOfKin', async (_, {getState, rejectWithValue}) => {
+  try {
+    const token = getState().auth.token;
+    const response = await axios.get(
+      'https://allater-sacco-backend.fly.dev/profile/nextofkin',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    return rejectWithValue(
+      error.response?.data?.message || 'Something went wrong',
+    );
+  }
+});
+
 const nextOfKinSlice = createSlice({
   name: 'nextOfKin',
   initialState,
@@ -76,6 +104,17 @@ const nextOfKinSlice = createSlice({
         state.loading = false;
         state.error = action.payload ?? 'Failed to submit';
         state.success = false;
+      })
+      .addCase(fetchNextOfKin.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchNextOfKin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload; // could be null
+      })
+      .addCase(fetchNextOfKin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
