@@ -20,7 +20,7 @@ const SavingsCard: React.FC<SavingsCardProps> = ({title, account, balance}) => {
         colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
         style={styles.glassCard}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.number}>{account}</Text>
+        <Text style={styles.number}>Acc: {account}</Text>
 
         <View style={{marginTop: 20}}>
           <Text style={styles.label}>Current Balance</Text>

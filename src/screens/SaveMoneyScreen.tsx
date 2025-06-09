@@ -7,13 +7,14 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
-import Header from '../components/Header/Header';
+//import Header from '../components/Header/Header';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 
 type SaveMoneyScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -65,6 +66,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
       );
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         setAmount('0');
@@ -73,7 +75,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
         setTimeout(() => {
           dispatch(fetchUserOverview());
           navigation.navigate('HomeMain');
-        }, 8000);
+        }, 10000);
       } else {
         Alert.alert('Error', data.message || 'Failed to save amount');
       }
@@ -84,7 +86,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header navigation={navigation} />
+      <ScreenHeader route="Savings" title="Save Money" />
       <View style={styles.card}>
         <Text style={styles.header}>Save Money To Your Account</Text>
 
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
   },
+
   card: {
     width: '100%',
     paddingTop: 50,
@@ -131,11 +134,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     alignItems: 'center',
   },
+
   header: {
     fontSize: 16,
     color: '#888',
     marginBottom: 10,
   },
+
   amountBox: {
     backgroundColor: '#F1F2F6',
     borderRadius: 12,
@@ -144,16 +149,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 40,
   },
+
   amountText: {
     fontSize: 28,
     fontWeight: '600',
   },
+
   keypad: {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
+
   key: {
     width: '30%',
     aspectRatio: 1,
@@ -162,20 +170,24 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     borderRadius: 10,
   },
+
   keyText: {
     fontSize: 24,
     color: '#333',
   },
+
   backKey: {
     backgroundColor: '#F1F2F6',
   },
+
   sendButton: {
-    backgroundColor: '#000',
+    backgroundColor: '#2ecc71',
     paddingVertical: 10,
     width: '90%',
     borderRadius: 12,
     marginBottom: 30,
   },
+
   sendButtonText: {
     color: '#fff',
     textAlign: 'center',

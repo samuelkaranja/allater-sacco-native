@@ -20,18 +20,18 @@ const SharesCard: React.FC<SharesCardProps> = ({title, balance, account}) => {
         colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
         style={styles.glassCard}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.number}>{account}</Text>
+        <Text style={styles.number}>Acc: {account}</Text>
 
         <View style={styles.sharesInfo}>
           <View>
             <Text style={styles.label}>No of shares</Text>
-            <Text style={styles.balance}>{balance.toFixed(2)} Shares</Text>
+            <Text style={styles.balance}>{balance} Shares</Text>
           </View>
 
-          <View style={{marginTop: 5}}>
+          {/* <View style={{marginTop: 5}}>
             <Text style={styles.label}>Shares Worth</Text>
             <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
-          </View>
+          </View> */}
         </View>
 
         <Pressable
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
   },
   label: {
     fontSize: 12,

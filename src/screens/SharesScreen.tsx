@@ -1,11 +1,14 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import SharesSummaryCard from '../components/Shares/SharesSummaryCard';
 import {Transaction} from '../components/Shares/types';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import SharesTransactionList from '../components/Shares/SharesTransactionList';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../store/store';
+import {fetchSharesSummary} from '../store/features/shares/sharesSlice';
 
 type LoansScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -116,11 +119,22 @@ const allTransactions: Transaction[] = [
 ];
 
 const SharesScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const sharesOverview = useSelector((state: RootState) => state.shares.shares);
+
+  useEffect(() => {
+    dispatch(fetchSharesSummary());
+  }, [dispatch]);
+
   return (
     <View style={styles.container}>
       <ScreenHeader route="HomeMain" title="Shares Account" />
 
-      <SharesSummaryCard />
+      <SharesSummaryCard
+        accountNumber={'12345678'}
+        shareAmount={sharesOverview?.shareAmount ?? 0}
+        noOfSharesBought={sharesOverview?.noOfSharesBought ?? 0}
+      />
 
       <View style={styles.more}>
         <Text style={styles.history}>Shares Transctions</Text>
@@ -129,7 +143,13 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <SharesTransactionList transactions={allTransactions} />
+      {sharesOverview?.recentTransactions.length === 0 ? (
+        <Text style={{textAlign: 'center'}}>No transactions found</Text>
+      ) : (
+        <SharesTransactionList
+          transactions={sharesOverview?.recentTransactions ?? []}
+        />
+      )}
     </View>
   );
 };

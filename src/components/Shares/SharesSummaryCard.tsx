@@ -3,7 +3,17 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SharesActions from './SharesActions';
 
-const SharesSummaryCard: React.FC = () => (
+interface Props {
+  shareAmount: number;
+  noOfSharesBought: number;
+  accountNumber: string;
+}
+
+const SharesSummaryCard: React.FC<Props> = ({
+  accountNumber,
+  shareAmount,
+  noOfSharesBought,
+}) => (
   <LinearGradient
     colors={['#005A5B', '#1CB5E0']} // gradient background based on image
     start={{x: 0, y: 0}}
@@ -11,18 +21,19 @@ const SharesSummaryCard: React.FC = () => (
     style={styles.card}>
     <View style={styles.intro}>
       <Text style={styles.account}>
-        <Text style={{fontWeight: '500'}}>Acc:</Text> 12345678
+        <Text style={{fontWeight: '500'}}>Acc:</Text> {accountNumber}
       </Text>
     </View>
     <View style={styles.more}>
       <View>
         <Text style={styles.label}>Shares</Text>
-        <Text style={styles.shares}>10 Shares</Text>
+        <Text style={styles.shares}>{noOfSharesBought} Shares</Text>
       </View>
       <View>
         <Text style={styles.label}>Share Worth</Text>
         <Text style={styles.amount}>
-          <Text style={{fontSize: 12}}>Kshs </Text>1000.00
+          <Text style={{fontSize: 12}}>Kshs </Text>
+          {shareAmount}
         </Text>
       </View>
     </View>
@@ -71,11 +82,13 @@ const styles = StyleSheet.create({
 
   shares: {
     color: '#fff',
+    fontSize: 20,
     fontWeight: '500',
   },
 
   amount: {
     color: '#fff',
+    fontSize: 20,
     fontWeight: '500',
   },
 });
