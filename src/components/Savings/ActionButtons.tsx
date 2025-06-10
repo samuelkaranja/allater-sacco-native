@@ -13,21 +13,21 @@ const ActionButtons: React.FC = () => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Save')}>
-        <Icon name="plus" size={18} color={'white'} style={styles.icon} />
+        <Icon name="plus" size={15} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Save</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Withdraw')}>
-        <Icon name="minus" size={18} color={'white'} style={styles.icon} />
+        <Icon name="minus" size={15} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Withdraw</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
+      {/* <TouchableOpacity style={styles.button}>
         <Icon name="send" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Transfer</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -44,16 +44,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  // label: {
-  //   marginTop: 6,
-  //   fontSize: 12,
-  // },
-
   icon: {
-    marginBottom: 7,
-    borderRadius: 50,
-    padding: 14,
+    borderRadius: 10,
+    padding: 15,
     backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    marginBottom: 5,
   },
 
   iconText: {

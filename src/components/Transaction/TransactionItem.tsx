@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
   time: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#7E8A9A',
     paddingTop: 5,
   },

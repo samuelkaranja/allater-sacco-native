@@ -17,7 +17,9 @@ const SavingsCard: React.FC<SavingsCardProps> = ({title, account, balance}) => {
   return (
     <View style={styles.cardContainer}>
       <LinearGradient
-        colors={['rgba(12, 12, 12, 0.1)', 'rgba(5, 5, 5, 0.05)']}
+        colors={['#005A5B', '#1CB5E0']} // gradient background based on image
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
         style={styles.glassCard}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.number}>Acc: {account}</Text>
@@ -30,7 +32,7 @@ const SavingsCard: React.FC<SavingsCardProps> = ({title, account, balance}) => {
         <Pressable
           style={styles.infoBtn}
           onPress={() => navigation.navigate('Savings')}>
-          <Text style={styles.visa}>Details</Text>
+          <Text style={styles.infoBtnText}>Details</Text>
         </Pressable>
       </LinearGradient>
     </View>
@@ -43,47 +45,53 @@ const styles = StyleSheet.create({
     height: 200,
     marginRight: 20,
   },
+
   glassCard: {
     flex: 1,
     borderRadius: 20,
     padding: 20,
-    backgroundColor: '#12994a',
     borderColor: 'rgba(255, 255, 255, 0.3)',
     borderWidth: 1,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 10,
   },
+
   title: {
     fontSize: 21,
     fontWeight: 'bold',
     color: '#fff',
   },
+
   number: {
     fontSize: 14,
     color: '#eee',
     marginTop: 4,
   },
+
   label: {
     fontSize: 12,
     color: '#ccc',
   },
+
   balance: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
   },
+
   infoBtn: {
     position: 'absolute',
     bottom: 20,
     right: 20,
     backgroundColor: '#fff',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
     borderRadius: 20,
   },
-  visa: {
-    fontSize: 13,
+
+  infoBtnText: {
+    fontSize: 11,
     fontWeight: 'bold',
     color: '#000',
   },

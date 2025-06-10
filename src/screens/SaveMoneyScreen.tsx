@@ -15,6 +15,7 @@ import {AppDispatch} from '../store/store';
 import {fetchUserOverview} from '../store/slices/overviewSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
+import Toast from 'react-native-toast-message';
 
 type SaveMoneyScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -39,7 +40,15 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
 
   const handleSave = async () => {
     if (!amount || parseFloat(amount) <= 0) {
-      Alert.alert('Validation', 'Please enter a valid amount.');
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Please enter a valid amount.',
+        position: 'top',
+        visibilityTime: 10000,
+        autoHide: true,
+      });
+      //Alert.alert('Validation', 'Please enter a valid amount.');
       return;
     }
 

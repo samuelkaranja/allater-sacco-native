@@ -39,9 +39,15 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <SavingsTransactionList
-        transactions={savingsDetails.recentTransactions}
-      />
+      {savingsDetails?.recentTransactions.length === 0 ? (
+        <Text style={{textAlign: 'center', color: 'black'}}>
+          No transactions found
+        </Text>
+      ) : (
+        <SavingsTransactionList
+          transactions={savingsDetails.recentTransactions}
+        />
+      )}
     </View>
   );
 };

@@ -23,7 +23,7 @@ const BalanceCard: React.FC<Props> = ({balance, accountNumber}) => {
       </View>
       <Text style={styles.label}>Savings balance</Text>
       <Text style={styles.balance}>
-        <Text style={styles.currency}>Kes</Text>
+        <Text style={styles.currency}>Kes </Text>
         {balance.toLocaleString(undefined, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
@@ -38,7 +38,6 @@ const BalanceCard: React.FC<Props> = ({balance, accountNumber}) => {
 const styles = StyleSheet.create({
   card: {
     width: '100%',
-    backgroundColor: '#27ae60',
     borderRadius: 16,
     paddingVertical: 20,
     paddingHorizontal: 25,
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: 'bold',
     marginTop: 5,
-    marginBottom: 15,
+    marginBottom: 10,
     color: '#fff',
     textAlign: 'center',
   },

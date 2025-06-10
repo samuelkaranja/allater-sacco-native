@@ -66,13 +66,13 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 13,
+    fontWeight: '500',
     color: '#1E1E1E',
   },
 
   time: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#000',
     paddingTop: 5,
   },
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 
   type: {
     fontSize: 12,
-    color: '#000',
+    color: 'green',
     paddingTop: 5,
   },
 

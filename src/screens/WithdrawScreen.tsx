@@ -6,11 +6,15 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
-import Header from '../components/Header/Header';
-import WithdrawForm from '../components/Withdraw/WithdrawForm';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../store/store';
+import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 type WithdrawScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -23,11 +27,96 @@ interface Props {
 
 const WithdrawScreen: React.FC<Props> = ({navigation}) => {
   const [amount, setAmount] = useState<string>('0');
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleKeyPress = (key: string) => {
+    if (key === 'back') {
+      setAmount(prev => prev.slice(0, -1));
+    } else {
+      setAmount(prev => prev + key);
+    }
+  };
+
+  const handleWithdraw = async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Please enter a valid amount.',
+        position: 'top',
+        visibilityTime: 4000,
+        autoHide: true,
+      });
+      return;
+    }
+
+    try {
+      const token = await AsyncStorage.getItem('token');
+      if (!token) {
+        Toast.show({
+          type: 'error',
+          text1: 'Unauthorized',
+          text2: 'You must be logged in to perform this action.',
+          position: 'top',
+          visibilityTime: 20000,
+          autoHide: true,
+        });
+        // Alert.alert(
+        //   'Unauthorized',
+        //   'You must be logged in to perform this action.',
+        // );
+        return;
+      }
+
+      const response = await axios.post(
+        'https://allater-sacco-backend.fly.dev/savings/withdraw',
+        {amount: parseFloat(amount)}, // Send amount
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      // Handle success
+      Toast.show({
+        type: 'success',
+        text1: 'Withdrawal Successful',
+        text2: `You have withdrawn KES ${parseFloat(amount).toLocaleString(
+          undefined,
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          },
+        )}`,
+        position: 'top',
+        visibilityTime: 4000,
+        autoHide: true,
+      });
+      console.log(response);
+      // Reset amount input
+      setAmount('0');
+
+      // Optionally navigate back or refresh savings screen
+      navigation.navigate('Savings');
+    } catch (error: any) {
+      console.error('Withdrawal error:', error.response?.data || error.message);
+      Toast.show({
+        type: 'error',
+        text1: 'Withdrawal Failed',
+        text2:
+          error.response?.data?.message ||
+          'Something went wrong. Please try again.',
+        position: 'top',
+        visibilityTime: 10000,
+        autoHide: true,
+      });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Header navigation={navigation} /> */}
-
       <ScreenHeader route="Savings" title="Withdraw" />
 
       <View style={styles.card}>
@@ -45,7 +134,7 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.sendButton}>
+        <TouchableOpacity style={styles.sendButton} onPress={handleWithdraw}>
           <Text style={styles.sendButtonText}>Withdraw</Text>
         </TouchableOpacity>
 
@@ -54,17 +143,14 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
             (key, idx) => (
               <TouchableOpacity
                 key={idx}
-                style={[styles.key, key === 'back' && styles.backKey]}>
+                style={[styles.key, key === 'back' && styles.backKey]}
+                onPress={() => handleKeyPress(key)}>
                 <Text style={styles.keyText}>{key === 'back' ? '⌫' : key}</Text>
               </TouchableOpacity>
             ),
           )}
         </View>
       </View>
-
-      {/* <Text style={styles.title}>Withdraw To Mpesa</Text>
-
-      <WithdrawForm /> */}
     </SafeAreaView>
   );
 };
