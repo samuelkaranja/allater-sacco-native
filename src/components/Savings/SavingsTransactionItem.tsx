@@ -14,6 +14,8 @@ const SavingsTransactionItem: React.FC<SavingsTransactionItemProps> = ({
   amount,
   createdAt,
 }) => {
+  const formattedDate = new Date(createdAt).toLocaleString();
+
   return (
     <View style={styles.container}>
       <View style={styles.details}>
@@ -28,7 +30,7 @@ const SavingsTransactionItem: React.FC<SavingsTransactionItemProps> = ({
             maximumFractionDigits: 2,
           })}
         </Text>
-        <Text style={styles.time}>{createdAt}</Text>
+        <Text style={styles.time}>{formattedDate}</Text>
       </View>
     </View>
   );

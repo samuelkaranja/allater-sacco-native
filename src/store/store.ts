@@ -3,6 +3,7 @@ import registerReducer from './features/auth/registerSlice';
 import authReducer from './features/auth/authSlice';
 import overviewReducer from './slices/overviewSlice';
 import nextOfKinReducer from './features/nextOfKin/nextOfKinSlice';
+import savingsReducer from './features/savings/savingsSlice';
 import sharesReducer from './features/shares/sharesSlice';
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     register: registerReducer,
     overview: overviewReducer,
     nextOfKin: nextOfKinReducer,
+    savings: savingsReducer,
     shares: sharesReducer,
   },
 });

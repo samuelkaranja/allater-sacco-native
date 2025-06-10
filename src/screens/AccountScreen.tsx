@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 15,
   },
+
   header: {
     alignItems: 'center',
     marginTop: 50,
@@ -86,9 +87,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+
   menuList: {
     marginBottom: 20,
   },
+
   menuItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -106,14 +109,17 @@ const styles = StyleSheet.create({
     // Android soft shadow
     elevation: 1.5,
   },
+
   menuIconLabel: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+
   menuText: {
     fontSize: 14,
     marginLeft: 12,
   },
+
   logoutButton: {
     backgroundColor: '#2ecc71', // Green color
     paddingVertical: 14,
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   logoutText: {
     color: '#fff',
     fontSize: 16,
