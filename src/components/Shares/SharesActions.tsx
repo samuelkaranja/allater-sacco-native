@@ -12,19 +12,19 @@ const SharesActions: React.FC = () => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('BuyShares')}>
-        <Icon name="plus" size={18} color={'white'} style={styles.icon} />
+        <Icon name="arrow-down" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Buy Shares</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
-        <Icon name="minus" size={18} color={'white'} style={styles.icon} />
+        <Icon name="arrow-up" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Sell Shares</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
+      {/* <TouchableOpacity style={styles.button}>
         <Icon name="exchange" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Transfer Shares</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

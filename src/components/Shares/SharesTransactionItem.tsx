@@ -14,13 +14,16 @@ const SharesTransactionItem: React.FC<SharesTransactionItemProps> = ({
   amount,
   createdAt,
 }) => {
+  const formattedDate = new Date(createdAt).toLocaleString();
+
   return (
     <View style={styles.container}>
-      <View style={styles.details}>
-        <Text style={styles.title}>{type}</Text>
-        <Text style={styles.type}>{status}</Text>
-      </View>
       <View style={styles.amountContainer}>
+        <Text style={styles.title}>{amount / 1} Shares</Text>
+        <Text style={styles.time}>{formattedDate}</Text>
+      </View>
+
+      <View style={styles.details}>
         <Text style={styles.amount}>
           <Text style={styles.currency}>Kshs </Text>
           {amount.toLocaleString(undefined, {
@@ -28,7 +31,6 @@ const SharesTransactionItem: React.FC<SharesTransactionItemProps> = ({
             maximumFractionDigits: 2,
           })}
         </Text>
-        <Text style={styles.time}>{createdAt}</Text>
       </View>
     </View>
   );
@@ -44,15 +46,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-
   icon: {
     width: 20,
     height: 20,
@@ -61,6 +54,7 @@ const styles = StyleSheet.create({
 
   details: {
     flex: 1,
+    alignItems: 'flex-end',
   },
 
   title: {
@@ -70,13 +64,13 @@ const styles = StyleSheet.create({
   },
 
   time: {
-    fontSize: 11,
+    fontSize: 0,
     color: '#000',
     paddingTop: 5,
   },
 
   amountContainer: {
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     paddingTop: 5,
   },
 
@@ -102,26 +96,6 @@ const styles = StyleSheet.create({
   },
 
   withdraw: {
-    color: 'red',
-  },
-
-  statusPending: {
-    color: 'orange',
-  },
-
-  statusSuccess: {
-    color: 'green',
-  },
-
-  statusFailed: {
-    color: 'orange',
-  },
-
-  statusInsufficient: {
-    color: 'purple',
-  },
-
-  statusCancelled: {
     color: 'red',
   },
 });
