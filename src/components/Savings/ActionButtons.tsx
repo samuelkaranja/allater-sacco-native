@@ -14,7 +14,7 @@ const ActionButtons: React.FC = () => {
         style={styles.button}
         onPress={() => navigation.navigate('Save')}>
         <Icon name="plus" size={15} color={'white'} style={styles.icon} />
-        <Text style={styles.iconText}>Save</Text>
+        <Text style={styles.iconText}>Deposit</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

@@ -15,6 +15,7 @@ import SavingsScreen from '../screens/SavingsScreen';
 import SaveMoneyScreen from '../screens/SaveMoneyScreen';
 import ProfileInfoScreen from '../screens/ProfileInfoScreen';
 import NextOfKinScreen from '../screens/NextOfKinScreen';
+import BuySharesScreen from '../screens/BuySharesScreen';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -34,6 +35,7 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="Withdraw" component={WithdrawScreen} />
       <Stack.Screen name="Member" component={ProfileInfoScreen} />
       <Stack.Screen name="Kin" component={NextOfKinScreen} />
+      <Stack.Screen name="BuyShares" component={BuySharesScreen} />
       {/* Add other screens here */}
     </Stack.Navigator>
   );

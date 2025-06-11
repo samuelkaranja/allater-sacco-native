@@ -7,15 +7,13 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
-//import Header from '../components/Header/Header';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../store/store';
-import {fetchUserOverview} from '../store/slices/overviewSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
+import {ActivityIndicator} from 'react-native';
 
 type SaveMoneyScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -28,7 +26,7 @@ interface Props {
 
 const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
   const [amount, setAmount] = useState<string>('0');
-  const dispatch = useDispatch<AppDispatch>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleKeyPress = (key: string) => {
     if (key === 'back') {
@@ -48,48 +46,80 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
         visibilityTime: 10000,
         autoHide: true,
       });
-      //Alert.alert('Validation', 'Please enter a valid amount.');
       return;
     }
 
     try {
+      setLoading(true); // Start loading
       const token = await AsyncStorage.getItem('token');
       if (!token) {
-        Alert.alert(
-          'Unauthorized',
-          'You must be logged in to perform this action.',
-        );
+        Toast.show({
+          type: 'error',
+          text1: 'Unauthorized',
+          text2: 'You must be logged in to perform this action.',
+          position: 'top',
+          visibilityTime: 20000,
+          autoHide: true,
+        });
         return;
       }
 
-      const response = await fetch(
+      const response = await axios.post(
         'https://allater-sacco-backend.fly.dev/savings/deposit',
+        {amount: parseFloat(amount)},
         {
-          method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify({amount}),
         },
       );
 
-      const data = await response.json();
-      console.log(data);
+      // Handle success
+      Toast.show({
+        type: 'success',
+        text1: 'Deposit Successful',
+        text2: `You have deposited KES ${parseFloat(amount).toLocaleString(
+          undefined,
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          },
+        )}`,
+        position: 'top',
+        visibilityTime: 4000,
+        autoHide: true,
+      });
 
-      if (response.ok) {
-        setAmount('0');
+      console.log(response);
+      // Reset amount input
+      setAmount('0');
 
-        // Wait 8 seconds to let backend update transaction status
-        setTimeout(() => {
-          dispatch(fetchUserOverview());
-          navigation.navigate('HomeMain');
-        }, 10000);
-      } else {
-        Alert.alert('Error', data.message || 'Failed to save amount');
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Something went wrong');
+      // Optionally navigate back or refresh savings screen
+      navigation.navigate('Savings');
+
+      // if (response.status === 201 || response.status === 200) {
+      //   setAmount('0');
+      //   navigation.navigate('Savings');
+      // } else {
+      //   Toast.show({
+      //     type: 'error',
+      //     text1: 'Error',
+      //     text2: response.data?.message || 'Failed to save amount',
+      //     position: 'top',
+      //     visibilityTime: 20000,
+      //     autoHide: true,
+      //   });
+      //   //Alert.alert('Error', response.data?.message || 'Failed to save amount');
+      // }
+    } catch (error: any) {
+      console.error('Deposit error:', error?.response || error);
+      Alert.alert(
+        'Error',
+        error?.response?.data?.message || 'Something went wrong',
+      );
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -109,8 +139,20 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.sendButton} onPress={handleSave}>
+        {/* <TouchableOpacity style={styles.sendButton} onPress={handleSave}>
           <Text style={styles.sendButtonText}>Save</Text>
+        </TouchableOpacity> */}
+
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={handleSave}
+          disabled={loading} // prevent multiple taps
+        >
+          {loading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.sendButtonText}>Save</Text>
+          )}
         </TouchableOpacity>
 
         <View style={styles.keypad}>

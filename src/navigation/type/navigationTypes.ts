@@ -35,4 +35,5 @@ export type HomeStackParamList = {
   Save: undefined;
   Member: undefined;
   Kin: undefined;
+  BuyShares: undefined;
 };

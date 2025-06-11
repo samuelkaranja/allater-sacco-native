@@ -16,11 +16,28 @@ const SavingsTransactionItem: React.FC<SavingsTransactionItemProps> = ({
 }) => {
   const formattedDate = new Date(createdAt).toLocaleString();
 
+  const getStatusStyle = () => {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return styles.statusPending;
+      case 'success':
+        return styles.statusSuccess;
+      case 'failed':
+        return styles.statusFailed;
+      case 'insufficient_funds':
+        return styles.statusInsufficient;
+      case 'cancelled':
+        return styles.statusCancelled;
+      default:
+        return {};
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.details}>
         <Text style={styles.title}>{type}</Text>
-        <Text style={styles.type}>{status}</Text>
+        <Text style={[styles.status, getStatusStyle()]}>{status}</Text>
       </View>
       <View style={styles.amountContainer}>
         <Text style={styles.amount}>
@@ -93,9 +110,8 @@ const styles = StyleSheet.create({
     color: '#000',
   },
 
-  type: {
-    fontSize: 12,
-    color: 'green',
+  status: {
+    fontSize: 11,
     paddingTop: 5,
   },
 

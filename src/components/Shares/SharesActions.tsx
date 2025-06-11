@@ -1,25 +1,33 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
-const SharesActions = () => (
-  <View style={styles.container}>
-    <TouchableOpacity style={styles.button}>
-      <Icon name="plus" size={18} color={'white'} style={styles.icon} />
-      <Text style={styles.iconText}>Buy Shares</Text>
-    </TouchableOpacity>
+const SharesActions: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('BuyShares')}>
+        <Icon name="plus" size={18} color={'white'} style={styles.icon} />
+        <Text style={styles.iconText}>Buy Shares</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.button}>
-      <Icon name="minus" size={18} color={'white'} style={styles.icon} />
-      <Text style={styles.iconText}>Sell Shares</Text>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Icon name="minus" size={18} color={'white'} style={styles.icon} />
+        <Text style={styles.iconText}>Sell Shares</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.button}>
-      <Icon name="exchange" size={18} color={'white'} style={styles.icon} />
-      <Text style={styles.iconText}>Transfer Shares</Text>
-    </TouchableOpacity>
-  </View>
-);
+      <TouchableOpacity style={styles.button}>
+        <Icon name="exchange" size={18} color={'white'} style={styles.icon} />
+        <Text style={styles.iconText}>Transfer Shares</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

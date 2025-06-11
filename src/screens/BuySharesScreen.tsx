@@ -1,55 +1,71 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import React, {useState} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  Text,
   View,
+  SafeAreaView,
+  Text,
   TouchableOpacity,
 } from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
-import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import Toast from 'react-native-toast-message';
+import {ActivityIndicator} from 'react-native';
+import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {ActivityIndicator} from 'react-native';
 
-type WithdrawScreenNavigationProps = DrawerNavigationProp<
+type BuySharesScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
-  'Withdraw'
+  'BuyShares'
 >;
 
 interface Props {
-  navigation: WithdrawScreenNavigationProps;
+  navigation: BuySharesScreenNavigationProps;
 }
 
-const WithdrawScreen: React.FC<Props> = ({navigation}) => {
+const BuySharesScreen: React.FC<Props> = ({navigation}) => {
   const [amount, setAmount] = useState<string>('0');
   const [loading, setLoading] = useState<boolean>(false);
 
+  //   const handleKeyPress = (key: string) => {
+  //     if (key === 'back') {
+  //       setAmount(prev => prev.slice(0, -1));
+  //     } else {
+  //       setAmount(prev => prev + key);
+  //     }
+  //   };
+
   const handleKeyPress = (key: string) => {
+    if (loading) return; // prevent input while loading
+
     if (key === 'back') {
       setAmount(prev => prev.slice(0, -1));
-    } else {
-      setAmount(prev => prev + key);
+    } else if (/^\d+$/.test(key)) {
+      setAmount(prev => {
+        // prevent leading zeroes
+        const next = prev === '0' ? key : prev + key;
+        return next;
+      });
     }
   };
 
-  const handleWithdraw = async () => {
-    if (!amount || parseFloat(amount) <= 0) {
+  const handleBuyShares = async () => {
+    // Validate: Must be a whole number greater than 0
+    if (!/^\d+$/.test(amount) || Number(amount) <= 0) {
       Toast.show({
         type: 'error',
-        text1: 'Error',
-        text2: 'Please enter a valid amount.',
+        text1: 'Invalid Amount',
+        text2: 'Please enter a valid number of shares (whole number above 0)',
         position: 'top',
-        visibilityTime: 4000,
+        visibilityTime: 8000,
         autoHide: true,
       });
       return;
     }
 
     try {
-      setLoading(true); // Start loading
+      setLoading(true);
+
       const token = await AsyncStorage.getItem('token');
       if (!token) {
         Toast.show({
@@ -60,13 +76,14 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
           visibilityTime: 20000,
           autoHide: true,
         });
-
         return;
       }
 
+      console.log('Sending amount:', amount, typeof amount);
+
       const response = await axios.post(
-        'https://allater-sacco-backend.fly.dev/savings/withdraw',
-        {amount: parseFloat(amount)}, // Send amount
+        'https://allater-sacco-backend.fly.dev/shares/buy',
+        {noOfShares: amount},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,32 +92,23 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
         },
       );
 
-      // Handle success
       Toast.show({
         type: 'success',
-        text1: 'Withdrawal Successful',
-        text2: `You have withdrawn KES ${parseFloat(amount).toLocaleString(
-          undefined,
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          },
-        )}`,
+        text1: 'Successful',
+        text2: response?.data.message,
         position: 'top',
-        visibilityTime: 4000,
+        visibilityTime: 10000,
         autoHide: true,
       });
-      console.log(response);
-      // Reset amount input
-      setAmount('0');
 
-      // Optionally navigate back or refresh savings screen
-      navigation.navigate('Savings');
+      console.log('Buy shares response:', response.data);
+      setAmount('0');
+      navigation.navigate('Shares');
     } catch (error: any) {
-      console.error('Withdrawal error:', error.response?.data || error.message);
+      console.error('Buy shares error:', error.response?.data || error.message);
       Toast.show({
         type: 'error',
-        text1: 'Withdrawal Failed',
+        text1: 'Purchase Failed',
         text2:
           error.response?.data?.message ||
           'Something went wrong. Please try again.',
@@ -109,42 +117,37 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
         autoHide: true,
       });
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader route="Savings" title="Withdraw" />
+      <ScreenHeader route="Shares" title="Buy Shares" />
 
       <View style={styles.card}>
         <Text style={styles.header}>
-          Withdraw Money From Your Savings Account
+          Enter the number of shares you want to buy
         </Text>
+        <Text>1 Share = Kshs 1.00</Text>
 
         <View style={styles.amountBox}>
-          <Text style={styles.amountText}>
-            <Text style={{fontSize: 15}}>KES </Text>
-            {Number(amount).toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }) || '0'}
-          </Text>
+          <Text style={styles.amountText}>{Number(amount) || '0'}</Text>
         </View>
 
         <TouchableOpacity
           style={styles.sendButton}
-          onPress={handleWithdraw}
+          onPress={handleBuyShares}
           disabled={loading} // prevent multiple taps
         >
           {loading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
-            <Text style={styles.sendButtonText}>Withdraw</Text>
+            <Text style={styles.sendButtonText}>Buy Shares</Text>
           )}
         </TouchableOpacity>
 
-        <View style={styles.keypad}>
+        {/* <View style={styles.keypad}>
           {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', 'back'].map(
             (key, idx) => (
               <TouchableOpacity
@@ -152,6 +155,29 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
                 style={[styles.key, key === 'back' && styles.backKey]}
                 onPress={() => handleKeyPress(key)}>
                 <Text style={styles.keyText}>{key === 'back' ? '⌫' : key}</Text>
+              </TouchableOpacity>
+            ),
+          )}
+        </View> */}
+
+        <View style={styles.keypad}>
+          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '0', 'back'].map(
+            (key, idx) => (
+              <TouchableOpacity
+                key={idx}
+                style={[
+                  styles.key,
+                  key === 'back' && styles.backKey,
+                  loading && styles.disabledKey, // optional style when disabled
+                ]}
+                onPress={() => {
+                  if (!loading) handleKeyPress(key); // ✅ prevent press if loading
+                }}
+                activeOpacity={loading ? 1 : 0.6} // ✅ prevent visual feedback if loading
+              >
+                <Text style={[styles.keyText, loading && {color: '#aaa'}]}>
+                  {key === 'back' ? '⌫' : key}
+                </Text>
               </TouchableOpacity>
             ),
           )}
@@ -165,7 +191,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
-    // backgroundColor: '#fff',
   },
 
   card: {
@@ -243,6 +268,10 @@ const styles = StyleSheet.create({
     color: '#0D5C63',
     textAlign: 'center',
   },
+
+  disabledKey: {
+    backgroundColor: '#eee',
+  },
 });
 
-export default WithdrawScreen;
+export default BuySharesScreen;

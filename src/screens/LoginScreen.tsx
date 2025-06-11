@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loginUser} from '../store/features/auth/authSlice';
 import Toast from 'react-native-toast-message';
 import {AppDispatch, RootState} from '../store/store';
+import {ActivityIndicator} from 'react-native';
 
 type LoginScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -130,13 +131,16 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       )}
 
       {/* Submit Button */}
+
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={handleSubmit(onSubmit)}
         disabled={loading}>
-        <Text style={styles.buttonText}>
-          {loading ? 'Logging in.....' : 'Login'}
-        </Text>
+        {loading ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Login</Text>
+        )}
       </TouchableOpacity>
 
       <View style={styles.linksContainer}>
