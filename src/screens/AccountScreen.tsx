@@ -58,14 +58,6 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
           <Ionicons name="chevron-forward" size={18} color="#ccc" />
         </TouchableOpacity>
       </View>
-
-      {/* Logout Button */}
-      <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={() => console.log('Logout pressed')}>
-        <Ionicons name="log-out-outline" size={20} color="#fff" />
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
     </View>
   );
 };

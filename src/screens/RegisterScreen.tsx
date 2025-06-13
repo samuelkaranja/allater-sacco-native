@@ -20,6 +20,7 @@ import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import {ActivityIndicator} from 'react-native';
 
 type FormData = {
   fullname: string;
@@ -73,6 +74,7 @@ const RegisterScreen = () => {
     };
 
     try {
+      setLoading(true); // Start loading
       const response = await axios.post(
         'https://allater-sacco-backend.fly.dev/auth/signup',
         payload,
@@ -120,6 +122,8 @@ const RegisterScreen = () => {
           autoHide: true,
         });
       }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -385,13 +389,16 @@ const RegisterScreen = () => {
             />
 
             {/* Submit & Back Buttons */}
+
             <TouchableOpacity
               style={styles.button}
               onPress={handleSubmit(handleFinalSubmit)}
               disabled={loading}>
-              <Text style={styles.buttonText}>
-                {loading ? 'Creating account...' : 'Create Account'}
-              </Text>
+              {loading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={styles.buttonText}>Create Account</Text>
+              )}
             </TouchableOpacity>
 
             <TouchableOpacity onPress={handlePrev}>
