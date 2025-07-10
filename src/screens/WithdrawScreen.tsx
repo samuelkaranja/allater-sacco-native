@@ -1,5 +1,5 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,6 +13,9 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {ActivityIndicator} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../store/store';
+import {fetchSavingsSummary} from '../store/features/savings/savingsSlice';
 
 type WithdrawScreenNavigationProps = DrawerNavigationProp<
   HomeStackParamList,
@@ -24,8 +27,16 @@ interface Props {
 }
 
 const WithdrawScreen: React.FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [amount, setAmount] = useState<string>('0');
   const [loading, setLoading] = useState<boolean>(false);
+
+  const balance = useSelector((state: RootState) => state.savings.balance);
+
+  useEffect(() => {
+    dispatch(fetchSavingsSummary());
+  }, [dispatch]);
 
   const handleKeyPress = (key: string) => {
     if (key === 'back') {
@@ -36,13 +47,39 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
   };
 
   const handleWithdraw = async () => {
-    if (!amount || parseFloat(amount) <= 0) {
+    const numericAmount = parseFloat(amount);
+
+    if (!amount || numericAmount <= 0) {
       Toast.show({
         type: 'error',
         text1: 'Error',
         text2: 'Please enter a valid amount.',
         position: 'top',
         visibilityTime: 4000,
+        autoHide: true,
+      });
+      return;
+    }
+
+    if (numericAmount < 30) {
+      Toast.show({
+        type: 'error',
+        text1: 'Insufficient Amount',
+        text2: 'You must withdraw at least KES 30 and above.',
+        position: 'top',
+        visibilityTime: 10000,
+        autoHide: true,
+      });
+      return;
+    }
+
+    if (numericAmount > balance) {
+      Toast.show({
+        type: 'error',
+        text1: 'Insufficient Funds',
+        text2: 'You do not have enough savings to complete this withdrawal.',
+        position: 'top',
+        visibilityTime: 8000,
         autoHide: true,
       });
       return;
@@ -66,7 +103,7 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
 
       const response = await axios.post(
         'https://allater-sacco-backend.fly.dev/savings/withdraw',
-        {amount: parseFloat(amount)}, // Send amount
+        {amount: numericAmount}, // Send amount
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,7 +116,7 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
       Toast.show({
         type: 'success',
         text1: 'Withdrawal Successful',
-        text2: `You have withdrawn KES ${parseFloat(amount).toLocaleString(
+        text2: `You have withdrawn KES ${numericAmount.toLocaleString(
           undefined,
           {
             minimumFractionDigits: 2,
@@ -87,7 +124,7 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
           },
         )}`,
         position: 'top',
-        visibilityTime: 4000,
+        visibilityTime: 9000,
         autoHide: true,
       });
       console.log(response);

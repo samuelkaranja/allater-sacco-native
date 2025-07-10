@@ -3,7 +3,6 @@ import React, {useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {HomeStackParamList} from '../navigation/type/navigationTypes';
 import SharesSummaryCard from '../components/Shares/SharesSummaryCard';
-import {Transaction} from '../components/Shares/types';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import SharesTransactionList from '../components/Shares/SharesTransactionList';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,105 +17,6 @@ type LoansScreenNavigationProps = DrawerNavigationProp<
 interface Props {
   navigation: LoansScreenNavigationProps;
 }
-
-const allTransactions: Transaction[] = [
-  {
-    type: 'Buy',
-    status: 'Savings - Shares',
-    amount: 123456,
-    createdAt: '2025-04-06',
-  },
-  {
-    type: 'Sell',
-    status: 'Shares - Savings',
-    amount: 123456,
-    createdAt: '2025-04-01',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-28',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-02',
-  },
-  {
-    type: 'Buy',
-    status: 'Savings - Shares',
-    amount: 123456,
-    createdAt: '2025-04-06',
-  },
-  {
-    type: 'Sell',
-    status: 'Shares - Savings',
-    amount: 123456,
-    createdAt: '2025-04-01',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-28',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-02',
-  },
-  {
-    type: 'Buy',
-    status: 'Savings - Shares',
-    amount: 123456,
-    createdAt: '2025-04-06',
-  },
-  {
-    type: 'Sell',
-    status: 'Shares - Savings',
-    amount: 123456,
-    createdAt: '2025-04-01',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-28',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-02',
-  },
-  {
-    type: 'Buy',
-    status: 'Savings - Shares',
-    amount: 123456,
-    createdAt: '2025-04-06',
-  },
-  {
-    type: 'Sell',
-    status: 'Shares - Savings',
-    amount: 123456,
-    createdAt: '2025-04-01',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-28',
-  },
-  {
-    type: 'Transfer',
-    status: 'Savings to Shares',
-    amount: 123456,
-    createdAt: '2025-03-02',
-  },
-];
 
 const SharesScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -144,7 +44,9 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
       </View>
 
       {sharesOverview?.recentTransactions.length === 0 ? (
-        <Text style={{textAlign: 'center'}}>No transactions found</Text>
+        <Text style={{textAlign: 'center', color: 'black'}}>
+          No transactions found
+        </Text>
       ) : (
         <SharesTransactionList
           transactions={sharesOverview?.recentTransactions ?? []}

@@ -37,7 +37,7 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
     <ScrollView style={styles.container}>
       <Header navigation={navigation} />
       <Text style={styles.welcomeText}>
-        Welcome Back, {user?.fullname.trim().split(' ')[0] || 'User'}!
+        Welcome, {user?.fullname.trim().split(' ')[0] || 'User'}!
       </Text>
       <CardCarousel />
       <Text style={styles.transaction}>Latest Transactions</Text>

@@ -45,7 +45,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             styles.amount,
             type === 'WITHDRAW' ? styles.withdraw : styles.deposit,
           ]}>
-          <Text style={styles.currency}>Kshs</Text>
+          <Text style={styles.currency}>Kshs </Text>
           {amount.toFixed(2)}
         </Text>
         <Text style={[styles.type, getStatusStyle()]}>

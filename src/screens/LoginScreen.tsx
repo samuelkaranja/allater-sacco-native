@@ -125,6 +125,14 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
             />
           )}
         />
+        <TouchableOpacity onPress={() => setSecureText(!secureText)}>
+          <Icon
+            name={secureText ? 'eye-slash' : 'eye'}
+            size={20}
+            color="#777"
+            style={styles.icon}
+          />
+        </TouchableOpacity>
       </View>
       {errors.password && (
         <Text style={styles.errorText}>{errors.password.message}</Text>
@@ -147,7 +155,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         <TouchableOpacity>
           <Text style={styles.linkText}>Reset Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('MainApp')}>
+        <TouchableOpacity>
           <Text style={styles.linkText}>Need Help?</Text>
         </TouchableOpacity>
       </View>

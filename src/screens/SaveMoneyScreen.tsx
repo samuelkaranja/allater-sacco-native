@@ -43,7 +43,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
         text1: 'Error',
         text2: 'Please enter a valid amount.',
         position: 'top',
-        visibilityTime: 10000,
+        visibilityTime: 8000,
         autoHide: true,
       });
       return;
@@ -56,7 +56,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
         Toast.show({
           type: 'error',
           text1: 'Unauthorized',
-          text2: 'You must be logged in to perform this action.',
+          text2: 'You must be logged in.',
           position: 'top',
           visibilityTime: 20000,
           autoHide: true,
@@ -75,43 +75,16 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
         },
       );
 
-      // Handle success
       Toast.show({
         type: 'success',
-        text1: 'Deposit Successful',
-        text2: `You have deposited KES ${parseFloat(amount).toLocaleString(
-          undefined,
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          },
-        )}`,
+        text2: 'Enter your M-pesa password to confirm the deposit.',
         position: 'top',
-        visibilityTime: 4000,
-        autoHide: true,
+        visibilityTime: 20000,
       });
 
       console.log(response);
       // Reset amount input
       setAmount('0');
-
-      // Optionally navigate back or refresh savings screen
-      navigation.navigate('Savings');
-
-      // if (response.status === 201 || response.status === 200) {
-      //   setAmount('0');
-      //   navigation.navigate('Savings');
-      // } else {
-      //   Toast.show({
-      //     type: 'error',
-      //     text1: 'Error',
-      //     text2: response.data?.message || 'Failed to save amount',
-      //     position: 'top',
-      //     visibilityTime: 20000,
-      //     autoHide: true,
-      //   });
-      //   //Alert.alert('Error', response.data?.message || 'Failed to save amount');
-      // }
     } catch (error: any) {
       console.error('Deposit error:', error?.response || error);
       Alert.alert(
@@ -139,10 +112,6 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
           </Text>
         </View>
 
-        {/* <TouchableOpacity style={styles.sendButton} onPress={handleSave}>
-          <Text style={styles.sendButtonText}>Save</Text>
-        </TouchableOpacity> */}
-
         <TouchableOpacity
           style={styles.sendButton}
           onPress={handleSave}
@@ -151,7 +120,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (
-            <Text style={styles.sendButtonText}>Save</Text>
+            <Text style={styles.sendButtonText}>Deposit</Text>
           )}
         </TouchableOpacity>
 

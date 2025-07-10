@@ -14,7 +14,9 @@ const SharesTransactionItem: React.FC<SharesTransactionItemProps> = ({
   amount,
   createdAt,
 }) => {
-  const formattedDate = new Date(createdAt).toLocaleString();
+  const formattedDate = createdAt
+    ? new Date(createdAt).toLocaleString()
+    : 'Invalid date';
 
   return (
     <View style={styles.container}>
@@ -26,7 +28,7 @@ const SharesTransactionItem: React.FC<SharesTransactionItemProps> = ({
       <View style={styles.details}>
         <Text style={styles.amount}>
           <Text style={styles.currency}>Kshs </Text>
-          {amount.toLocaleString(undefined, {
+          {Number(amount).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
