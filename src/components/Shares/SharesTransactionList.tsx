@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View} from 'react-native';
+import {FlatList, Text} from 'react-native';
 import SharesTransactionItem from './SharesTransactionItem';
 
 interface SharesTransaction {
@@ -17,17 +17,26 @@ const SharesTransactionList: React.FC<SharesTransactionListProps> = ({
   transactions,
 }) => {
   return (
-    <ScrollView>
-      {transactions.map((transaction, index) => (
-        <SharesTransactionItem
-          key={index}
-          type={transaction.type}
-          amount={transaction.amount}
-          status={transaction.status}
-          createdAt={transaction.createdAt}
-        />
-      ))}
-    </ScrollView>
+    <>
+      <FlatList
+        data={transactions}
+        keyExtractor={(item, index) => item.createdAt + index}
+        renderItem={({item}) => (
+          <SharesTransactionItem
+            type={item.type}
+            amount={item.amount}
+            status={item.status}
+            createdAt={item.createdAt}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+      />
+      {transactions.length === 0 && (
+        <Text style={{textAlign: 'center', color: 'black'}}>
+          No transactions found
+        </Text>
+      )}
+    </>
   );
 };
 

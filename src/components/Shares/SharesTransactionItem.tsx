@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
 
   time: {
-    fontSize: 0,
+    fontSize: 12,
     color: '#000',
     paddingTop: 5,
   },
