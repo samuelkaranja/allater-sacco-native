@@ -7,7 +7,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import {BottomTabParamList} from '../navigation/type/navigationTypes';
 import Balance from '../components/Savings/Balance';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../store/store';
@@ -16,7 +16,7 @@ import SavingsTransactionList from '../components/Savings/SavingsTransactionList
 import {fetchSavingsSummary} from '../store/features/savings/savingsSlice';
 
 type SavingsScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
+  BottomTabParamList,
   'Savings'
 >;
 

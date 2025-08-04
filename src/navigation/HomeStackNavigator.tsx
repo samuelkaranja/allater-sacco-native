@@ -23,8 +23,8 @@ const HomeStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="HomeMain" component={HomeScreen} />
-      <Stack.Screen name="Savings" component={SavingsScreen} />
-      <Stack.Screen name="Shares" component={SharesScreen} />
+      {/* <Stack.Screen name="Savings" component={SavingsScreen} />
+      <Stack.Screen name="Shares" component={SharesScreen} /> */}
       <Stack.Screen name="Loan" component={LoansScreen} />
       <Stack.Screen name="Contact" component={ContactScreen} />
       <Stack.Screen name="Investing" component={InvestingScreen} />

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import {BottomTabParamList} from '../navigation/type/navigationTypes';
 import SharesSummaryCard from '../components/Shares/SharesSummaryCard';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import SharesTransactionList from '../components/Shares/SharesTransactionList';
@@ -16,7 +16,7 @@ import {AppDispatch, RootState} from '../store/store';
 import {fetchSharesSummary} from '../store/features/shares/sharesSlice';
 
 type SharesScreenNavigationProps = DrawerNavigationProp<
-  HomeStackParamList,
+  BottomTabParamList,
   'Shares'
 >;
 

@@ -36,11 +36,11 @@ const SharesCard: React.FC<SharesCardProps> = ({title, balance, account}) => {
           </View> */}
         </View>
 
-        <Pressable
+        {/* <Pressable
           style={styles.infoBtn}
           onPress={() => navigation.navigate('Shares')}>
           <Text style={styles.infoBtnText}>Details</Text>
-        </Pressable>
+        </Pressable> */}
       </LinearGradient>
     </View>
   );

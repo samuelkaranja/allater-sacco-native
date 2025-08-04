@@ -29,11 +29,11 @@ const SavingsCard: React.FC<SavingsCardProps> = ({title, account, balance}) => {
           <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
         </View>
 
-        <Pressable
+        {/* <Pressable
           style={styles.infoBtn}
           onPress={() => navigation.navigate('Savings')}>
           <Text style={styles.infoBtnText}>Details</Text>
-        </Pressable>
+        </Pressable> */}
       </LinearGradient>
     </View>
   );

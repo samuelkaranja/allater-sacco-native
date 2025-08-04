@@ -13,7 +13,9 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
-  Transact: undefined;
+  // Transact: undefined;
+  Savings: undefined;
+  Shares: undefined;
   Profile: undefined;
 };
 
@@ -25,8 +27,8 @@ export type DrawerParamList = {
 
 export type HomeStackParamList = {
   HomeMain: undefined;
-  Savings: undefined;
-  Shares: undefined;
+  // Savings: undefined;
+  // Shares: undefined;
   Loan: undefined;
   Contact: undefined;
   Investing: undefined;
