@@ -33,13 +33,13 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   'password/resetPassword',
   async (
-    {code, newPassword}: {code: string; newPassword: string},
+    {token, newpassword}: {token: string; newpassword: string},
     {rejectWithValue},
   ) => {
     try {
       const res = await axios.post(
         'https://allater-sacco-backend.fly.dev/auth/reset-password',
-        {code, newPassword},
+        {token, newpassword},
       );
       return res.data.message;
     } catch (err: any) {

@@ -18,6 +18,7 @@ import {useDispatch} from 'react-redux';
 import {logout} from '../../store/features/auth/authSlice';
 import {useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import LinearGradient from 'react-native-linear-gradient';
 
 const InboxScreen = () => {
   return (
@@ -66,125 +67,131 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   };
 
   return (
-    <DrawerContentScrollView {...props}>
-      <View style={styles.header}>
-        <Text></Text>
-        <TouchableOpacity
-          onPress={() => props.navigation.closeDrawer()}
-          style={styles.closeBtn}>
-          <Text style={styles.title}>Close</Text>
-          <Ionicons name="close" size={17} color="white" />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.tabRow}>
-        <TouchableOpacity onPress={InboxScreen}>
-          <Text style={styles.tab}>Inbox</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={SettingsScreen}>
-          <Text style={styles.tab}>Settings</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={HelpScreen}>
-          <Text style={styles.tab}>Help</Text>
-        </TouchableOpacity>
-      </View>
-
-      <DrawerItemList {...props} />
-
-      <View>
-        <Pressable
-          onPress={() =>
-            props.navigation.navigate('Home', {
-              screen: 'Home',
-              params: {
-                screen: 'Contact',
-              },
-            })
-          }
-          style={({pressed}) => [styles.button, pressed && styles.pressed]}>
-          <View style={styles.tabContainer}>
-            <Icon name="address-card" size={17} color={'white'} />
-            <Text style={styles.tab}>Contact</Text>
-          </View>
-        </Pressable>
-
-        <Pressable
-          onPress={() =>
-            props.navigation.navigate('Home', {
-              screen: 'Home',
-              params: {
-                screen: 'Investing',
-              },
-            })
-          }
-          style={({pressed}) => [styles.button, pressed && styles.pressed]}>
-          <View style={styles.tabContainer}>
-            <Icon name="money" size={17} color={'white'} />
-            <Text style={styles.tab}>Investing</Text>
-          </View>
-        </Pressable>
-
-        <Pressable
-          onPress={() =>
-            props.navigation.navigate('Home', {
-              screen: 'Home',
-              params: {
-                screen: 'Locate',
-              },
-            })
-          }
-          style={({pressed}) => [styles.button, pressed && styles.pressed]}>
-          <View style={styles.tabContainer}>
-            <Icon name="location-arrow" size={23} color={'white'} />
-            <Text style={styles.tab}>Locate</Text>
-          </View>
-        </Pressable>
-
-        <Pressable
-          onPress={() =>
-            props.navigation.navigate('Home', {
-              screen: 'Home',
-              params: {
-                screen: 'About',
-              },
-            })
-          }
-          style={({pressed}) => [styles.button, pressed && styles.pressed]}>
-          <View style={styles.tabContainer}>
-            <Icon name="users" size={17} color={'white'} />
-            <Text style={styles.tab}>About</Text>
-          </View>
-        </Pressable>
-
-        <Pressable
-          onPress={() =>
-            props.navigation.navigate('Home', {
-              screen: 'Home',
-              params: {
-                screen: 'Faq',
-              },
-            })
-          }
-          style={({pressed}) => [styles.button, pressed && styles.pressed]}>
-          <View style={styles.tabContainer}>
-            <Icon name="question-circle" size={23} color={'white'} />
-            <Text style={styles.tab}>FAQs</Text>
-          </View>
-        </Pressable>
-      </View>
-
-      {/* Logout Button */}
-      <Pressable
-        onPress={handleLogout}
-        style={({pressed}) => [styles.button, pressed && styles.pressed]}>
-        <View style={styles.tabContainer}>
-          <Icon name="sign-out" size={20} color="white" />
-          <Text style={styles.tab}>Logout</Text>
+    <LinearGradient
+      colors={['#005A5B', '#1CB5E0']} // adjust colors as needed
+      start={{x: 0, y: 0}}
+      end={{x: 0, y: 1}}
+      style={{flex: 1}}>
+      <DrawerContentScrollView {...props} contentContainerStyle={{flexGrow: 1}}>
+        <View style={styles.header}>
+          <Text></Text>
+          <TouchableOpacity
+            onPress={() => props.navigation.closeDrawer()}
+            style={styles.closeBtn}>
+            <Text style={styles.title}>Close</Text>
+            <Ionicons name="close" size={17} color="white" />
+          </TouchableOpacity>
         </View>
-      </Pressable>
-    </DrawerContentScrollView>
+
+        <View style={styles.tabRow}>
+          <TouchableOpacity onPress={InboxScreen}>
+            <Text style={styles.tab}>Inbox</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={SettingsScreen}>
+            <Text style={styles.tab}>Settings</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={HelpScreen}>
+            <Text style={styles.tab}>Help</Text>
+          </TouchableOpacity>
+        </View>
+
+        <DrawerItemList {...props} />
+
+        <View>
+          <Pressable
+            onPress={() =>
+              props.navigation.navigate('Home', {
+                screen: 'Home',
+                params: {
+                  screen: 'Contact',
+                },
+              })
+            }
+            style={({pressed}) => [styles.button, pressed && styles.pressed]}>
+            <View style={styles.tabContainer}>
+              <Icon name="address-card" size={17} color={'white'} />
+              <Text style={styles.tab}>Contact</Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            onPress={() =>
+              props.navigation.navigate('Home', {
+                screen: 'Home',
+                params: {
+                  screen: 'Investing',
+                },
+              })
+            }
+            style={({pressed}) => [styles.button, pressed && styles.pressed]}>
+            <View style={styles.tabContainer}>
+              <Icon name="money" size={17} color={'white'} />
+              <Text style={styles.tab}>Investing</Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            onPress={() =>
+              props.navigation.navigate('Home', {
+                screen: 'Home',
+                params: {
+                  screen: 'Locate',
+                },
+              })
+            }
+            style={({pressed}) => [styles.button, pressed && styles.pressed]}>
+            <View style={styles.tabContainer}>
+              <Icon name="location-arrow" size={23} color={'white'} />
+              <Text style={styles.tab}>Locate</Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            onPress={() =>
+              props.navigation.navigate('Home', {
+                screen: 'Home',
+                params: {
+                  screen: 'About',
+                },
+              })
+            }
+            style={({pressed}) => [styles.button, pressed && styles.pressed]}>
+            <View style={styles.tabContainer}>
+              <Icon name="users" size={17} color={'white'} />
+              <Text style={styles.tab}>About</Text>
+            </View>
+          </Pressable>
+
+          <Pressable
+            onPress={() =>
+              props.navigation.navigate('Home', {
+                screen: 'Home',
+                params: {
+                  screen: 'Faq',
+                },
+              })
+            }
+            style={({pressed}) => [styles.button, pressed && styles.pressed]}>
+            <View style={styles.tabContainer}>
+              <Icon name="question-circle" size={23} color={'white'} />
+              <Text style={styles.tab}>FAQs</Text>
+            </View>
+          </Pressable>
+        </View>
+
+        {/* Logout Button */}
+        <Pressable
+          onPress={handleLogout}
+          style={({pressed}) => [styles.button, pressed && styles.pressed]}>
+          <View style={styles.tabContainer}>
+            <Icon name="sign-out" size={20} color="white" />
+            <Text style={styles.tab}>Logout</Text>
+          </View>
+        </Pressable>
+      </DrawerContentScrollView>
+    </LinearGradient>
   );
 };
 

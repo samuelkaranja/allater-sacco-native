@@ -1,8 +1,6 @@
 import React from 'react';
 import {Text, View, Dimensions, StyleSheet, Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-// import {useNavigation, NavigationProp} from '@react-navigation/native';
-// import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 const {width} = Dimensions.get('window');
 
@@ -13,7 +11,6 @@ type LoansCardProps = {
 };
 
 const LoansCard: React.FC<LoansCardProps> = ({title, account, balance}) => {
-  //const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   return (
     <View style={styles.cardContainer}>
       <LinearGradient
@@ -34,9 +31,7 @@ const LoansCard: React.FC<LoansCardProps> = ({title, account, balance}) => {
           </View> */}
         </View>
 
-        <Pressable
-          // onPress={() => navigation.navigate('Loan')}
-          style={styles.infoBtn}>
+        <Pressable style={styles.infoBtn}>
           <Text style={styles.visa}>Coming Soon</Text>
         </Pressable>
       </LinearGradient>

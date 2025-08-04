@@ -3,12 +3,9 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Alert,
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
-  Image,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../store/store';
@@ -17,11 +14,11 @@ import {
   clearPasswordError,
   clearPasswordMessage,
 } from '../store/features/auth/passwordSlice';
-import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../navigation/type/navigationTypes';
-//import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type ForgotPasswordScreenNavigationProps = StackNavigationProp<
   RootStackParamList,
@@ -40,7 +37,15 @@ const ForgotPasswordScreen: React.FC<Props> = ({navigation}) => {
   );
 
   const handleSubmit = () => {
-    if (!email.trim()) return Alert.alert('Error', 'Please enter your email');
+    if (!email.trim())
+      return Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Please enter your email',
+        position: 'top', // or 'bottom'
+        visibilityTime: 7000, // duration in ms
+        autoHide: true,
+      });
 
     dispatch(forgotPassword(email)).then((res: any) => {
       if (!res.error) {
@@ -51,12 +56,26 @@ const ForgotPasswordScreen: React.FC<Props> = ({navigation}) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error,
+        position: 'top', // or 'bottom'
+        visibilityTime: 7000, // duration in ms
+        autoHide: true,
+      });
       dispatch(clearPasswordError());
     }
 
     if (message) {
-      Alert.alert('Success', message);
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: message,
+        position: 'top', // or 'bottom'
+        visibilityTime: 7000, // duration in ms
+        autoHide: true,
+      });
       dispatch(clearPasswordMessage());
     }
   }, [error, message]);
@@ -83,19 +102,24 @@ const ForgotPasswordScreen: React.FC<Props> = ({navigation}) => {
         <Text style={styles.introText}>
           Enter your email to receive a reset code
         </Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          style={styles.input}
-        />
+        <View style={styles.inputContainer}>
+          <Icon name="envelope" size={18} color="#777" style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            keyboardType="email-address"
+            placeholder="xyz@gmail.com"
+            placeholderTextColor="#888"
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            value={email}
+          />
+        </View>
 
         <TouchableOpacity
           style={styles.resetBtn}
           onPress={() => handleSubmit()}>
           {loading ? (
-            <ActivityIndicator size="large" color="#007bff" />
+            <ActivityIndicator size="small" color="#fff" />
           ) : (
             <Text style={{color: '#fff'}}>Send Reset Code</Text>
           )}
@@ -113,7 +137,7 @@ const styles = StyleSheet.create({
 
   screenHeader: {
     paddingTop: 25,
-    paddingBottom: 25,
+    paddingBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 50,
@@ -147,13 +171,26 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+    borderRadius: 50,
+    paddingHorizontal: 15,
+    marginBottom: 10,
+    width: '100%',
+  },
+
+  icon: {
+    marginRight: 10,
+  },
+
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 20,
-    borderRadius: 5,
-    color: '#000',
+    flex: 1,
+    height: 50,
+    fontSize: 16,
+    color: '#333',
+    padding: 5,
   },
 });
 

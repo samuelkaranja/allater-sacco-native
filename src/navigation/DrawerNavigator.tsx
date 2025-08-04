@@ -20,9 +20,10 @@ const DrawerNavigator = () => {
         drawerInactiveTintColor: '#ffffff', // inactive item text color
       }}>
       <Drawer.Screen
-        name="Home"
+        name="MainTabs"
         component={BottomTabs}
         options={{
+          drawerLabel: 'Home',
           drawerIcon: ({color}) => <Icon name="home" size={17} color={color} />,
         }}
       />
