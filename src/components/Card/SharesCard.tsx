@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, View, Dimensions, StyleSheet, Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {HomeStackParamList} from '../../navigation/type/navigationTypes';
+//import {useNavigation, NavigationProp} from '@react-navigation/native';
+//import {HomeStackParamList} from '../../navigation/type/navigationTypes';
 
 const {width} = Dimensions.get('window');
 
@@ -13,7 +13,7 @@ type SharesCardProps = {
 };
 
 const SharesCard: React.FC<SharesCardProps> = ({title, balance, account}) => {
-  const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  //const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
   return (
     <View style={styles.cardContainer}>
       <LinearGradient

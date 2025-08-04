@@ -81,7 +81,7 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.signOut}>
+      <View>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Ionicons name="log-out-outline" size={20} color="#fff" />
           <Text style={styles.logoutText}>Logout</Text>

@@ -29,6 +29,7 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
   const {shares, loading, error} = useSelector(
     (state: RootState) => state.shares,
   );
+  const profile = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     dispatch(fetchSharesSummary());
@@ -57,10 +58,10 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader route="HomeMain" title="Shares Account" />
+      <ScreenHeader route="Home" title="Shares Account" />
 
       <SharesSummaryCard
-        accountNumber={'12345678'}
+        accountNumber={profile?.accountID || 'N/A'}
         shareAmount={shares?.shareAmount ?? 0}
         noOfSharesBought={shares?.noOfSharesBought ?? 0}
       />

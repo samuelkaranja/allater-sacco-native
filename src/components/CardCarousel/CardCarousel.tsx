@@ -13,6 +13,7 @@ const cardWidth = width * 0.75 + 20;
 const CardCarousel: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const overview = useSelector((state: RootState) => state.overview);
+  const profile = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     dispatch(fetchUserOverview());
@@ -30,10 +31,18 @@ const CardCarousel: React.FC = () => {
       <SavingsCard
         title="Savings"
         balance={overview.savings}
-        account="42464246"
+        account={profile?.accountID || 'N/A'}
       />
-      <SharesCard title="Shares" balance={overview.shares} account="33813381" />
-      <LoansCard title="Loans" balance={overview.loan} account="71237123" />
+      <SharesCard
+        title="Shares"
+        balance={overview.shares}
+        account={profile?.accountID || 'N/A'}
+      />
+      <LoansCard
+        title="Loans"
+        balance={overview.loan}
+        account={profile?.accountID || 'N/A'}
+      />
     </ScrollView>
   );
 };

@@ -28,6 +28,7 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch<AppDispatch>();
   const savingsDetails = useSelector((state: RootState) => state.savings);
   const {loading, error} = savingsDetails;
+  const profile = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     dispatch(fetchSavingsSummary());
@@ -52,9 +53,12 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader route="HomeMain" title="Savings Account" />
+      <ScreenHeader route="Home" title="Savings Account" />
 
-      <Balance balance={savingsDetails.balance} accountNumber="12345678910" />
+      <Balance
+        balance={savingsDetails.balance}
+        accountNumber={profile?.accountID || 'N/A'}
+      />
 
       <View style={styles.more}>
         <Text style={styles.transaction}>Savings Transactions</Text>

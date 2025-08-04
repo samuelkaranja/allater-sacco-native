@@ -24,11 +24,6 @@ const LoansCard: React.FC<LoansCardProps> = ({title, account, balance}) => {
             <Text style={styles.label}>Amount Due</Text>
             <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
           </View>
-
-          {/* <View style={{marginTop: 5}}>
-            <Text style={styles.label}>Loan Limit</Text>
-            <Text style={styles.balance}>Kshs {balance.toFixed(2)}</Text>
-          </View> */}
         </View>
 
         <Pressable style={styles.infoBtn}>

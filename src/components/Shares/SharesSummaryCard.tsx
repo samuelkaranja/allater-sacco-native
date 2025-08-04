@@ -30,7 +30,7 @@ const SharesSummaryCard: React.FC<Props> = ({
         <Text style={styles.shares}>{noOfSharesBought} Shares</Text>
       </View>
       <View>
-        <Text style={styles.label}>Share Worth</Text>
+        <Text style={styles.label}>Shares Worth</Text>
         <Text style={styles.amount}>
           <Text style={{fontSize: 12}}>Kshs </Text>
           {shareAmount}
