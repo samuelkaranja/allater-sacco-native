@@ -4,8 +4,11 @@ import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {BottomTabParamList} from '../navigation/type/navigationTypes';
 import Header from '../components/Header/Header';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useSelector} from 'react-redux';
-import {RootState} from '../store/store';
+import {useSelector, useDispatch} from 'react-redux';
+import {RootState, AppDispatch} from '../store/store';
+import {logout} from '../store/features/auth/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 type AccountScreenNavigationProps = DrawerNavigationProp<
   BottomTabParamList,
@@ -18,6 +21,25 @@ interface Props {
 
 const AccountScreen: React.FC<Props> = ({navigation}) => {
   const user = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    dispatch(logout());
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Login' as never}],
+    });
+    Toast.show({
+      type: 'success',
+      text1: 'Logout Successful',
+      text2: 'You have logged out successfully.',
+      position: 'top',
+      visibilityTime: 3000,
+      autoHide: true,
+    });
+  };
+
   return (
     <View style={styles.container}>
       {/* Profile Header */}
@@ -56,6 +78,13 @@ const AccountScreen: React.FC<Props> = ({navigation}) => {
             <Text style={styles.menuText}>Next of kin</Text>
           </View>
           <Ionicons name="chevron-forward" size={18} color="#ccc" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.signOut}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Ionicons name="log-out-outline" size={20} color="#fff" />
+          <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
     </View>

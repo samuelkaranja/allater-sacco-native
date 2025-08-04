@@ -15,7 +15,7 @@ import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import {logout} from '../../store/features/auth/authSlice';
+// import {logout} from '../../store/features/auth/authSlice';
 import {useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import LinearGradient from 'react-native-linear-gradient';
@@ -49,22 +49,22 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem('token');
-    dispatch(logout());
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'Login' as never}],
-    });
-    Toast.show({
-      type: 'success',
-      text1: 'Logout Successful',
-      text2: 'You have logged out successfully.',
-      position: 'top',
-      visibilityTime: 3000,
-      autoHide: true,
-    });
-  };
+  // const handleLogout = async () => {
+  //   await AsyncStorage.removeItem('token');
+  //   dispatch(logout());
+  //   navigation.reset({
+  //     index: 0,
+  //     routes: [{name: 'Login' as never}],
+  //   });
+  //   Toast.show({
+  //     type: 'success',
+  //     text1: 'Logout Successful',
+  //     text2: 'You have logged out successfully.',
+  //     position: 'top',
+  //     visibilityTime: 3000,
+  //     autoHide: true,
+  //   });
+  // };
 
   return (
     <LinearGradient
@@ -182,14 +182,14 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
         </View>
 
         {/* Logout Button */}
-        <Pressable
+        {/* <Pressable
           onPress={handleLogout}
           style={({pressed}) => [styles.button, pressed && styles.pressed]}>
           <View style={styles.tabContainer}>
             <Icon name="sign-out" size={20} color="white" />
             <Text style={styles.tab}>Logout</Text>
           </View>
-        </Pressable>
+        </Pressable> */}
       </DrawerContentScrollView>
     </LinearGradient>
   );
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
 
   pressed: {
-    backgroundColor: '#0b6b35',
+    backgroundColor: 'none',
   },
 });
 
