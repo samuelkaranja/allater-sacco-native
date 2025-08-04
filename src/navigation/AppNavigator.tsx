@@ -8,6 +8,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import DrawerNavigator from './DrawerNavigator';
 import {RootStackParamList} from './type/navigationTypes';
 import LoanScreen from '../screens/LoansScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -21,6 +23,8 @@ const AppNavigator = () => {
         <Stack.Screen name="OnBoarding" component={OnboardingScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
         <Stack.Screen name="MainApp" component={DrawerNavigator} />
         <Stack.Screen name="Loan" component={LoanScreen} />
       </Stack.Navigator>

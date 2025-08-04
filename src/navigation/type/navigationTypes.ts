@@ -5,6 +5,8 @@ export type RootStackParamList = {
   OnBoarding: undefined;
   Register: undefined;
   Login: undefined;
+  ForgotPassword: undefined;
+  ResetPassword: undefined;
   MainApp: undefined;
   Loan: undefined;
 };
