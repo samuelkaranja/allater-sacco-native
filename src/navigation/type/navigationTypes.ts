@@ -9,11 +9,13 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   MainApp: undefined;
   Loan: undefined;
+  Save: undefined;
+  Withdraw: undefined;
+  BuyShares: undefined;
 };
 
 export type BottomTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
-  // Transact: undefined;
   Savings: undefined;
   Shares: undefined;
   Profile: undefined;
@@ -27,17 +29,12 @@ export type DrawerParamList = {
 
 export type HomeStackParamList = {
   HomeMain: undefined;
-  // Savings: undefined;
-  // Shares: undefined;
   Loan: undefined;
   Contact: undefined;
   Investing: undefined;
   Locate: undefined;
   About: undefined;
   Faq: undefined;
-  Withdraw: undefined;
-  Save: undefined;
   Member: undefined;
   Kin: undefined;
-  BuyShares: undefined;
 };

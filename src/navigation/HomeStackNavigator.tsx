@@ -30,11 +30,11 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="Locate" component={LocateScreen} />
       <Stack.Screen name="About" component={AboutScreen} />
       <Stack.Screen name="Faq" component={FaqScreen} />
-      <Stack.Screen name="Save" component={SaveMoneyScreen} />
-      <Stack.Screen name="Withdraw" component={WithdrawScreen} />
+      {/* <Stack.Screen name="Save" component={SaveMoneyScreen} />
+      <Stack.Screen name="Withdraw" component={WithdrawScreen} /> */}
       <Stack.Screen name="Member" component={ProfileInfoScreen} />
       <Stack.Screen name="Kin" component={NextOfKinScreen} />
-      <Stack.Screen name="BuyShares" component={BuySharesScreen} />
+      {/* <Stack.Screen name="BuyShares" component={BuySharesScreen} /> */}
       {/* Add other screens here */}
     </Stack.Navigator>
   );

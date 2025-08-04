@@ -10,6 +10,9 @@ import {RootStackParamList} from './type/navigationTypes';
 import LoanScreen from '../screens/LoansScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
+import SaveMoneyScreen from '../screens/SaveMoneyScreen';
+import WithdrawScreen from '../screens/WithdrawScreen';
+import BuySharesScreen from '../screens/BuySharesScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -27,6 +30,9 @@ const AppNavigator = () => {
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
         <Stack.Screen name="MainApp" component={DrawerNavigator} />
         <Stack.Screen name="Loan" component={LoanScreen} />
+        <Stack.Screen name="Save" component={SaveMoneyScreen} />
+        <Stack.Screen name="Withdraw" component={WithdrawScreen} />
+        <Stack.Screen name="BuyShares" component={BuySharesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

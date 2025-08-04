@@ -37,7 +37,7 @@ const ProfileInfo: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader route="Profile" title="My Profile" />
+      <ScreenHeader title="My Profile" />
 
       {/* Profile block */}
       <View style={styles.profileBlock}>

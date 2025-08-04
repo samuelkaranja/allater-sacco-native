@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import {RootStackParamList} from '../navigation/type/navigationTypes';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,7 +18,7 @@ import {AppDispatch, RootState} from '../store/store';
 import {fetchSavingsSummary} from '../store/features/savings/savingsSlice';
 
 type WithdrawScreenNavigationProps = DrawerNavigationProp<
-  HomeStackParamList,
+  RootStackParamList,
   'Withdraw'
 >;
 
@@ -132,7 +132,7 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
       setAmount('0');
 
       // Optionally navigate back or refresh savings screen
-      navigation.navigate('Savings');
+      //navigation.navigate('Savings');
     } catch (error: any) {
       console.error('Withdrawal error:', error.response?.data || error.message);
       Toast.show({
@@ -152,7 +152,7 @@ const WithdrawScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader route="Savings" title="Withdraw" />
+      <ScreenHeader title="Withdraw" />
 
       <View style={styles.card}>
         <Text style={styles.header}>

@@ -3,10 +3,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {HomeStackParamList} from '../../navigation/type/navigationTypes';
+import {RootStackParamList} from '../../navigation/type/navigationTypes';
 
 const SharesActions: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -20,11 +20,6 @@ const SharesActions: React.FC = () => {
         <Icon name="arrow-up" size={18} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Sell Shares</Text>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity style={styles.button}>
-        <Icon name="exchange" size={18} color={'white'} style={styles.icon} />
-        <Text style={styles.iconText}>Transfer Shares</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };

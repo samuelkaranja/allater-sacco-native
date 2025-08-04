@@ -36,10 +36,10 @@ export const fetchSharesSummary = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
+      //console.log(response.data);
       return response.data;
     } catch (error: any) {
-      console.log(error.response?.data || 'Failed to fetch data');
+      //console.log(error.response?.data || 'Failed to fetch data');
       return rejectWithValue(error.response?.data || 'Failed to fetch data');
     }
   },

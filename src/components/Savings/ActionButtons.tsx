@@ -3,10 +3,10 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {HomeStackParamList} from '../../navigation/type/navigationTypes';
+import {RootStackParamList} from '../../navigation/type/navigationTypes';
 
 const ActionButtons: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
     <View style={styles.container}>
@@ -23,11 +23,6 @@ const ActionButtons: React.FC = () => {
         <Icon name="arrow-up" size={15} color={'white'} style={styles.icon} />
         <Text style={styles.iconText}>Withdraw</Text>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity style={styles.button}>
-        <Icon name="send" size={18} color={'white'} style={styles.icon} />
-        <Text style={styles.iconText}>Transfer</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };

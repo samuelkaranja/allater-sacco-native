@@ -62,7 +62,7 @@ export const fetchSavingsSummary = createAsyncThunk<
 });
 
 const savingsSlice = createSlice({
-  name: 'shares',
+  name: 'savings',
   initialState,
   reducers: {},
   extraReducers: builder => {

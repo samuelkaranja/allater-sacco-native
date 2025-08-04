@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import {RootStackParamList} from '../navigation/type/navigationTypes';
 import Toast from 'react-native-toast-message';
 import {ActivityIndicator} from 'react-native';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 type BuySharesScreenNavigationProps = DrawerNavigationProp<
-  HomeStackParamList,
+  RootStackParamList,
   'BuyShares'
 >;
 
@@ -103,17 +103,18 @@ const BuySharesScreen: React.FC<Props> = ({navigation}) => {
 
       console.log('Buy shares response:', response.data);
       setAmount('0');
-      navigation.navigate('Shares');
+      navigation.navigate({name: 'Shares' as never, params: undefined});
     } catch (error: any) {
-      console.error('Buy shares error:', error.response?.data || error.message);
       Toast.show({
         type: 'error',
         text1: 'Purchase Failed',
         text2:
-          error.response?.data?.message ||
-          'Something went wrong. Please try again.',
+          error.response?.data?.message === 'Insufficient savings balance'
+            ? 'You do not have enough savings to buy these shares.'
+            : error.response?.data?.message ||
+              'Something went wrong. Please try again.',
         position: 'top',
-        visibilityTime: 10000,
+        visibilityTime: 6000,
         autoHide: true,
       });
     } finally {
@@ -123,7 +124,7 @@ const BuySharesScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader route="Shares" title="Buy Shares" />
+      <ScreenHeader title="Buy Shares" />
 
       <View style={styles.card}>
         <Text style={styles.header}>

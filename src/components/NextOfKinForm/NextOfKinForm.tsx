@@ -9,16 +9,7 @@ import {
   Modal,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../store/store';
-import {addNextOfKin} from '../../store/features/nextOfKin/nextOfKinSlice';
 import Toast from 'react-native-toast-message';
-
-type Props = {
-  visible: boolean;
-  onClose: () => void;
-  onSubmit: (data: NextOfKinData) => void;
-};
 
 export type NextOfKinData = {
   firstName: string;
@@ -26,6 +17,12 @@ export type NextOfKinData = {
   phoneNumber: string;
   email: string;
   relationship: string;
+};
+
+type Props = {
+  visible: boolean;
+  onClose: () => void;
+  onSubmit: (data: NextOfKinData) => void;
 };
 
 const relationshipOptions = [
@@ -39,8 +36,6 @@ const relationshipOptions = [
 ];
 
 const NextOfKinForm: React.FC<Props> = ({visible, onClose, onSubmit}) => {
-  const dispatch = useDispatch<AppDispatch>();
-
   const [form, setForm] = useState<NextOfKinData>({
     firstName: '',
     lastName: '',
@@ -53,34 +48,27 @@ const NextOfKinForm: React.FC<Props> = ({visible, onClose, onSubmit}) => {
     setForm(prev => ({...prev, [field]: value}));
   };
 
-  const handleSubmit = async () => {
-    const resultAction = await dispatch(addNextOfKin(form));
+  const handleSubmit = () => {
+    onSubmit(form); // 👈 Submit to parent (screen)
+    Toast.show({
+      type: 'success',
+      text1: 'Success',
+      text2: "You've successfully added next of kin 👋",
+      position: 'top',
+      visibilityTime: 7000,
+    });
 
-    if (addNextOfKin.fulfilled.match(resultAction)) {
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: "You've successfully added next of kin 👋",
-        position: 'top',
-        visibilityTime: 7000,
-        autoHide: true,
-      });
-      onClose();
-      setForm({
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
-        email: '',
-        relationship: 'SIBLING',
-      });
-    } else {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: resultAction.payload || 'Failed to add next of kin',
-        position: 'bottom',
-      });
-    }
+    // Reset form
+    setForm({
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      email: '',
+      relationship: 'SIBLING',
+    });
+
+    // Close modal
+    onClose();
   };
 
   return (
@@ -89,7 +77,6 @@ const NextOfKinForm: React.FC<Props> = ({visible, onClose, onSubmit}) => {
         <View style={styles.modalContainer}>
           <ScrollView contentContainerStyle={styles.content}>
             <View style={styles.header}>
-              {/* <Ionicons name="create-outline" size={40} color="#333" /> */}
               <Text style={styles.headerText}>Edit details</Text>
             </View>
 
@@ -170,7 +157,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.3)',
     justifyContent: 'flex-end',
   },
-
   modalContainer: {
     backgroundColor: 'white',
     borderTopLeftRadius: 24,
@@ -179,33 +165,27 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     height: '85%',
   },
-
   content: {
     paddingBottom: 40,
   },
-
   header: {
     alignItems: 'center',
     marginBottom: 25,
   },
-
   headerText: {
     fontSize: 18,
     fontWeight: '600',
     marginTop: 8,
     color: '#333',
   },
-
   field: {
     marginBottom: 18,
   },
-
   label: {
     fontSize: 14,
     color: '#555',
     marginBottom: 6,
   },
-
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
@@ -215,27 +195,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 16,
   },
-
   pickerWrapper: {
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: '#fff',
     borderRadius: 8,
   },
-
   picker: {
     height: 53,
     width: '100%',
     color: '#333',
     fontSize: 16,
   },
-
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 50,
   },
-
   cancelButton: {
     borderWidth: 1.5,
     borderColor: '#2ecc71',
@@ -243,19 +219,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 30,
   },
-
   cancelText: {
     color: '#2ecc71',
     fontWeight: '600',
   },
-
   saveButton: {
-    backgroundColor: '#2ecc71', // Replace with '#008069' to enable
+    backgroundColor: '#2ecc71',
     borderRadius: 24,
     paddingVertical: 12,
     paddingHorizontal: 30,
   },
-
   saveText: {
     color: 'white',
     fontWeight: '600',

@@ -65,7 +65,7 @@ const NextOfKinScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader route="Profile" title="Next Of Kin" />
+      <ScreenHeader title="Next Of Kin" />
 
       {/* Next of Kin Info */}
       <View style={{marginTop: 50}}>

@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeStackParamList} from '../navigation/type/navigationTypes';
+import {RootStackParamList} from '../navigation/type/navigationTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import Toast from 'react-native-toast-message';
@@ -16,8 +16,8 @@ import axios from 'axios';
 import {ActivityIndicator} from 'react-native';
 
 type SaveMoneyScreenNavigationProp = StackNavigationProp<
-  HomeStackParamList,
-  'Savings'
+  RootStackParamList,
+  'Save'
 >;
 
 interface Props {
@@ -79,7 +79,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
         type: 'success',
         text2: 'Enter your M-pesa password to confirm the deposit.',
         position: 'top',
-        visibilityTime: 20000,
+        visibilityTime: 8000,
       });
 
       console.log(response);
@@ -98,7 +98,7 @@ const SaveMoneyScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader route="Savings" title="Save Money" />
+      <ScreenHeader title="Save Money" />
       <View style={styles.card}>
         <Text style={styles.header}>Save Money To Your Account</Text>
 

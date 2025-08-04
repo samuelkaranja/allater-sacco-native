@@ -58,7 +58,7 @@ const SharesScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader route="Home" title="Shares Account" />
+      <ScreenHeader title="Shares Account" />
 
       <SharesSummaryCard
         accountNumber={profile?.accountID || 'N/A'}

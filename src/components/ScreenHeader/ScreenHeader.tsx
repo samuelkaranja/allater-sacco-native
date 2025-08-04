@@ -4,21 +4,16 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 type Props = {
-  route?: string;
   title: string;
 };
 
-const ScreenHeader: React.FC<Props> = ({route, title}) => {
+const ScreenHeader: React.FC<Props> = ({title}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.screenHeader}>
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => {
-          if (route) {
-            navigation.navigate(route as never);
-          }
-        }}>
+        onPress={() => navigation.goBack()}>
         <FontAwesome
           name="angle-left"
           size={28}

@@ -1,11 +1,11 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import TransactScreen from '../screens/TransactScreen';
+//import TransactScreen from '../screens/TransactScreen';
 import SavingsScreen from '../screens/SavingsScreen';
 import SharesScreen from '../screens/SharesScreen';
 import AccountScreen from '../screens/AccountScreen';
-import HomeScreen from '../screens/HomeScreen';
+//import HomeScreen from '../screens/HomeScreen';
 import {BottomTabParamList} from './type/navigationTypes';
 import HomeStackNavigator from './HomeStackNavigator';
 
@@ -18,8 +18,8 @@ const BottomTabs = () => {
         tabBarIcon: ({color, size}) => {
           let iconName;
           if (route.name === 'Home') iconName = 'home';
-          else if (route.name === 'Savings') iconName = 'card';
-          else if (route.name === 'Shares') iconName = 'card';
+          else if (route.name === 'Savings') iconName = 'wallet';
+          else if (route.name === 'Shares') iconName = 'stats-chart';
           // else if (route.name === 'Transact') iconName = 'card';
           else if (route.name === 'Profile') iconName = 'person';
           else iconName = 'ellipse-outline';

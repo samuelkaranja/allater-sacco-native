@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
   StyleSheet,
@@ -14,6 +14,7 @@ import {AppDispatch, RootState} from '../store/store';
 import ScreenHeader from '../components/ScreenHeader/ScreenHeader';
 import SavingsTransactionList from '../components/Savings/SavingsTransactionList';
 import {fetchSavingsSummary} from '../store/features/savings/savingsSlice';
+import {useFocusEffect} from '@react-navigation/native';
 
 type SavingsScreenNavigationProp = StackNavigationProp<
   BottomTabParamList,
@@ -27,12 +28,19 @@ interface Props {
 const SavingsScreen: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch<AppDispatch>();
   const savingsDetails = useSelector((state: RootState) => state.savings);
-  const {loading, error} = savingsDetails;
   const profile = useSelector((state: RootState) => state.auth.user);
 
-  useEffect(() => {
-    dispatch(fetchSavingsSummary());
-  }, [dispatch]);
+  const {loading, error, balance, recentTransactions} = savingsDetails;
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchSavingsSummary());
+    }, [dispatch]),
+  );
+
+  // useEffect(() => {
+  //   dispatch(fetchSavingsSummary());
+  // }, [dispatch]);
 
   if (loading) {
     return (
@@ -53,7 +61,7 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader route="Home" title="Savings Account" />
+      <ScreenHeader title="Savings Account" />
 
       <Balance
         balance={savingsDetails.balance}
@@ -67,14 +75,12 @@ const SavingsScreen: React.FC<Props> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      {savingsDetails?.recentTransactions.length === 0 ? (
+      {recentTransactions.length === 0 ? (
         <Text style={{textAlign: 'center', color: 'black'}}>
           No transactions found
         </Text>
       ) : (
-        <SavingsTransactionList
-          transactions={savingsDetails.recentTransactions}
-        />
+        <SavingsTransactionList transactions={recentTransactions} />
       )}
     </View>
   );
